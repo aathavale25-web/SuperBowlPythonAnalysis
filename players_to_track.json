@@ -1,0 +1,28 @@
+{
+  "players": [
+    {
+      "name": "Patrick Mahomes",
+      "url": "/players/M/MahoPa00.htm",
+      "team": "Kansas City Chiefs",
+      "position": "QB"
+    },
+    {
+      "name": "Jalen Hurts",
+      "url": "/players/H/HurtJa00.htm",
+      "team": "Philadelphia Eagles",
+      "position": "QB"
+    },
+    {
+      "name": "Travis Kelce",
+      "url": "/players/K/KelcTr00.htm",
+      "team": "Kansas City Chiefs",
+      "position": "TE"
+    },
+    {
+      "name": "A.J. Brown",
+      "url": "/players/B/BrowAJ00.htm",
+      "team": "Philadelphia Eagles",
+      "position": "WR"
+    }
+  ]
+}
