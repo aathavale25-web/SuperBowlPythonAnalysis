@@ -30,11 +30,66 @@ def calculate_player_stats(games, player_name):
     return stats
 
 
-def calculate_hit_rates(games, player_name, stat_column, lines):
+def calculate_position_benchmarks(sb_history, position):
+    """
+    Calculate Super Bowl position benchmarks
+
+    Args:
+        sb_history: Polars DataFrame with Super Bowl player history
+        position: Position to calculate benchmarks for (e.g., "QB", "RB", "WR", "TE")
+
+    Returns:
+        dict with average stats for the position, or None if no data
+    """
+    # Filter to position
+    position_players = sb_history.filter(pl.col("position") == position)
+
+    if len(position_players) == 0:
+        return None
+
+    benchmarks = {}
+
+    # Calculate averages for all stat columns
+    stat_columns = [
+        "passing_yards", "passing_tds", "interceptions",
+        "rushing_yards", "rushing_tds",
+        "receptions", "receiving_yards", "receiving_tds"
+    ]
+
+    for col in stat_columns:
+        if col in position_players.columns:
+            avg_value = position_players[col].mean()
+            benchmarks[f"avg_{col}"] = avg_value
+
+    return benchmarks
+
+
+def calculate_combined_hit_rate(season_hit_rate, sb_position_hit_rate, season_weight=0.7):
+    """
+    Calculate combined hit rate from season and Super Bowl position data
+
+    Args:
+        season_hit_rate: Hit rate from player's season data (0.0 to 1.0)
+        sb_position_hit_rate: Hit rate from SB position benchmark (0.0 to 1.0)
+        season_weight: Weight for season data (default 0.7 for 70/30 split)
+
+    Returns:
+        Combined hit rate (0.0 to 1.0)
+    """
+    sb_weight = 1.0 - season_weight
+    combined = (season_hit_rate * season_weight) + (sb_position_hit_rate * sb_weight)
+    return combined
+
+
+def calculate_hit_rates(games, player_name, stat_column, lines, player_filter=True):
     """Calculate hit rates for betting lines"""
-    # Filter to player
-    player_games = games.filter(pl.col("player_name") == player_name)
-    values = player_games[stat_column]
+    # Filter to player if player_filter is True
+    if player_filter:
+        player_games = games.filter(pl.col("player_name") == player_name)
+        values = player_games[stat_column]
+    else:
+        # Use all games (for position benchmarks)
+        values = games[stat_column]
 
     hit_rates = {}
 
