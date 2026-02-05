@@ -31,32 +31,32 @@
       "position": "TE"
     },
     {
-      "name": "Player Name SEA QB",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Geno Smith",
+      "url": "/players/S/SmitGe00.htm",
       "team": "Seattle Seahawks",
       "position": "QB"
     },
     {
-      "name": "Player Name SEA RB",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Kenneth Walker III",
+      "url": "/players/W/WalkKe01.htm",
       "team": "Seattle Seahawks",
       "position": "RB"
     },
     {
-      "name": "Player Name SEA WR1",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "DK Metcalf",
+      "url": "/players/M/MetcDK00.htm",
       "team": "Seattle Seahawks",
       "position": "WR"
     },
     {
-      "name": "Player Name SEA WR2",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Tyler Lockett",
+      "url": "/players/L/LockTy00.htm",
       "team": "Seattle Seahawks",
       "position": "WR"
     },
     {
-      "name": "Player Name SEA TE",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Noah Fant",
+      "url": "/players/F/FantNo00.htm",
       "team": "Seattle Seahawks",
       "position": "TE"
     }
