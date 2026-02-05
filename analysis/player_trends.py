@@ -196,33 +196,97 @@ def get_betting_lines_for_position(position):
     return lines.get(position, {})
 
 
-def generate_player_summary(games, player_name, position):
-    """Generate complete prop analysis summary for a player"""
+def generate_player_summary(games, player_name, position, sb_history=None):
+    """
+    Generate complete prop analysis summary for a player
+
+    Args:
+        games: Player's season game data
+        player_name: Player's name
+        position: Player's position
+        sb_history: Optional Super Bowl history data for position benchmarking
+
+    Returns:
+        dict with player analysis including optional SB benchmarks and combined hit rates
+    """
     # Calculate basic stats
     stats = calculate_player_stats(games, player_name)
 
     # Get betting lines for position
     lines = get_betting_lines_for_position(position)
 
-    # Calculate hit rates for each stat
+    # Calculate hit rates for each stat (season data)
     all_hit_rates = {}
     for stat_column, stat_lines in lines.items():
         if stat_column in games.columns:
-            hit_rates = calculate_hit_rates(games, player_name, stat_column, stat_lines)
+            hit_rates = calculate_hit_rates(games, player_name, stat_column, stat_lines, player_filter=True)
             all_hit_rates[stat_column] = hit_rates
 
-    # Identify best bets
+    # Calculate Super Bowl position benchmarks if history provided
+    sb_benchmarks = None
+    combined_hit_rates = {}
+
+    if sb_history is not None:
+        sb_benchmarks = calculate_position_benchmarks(sb_history, position)
+
+        if sb_benchmarks is not None:
+            # Calculate position hit rates from SB history
+            sb_position_games = sb_history.filter(pl.col("position") == position)
+
+            # Calculate combined hit rates for each stat
+            for stat_column, stat_lines in lines.items():
+                if stat_column in sb_position_games.columns:
+                    # Get SB position hit rates
+                    sb_hit_rates = calculate_hit_rates(
+                        sb_position_games,
+                        player_name,
+                        stat_column,
+                        stat_lines,
+                        player_filter=False
+                    )
+
+                    # Combine with season hit rates
+                    combined_hit_rates[stat_column] = {}
+                    for line in stat_lines:
+                        if line in all_hit_rates[stat_column] and line in sb_hit_rates:
+                            season_rate = all_hit_rates[stat_column][line]["hit_rate_over"]
+                            sb_rate = sb_hit_rates[line]["hit_rate_over"]
+                            combined_rate = calculate_combined_hit_rate(season_rate, sb_rate, season_weight=0.7)
+
+                            combined_hit_rates[stat_column][line] = {
+                                "season_hit_rate": season_rate,
+                                "sb_position_hit_rate": sb_rate,
+                                "combined_hit_rate": combined_rate,
+                                "sb_validated": True
+                            }
+
+    # Identify best bets (use combined hit rates if available, otherwise season hit rates)
     best_bets = []
     for stat_column, hit_rates in all_hit_rates.items():
-        bets = identify_best_bets(hit_rates, threshold=0.65)
-        for line, data in bets.items():
-            best_bets.append({
-                "stat": stat_column,
-                "line": line,
-                "hit_rate": data["hit_rate_over"],
-                "over_count": data["over"],
-                "under_count": data["under"]
-            })
+        # Use combined hit rates if available
+        if stat_column in combined_hit_rates:
+            for line, data in combined_hit_rates[stat_column].items():
+                if data["combined_hit_rate"] >= 0.65:
+                    best_bets.append({
+                        "stat": stat_column,
+                        "line": line,
+                        "hit_rate": data["combined_hit_rate"],
+                        "over_count": all_hit_rates[stat_column][line]["over"],
+                        "under_count": all_hit_rates[stat_column][line]["under"],
+                        "sb_validated": True
+                    })
+        else:
+            # Use season-only hit rates
+            bets = identify_best_bets(hit_rates, threshold=0.65)
+            for line, data in bets.items():
+                best_bets.append({
+                    "stat": stat_column,
+                    "line": line,
+                    "hit_rate": data["hit_rate_over"],
+                    "over_count": data["over"],
+                    "under_count": data["under"],
+                    "sb_validated": False
+                })
 
     # Analyze trends for key stats
     trends = {}
@@ -237,7 +301,9 @@ def generate_player_summary(games, player_name, position):
         "stats": stats,
         "hit_rates": all_hit_rates,
         "best_bets": best_bets,
-        "trends": trends
+        "trends": trends,
+        "sb_benchmarks": sb_benchmarks,
+        "combined_hit_rates": combined_hit_rates
     }
 
 
