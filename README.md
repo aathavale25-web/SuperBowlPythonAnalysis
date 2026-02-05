@@ -25,6 +25,12 @@ Updated weekly with the latest data.
 - Best bets identification (>65% hit rate)
 - Last 5 games trend analysis
 
+### Super Bowl Predictions (New!)
+- Historical Super Bowl player performance benchmarks
+- Season stats vs Super Bowl average comparison
+- Validated predictions (regular season + SB history alignment)
+- Position-specific benchmarking (QB, RB, WR, TE)
+
 ### Playoff Props
 - Historical playoff game analysis (2020-2024)
 - Total points and winning margin trends
@@ -80,18 +86,23 @@ The analysis data updates automatically:
 Run the scrapers to fetch latest data:
 
 ```bash
-# Scrape Super Bowl history
+# Scrape Super Bowl game history
 python -c "from scrapers.superbowl_history import scrape_superbowl_history; scrape_superbowl_history()"
+
+# Scrape Super Bowl player history (for predictions)
+python -c "from scrapers.superbowl_player_history import scrape_superbowl_player_history; scrape_superbowl_player_history()"
 
 # Scrape playoff data (2020-2024)
 python -c "from scrapers.playoff_history import scrape_playoff_history; scrape_playoff_history(seasons=list(range(2020, 2025)))"
 
-# Scrape player stats (2024 season)
-python -c "from scrapers.player_stats import scrape_player_stats; scrape_player_stats(season=2024)"
+# Scrape player stats (2025 season)
+python -c "from scrapers.player_stats import scrape_player_stats; scrape_player_stats(season=2025)"
 
 # Regenerate site
 python generate_site.py
 ```
+
+See `docs/SCRAPING_GUIDE.md` for detailed scraper documentation.
 
 ## 📁 Project Structure
 
@@ -104,10 +115,11 @@ SuperBowlPythonAnalysis/
 │   ├── squares.py           # Squares betting analysis
 │   ├── player_trends.py     # Player prop analysis
 │   └── props.py             # Playoff props analysis
-├── scrapers/                # Web scraping modules
-│   ├── superbowl_history.py # Super Bowl game scraper
-│   ├── playoff_history.py   # Playoff game scraper
-│   └── player_stats.py      # Player stats scraper
+├── scrapers/                      # Web scraping modules
+│   ├── superbowl_history.py       # Super Bowl game scraper
+│   ├── superbowl_player_history.py # Super Bowl player stats scraper
+│   ├── playoff_history.py         # Playoff game scraper
+│   └── player_stats.py            # Player stats scraper
 ├── templates/               # Jinja2 templates
 │   ├── base.html            # Base layout
 │   ├── index.html           # Dashboard
@@ -117,9 +129,11 @@ SuperBowlPythonAnalysis/
 │   └── about.html           # Methodology
 ├── static/                  # Static assets
 │   └── styles.css           # Site stylesheet
-├── data/                    # Data files (Parquet)
+├── data/                          # Data files (Parquet)
+│   ├── superbowl_games.parquet
+│   ├── superbowl_player_history.parquet
 │   ├── playoff_games.parquet
-│   └── player_stats_2024.parquet
+│   └── player_stats_2025.parquet
 ├── static_site/             # Generated site (deployed to Pages)
 ├── tests/                   # Test suite
 ├── generate_site.py         # Static site generator
@@ -151,8 +165,9 @@ All 34 tests should pass.
 
 All data is scraped from official NFL sources:
 - Historical Super Bowl games (complete game data)
+- Historical Super Bowl player performances (all positions)
 - Playoff game results (2020-2024 seasons)
-- Player game logs (2024 season)
+- Player game logs (2025 season)
 
 ## ⚠️ Disclaimer
 

@@ -20,8 +20,11 @@ python serve_site.py
 # Run tests
 pytest tests/ -v
 
-# Run specific scraper
+# Run scrapers
 python -c "from scrapers.superbowl_history import scrape_superbowl_history; scrape_superbowl_history()"
+python -c "from scrapers.superbowl_player_history import scrape_superbowl_player_history; scrape_superbowl_player_history()"
+python -c "from scrapers.playoff_history import scrape_playoff_history; scrape_playoff_history(seasons=list(range(2020, 2026)))"
+python -c "from scrapers.player_stats import scrape_player_stats; scrape_player_stats(season=2025)"
 ```
 
 ## 📂 Key Files
@@ -30,10 +33,21 @@ python -c "from scrapers.superbowl_history import scrape_superbowl_history; scra
 |------|---------|
 | `generate_site.py` | Generate static HTML from data |
 | `serve_site.py` | Local development server |
+| `players_to_track.json` | Player configuration for scraping |
 | `.github/workflows/update-analysis.yml` | Weekly data updates |
 | `.github/workflows/deploy.yml` | GitHub Pages deployment |
+| `docs/SCRAPING_GUIDE.md` | Complete scraper documentation |
 | `GITHUB_PAGES_SETUP.md` | Deployment instructions |
 | `FUTURE_ENHANCEMENTS.md` | 34 improvement ideas |
+
+## 📊 Data Files
+
+| File | Description |
+|------|-------------|
+| `data/superbowl_games.parquet` | Super Bowl game scores by quarter |
+| `data/superbowl_player_history.parquet` | Player stats from all Super Bowls |
+| `data/playoff_games.parquet` | Playoff games (2020-2024) |
+| `data/player_stats_2025.parquet` | Current season player game logs |
 
 ## 🔧 Workflows
 
@@ -94,7 +108,8 @@ pytest tests/ --cov=analysis --cov=scrapers
 
 ## 📚 Documentation
 
-- `README.md` - Project overview
+- `README.md` - Project overview and quick start
+- `docs/SCRAPING_GUIDE.md` - Complete scraper documentation
 - `GITHUB_PAGES_SETUP.md` - Deployment guide
 - `FUTURE_ENHANCEMENTS.md` - Improvement ideas
 - `PHASE*_SUMMARY.md` - Phase details
