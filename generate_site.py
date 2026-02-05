@@ -113,10 +113,19 @@ def collect_players_data():
     """
     import json
 
-    # Load player data
+    # Load player data (2025 season)
     games = load_player_data()
     if games is None:
         return {'summaries': []}
+
+    # Load Super Bowl player history if available
+    sb_history_path = Path("data/superbowl_player_history.parquet")
+    sb_player_history = None
+    if sb_history_path.exists():
+        try:
+            sb_player_history = pl.read_parquet(sb_history_path)
+        except Exception as e:
+            print(f"Warning: Could not load SB player history: {e}")
 
     # Load player config
     config_path = Path("players_to_track.json")
@@ -137,7 +146,12 @@ def collect_players_data():
         if len(player_games) == 0:
             continue
 
-        summary = generate_player_summary(player_games, player_name, position)
+        summary = generate_player_summary(
+            player_games,
+            player_name,
+            position,
+            sb_player_history=sb_player_history
+        )
         summaries.append(summary)
 
     return {'summaries': summaries}
