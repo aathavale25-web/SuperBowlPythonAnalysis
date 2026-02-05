@@ -78,6 +78,42 @@
             </table>
         {% endfor %}
 
+        <!-- Super Bowl Benchmarks -->
+        {% if player.sb_benchmarks %}
+            <h3 style="margin-top: 2rem;">Super Bowl Benchmarks</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Historical {{ player.position }} performance in Super Bowls
+            </p>
+            <table class="sb-benchmark-table">
+                <thead>
+                    <tr>
+                        <th>Stat</th>
+                        <th>SB Avg</th>
+                        <th>Season Avg</th>
+                        <th>vs SB Avg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat, benchmark in player.sb_benchmarks.items() %}
+                        {% if stat.startswith('avg_') %}
+                            {% set stat_name = stat.replace('avg_', '').replace('_', ' ')|title %}
+                            {% set season_avg = player.stats[stat] %}
+                            {% set diff = season_avg - benchmark %}
+                            {% set diff_pct = (diff / benchmark * 100) if benchmark > 0 else 0 %}
+                            <tr>
+                                <td>{{ stat_name }}</td>
+                                <td>{{ "%.1f"|format(benchmark) }}</td>
+                                <td>{{ "%.1f"|format(season_avg) }}</td>
+                                <td class="{% if diff > 0 %}positive{% elif diff < 0 %}negative{% else %}neutral{% endif %}">
+                                    {{ "%+.1f"|format(diff) }} ({{ "%+.0f%%"|format(diff_pct) }})
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
         <!-- Best Bets -->
         {% if player.best_bets %}
             <h3 style="margin-top: 2rem;">Best Bets (>65% Hit Rate)</h3>
@@ -88,19 +124,49 @@
                         <th>Line</th>
                         <th>Hit Rate</th>
                         <th>Count</th>
+                        {% if player.sb_benchmarks %}<th>SB Validated</th>{% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for bet in player.best_bets|sort(attribute='hit_rate', reverse=True) %}
-                    <tr>
+                    <tr class="{% if bet.sb_validated %}strong-bet{% endif %}">
                         <td>{{ bet.stat|replace('_', ' ')|title }}</td>
                         <td>Over {{ bet.line }}</td>
                         <td class="stat-good">{{ "%.1f%%"|format(bet.hit_rate * 100) }}</td>
                         <td>{{ bet.over_count }}/{{ bet.over_count + bet.under_count }}</td>
+                        {% if player.sb_benchmarks %}
+                            <td>
+                                {% if bet.sb_validated %}
+                                    <span class="validated">Yes</span>
+                                {% else %}
+                                    <span style="color: var(--text-secondary);">No</span>
+                                {% endif %}
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
+            <!-- Combined Predictions -->
+            {% if player.sb_benchmarks %}
+                <div class="combined-prediction">
+                    <h4>Combined Analysis (Season + SB History)</h4>
+                    {% set validated_bets = player.best_bets|selectattr('sb_validated', 'equalto', true)|list %}
+                    {% if validated_bets %}
+                        <p style="color: var(--accent-green); margin: 0.5rem 0;">
+                            <strong>{{ validated_bets|length }}</strong> bet(s) validated by Super Bowl history
+                        </p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                            These props show strong hit rates in both regular season and Super Bowl games
+                        </p>
+                    {% else %}
+                        <p style="color: var(--text-secondary);">
+                            No bets validated by Super Bowl history. Consider player's regular season trends but note different SB performance patterns.
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
 
         <!-- Trends -->

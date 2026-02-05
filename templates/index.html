@@ -9,6 +9,36 @@
     <p>Data-driven insights for squares betting, player props, and playoff trends</p>
 </div>
 
+<!-- Super Bowl Predictions Summary -->
+{% if data.players.summaries %}
+    {% set validated_count = 0 %}
+    {% set total_bets = 0 %}
+    {% for player in data.players.summaries %}
+        {% if player.best_bets %}
+            {% set total_bets = total_bets + player.best_bets|length %}
+            {% for bet in player.best_bets %}
+                {% if bet.sb_validated %}
+                    {% set validated_count = validated_count + 1 %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% if validated_count > 0 %}
+        <div class="best-bets-summary">
+            <h2 style="margin-bottom: 1rem;">Super Bowl Predictions</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">
+                <strong class="stat-good">{{ validated_count }}</strong> of {{ total_bets }} best bets validated by Super Bowl history
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                These props show strong performance in both regular season (>65% hit rate) and historical Super Bowl games
+            </p>
+            <p style="margin-top: 1rem;">
+                <a href="players.html" style="color: var(--accent-blue); font-weight: 600;">View detailed player analysis →</a>
+            </p>
+        </div>
+    {% endif %}
+{% endif %}
+
 <!-- Key Insights -->
 <div class="grid grid-3">
     <!-- Best Square -->
