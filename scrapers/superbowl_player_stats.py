@@ -2,11 +2,21 @@
 Scraper for historical Super Bowl player statistics
 """
 
-import polars as pl
+import duckdb
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from pathlib import Path
 import time
+
+
+def safe_int(value):
+    """Safely convert a value to int, returning 0 if conversion fails"""
+    if value is None or value == '':
+        return 0
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return 0
 
 
 def parse_superbowl_boxscore(html_content, super_bowl, year, team):
@@ -38,6 +48,10 @@ def parse_superbowl_boxscore(html_content, super_bowl, year, team):
     rows = tbody.find_all('tr')
 
     for row in rows:
+        # Skip header rows
+        if row.get('class') and 'thead' in row.get('class'):
+            continue
+
         cells = row.find_all(['th', 'td'])
         if len(cells) < 2:
             continue
@@ -53,16 +67,31 @@ def parse_superbowl_boxscore(html_content, super_bowl, year, team):
             continue
 
         player_name = cell_data['player']
+        if not player_name or player_name == 'Player':  # Skip if empty or header
+            continue
+
+        # Extract stats safely
+        pass_yds = safe_int(cell_data.get('pass_yds'))
+        pass_td = safe_int(cell_data.get('pass_td'))
+        pass_int = safe_int(cell_data.get('pass_int'))
+        rush_yds = safe_int(cell_data.get('rush_yds'))
+        rush_td = safe_int(cell_data.get('rush_td'))
+        rec = safe_int(cell_data.get('rec'))
+        rec_yds = safe_int(cell_data.get('rec_yds'))
+        rec_td = safe_int(cell_data.get('rec_td'))
+
+        # Skip if all stats are zero (likely a header or empty row)
+        if all(x == 0 for x in [pass_yds, pass_td, rush_yds, rec, rec_yds]):
+            continue
 
         # Determine position based on stats present
         position = "FLEX"
-        if 'pass_yds' in cell_data and int(cell_data.get('pass_yds', 0) or 0) > 0:
+        if pass_yds > 0:
             position = "QB"
-        elif 'rush_yds' in cell_data and int(cell_data.get('rush_yds', 0) or 0) > 50:
+        elif rush_yds > 50:
             position = "RB"
-        elif 'rec' in cell_data and int(cell_data.get('rec', 0) or 0) > 0:
+        elif rec > 0:
             # Heuristic: if primarily receiving, likely WR or TE
-            rec_yds = int(cell_data.get('rec_yds', 0) or 0)
             if rec_yds > 40:
                 position = "WR"
             else:
@@ -74,14 +103,14 @@ def parse_superbowl_boxscore(html_content, super_bowl, year, team):
             "player_name": player_name,
             "position": position,
             "team": team,
-            "passing_yards": int(cell_data.get('pass_yds', 0) or 0),
-            "passing_tds": int(cell_data.get('pass_td', 0) or 0),
-            "interceptions": int(cell_data.get('pass_int', 0) or 0),
-            "rushing_yards": int(cell_data.get('rush_yds', 0) or 0),
-            "rushing_tds": int(cell_data.get('rush_td', 0) or 0),
-            "receptions": int(cell_data.get('rec', 0) or 0),
-            "receiving_yards": int(cell_data.get('rec_yds', 0) or 0),
-            "receiving_tds": int(cell_data.get('rec_td', 0) or 0)
+            "passing_yards": pass_yds,
+            "passing_tds": pass_td,
+            "interceptions": pass_int,
+            "rushing_yards": rush_yds,
+            "rushing_tds": rush_td,
+            "receptions": rec,
+            "receiving_yards": rec_yds,
+            "receiving_tds": rec_td
         }
 
         players.append(player)
@@ -190,11 +219,20 @@ def scrape_superbowl_player_stats(start_year=2000, end_year=2024):
 
         browser.close()
 
-    # Export to parquet
+    # Export to parquet using DuckDB
     parquet_path = Path("data/superbowl_player_history.parquet")
     if all_players:
-        df = pl.DataFrame(all_players)
-        df.write_parquet(parquet_path)
+        conn = duckdb.connect()
+        # Create a table from the list of dicts
+        conn.execute("CREATE TABLE sb_history AS SELECT * FROM (VALUES " +
+                     ", ".join([f"('{p['super_bowl']}', {p['year']}, '{p['player_name']}', '{p['position']}', '{p['team']}', "
+                               f"{p['passing_yards']}, {p['passing_tds']}, {p['interceptions']}, "
+                               f"{p['rushing_yards']}, {p['rushing_tds']}, {p['receptions']}, "
+                               f"{p['receiving_yards']}, {p['receiving_tds']})" for p in all_players]) +
+                     ") AS t(super_bowl, year, player_name, position, team, passing_yards, passing_tds, interceptions, " +
+                     "rushing_yards, rushing_tds, receptions, receiving_yards, receiving_tds)")
+        conn.execute(f"COPY sb_history TO '{parquet_path}' (FORMAT PARQUET)")
+        conn.close()
         print(f"\n✅ Exported {len(all_players)} player records to {parquet_path}")
     else:
         print("\n⚠️  No data scraped")
