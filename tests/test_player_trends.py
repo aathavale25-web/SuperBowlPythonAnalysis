@@ -144,3 +144,64 @@ class TestAnalyzeLastNGamesTrend:
         # Average of last 5: 222 vs previous 5: 302
         assert trend["direction"] == "declining"
         assert trend["last_n_avg"] < trend["previous_n_avg"]
+
+
+class TestGeneratePlayerSummaryWithSBHistory:
+    """Test player summary generation with Super Bowl history"""
+
+    def test_generate_player_summary_with_sb_history(self):
+        """Verify SB benchmarks are calculated when sb_history provided"""
+        from analysis.player_trends import generate_player_summary
+
+        # Sample regular season games
+        games = pl.DataFrame({
+            "player_name": ["Patrick Mahomes"] * 10,
+            "passing_yards": [280, 300, 250, 320, 290, 310, 275, 295, 305, 285],
+            "passing_tds": [2, 3, 2, 3, 2, 3, 2, 2, 3, 2],
+            "interceptions": [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
+            "rushing_yards": [20, 15, 25, 10, 30, 20, 15, 25, 20, 15],
+            "rushing_tds": [0, 0, 1, 0, 0, 1, 0, 0, 0, 1]
+        })
+
+        # Sample Super Bowl history
+        sb_history = pl.DataFrame({
+            "player_name": ["Patrick Mahomes", "Patrick Mahomes", "Other QB"],
+            "position": ["QB", "QB", "QB"],
+            "passing_yards": [270, 290, 250],
+            "passing_tds": [2, 3, 2],
+            "interceptions": [1, 0, 1],
+            "rushing_yards": [15, 20, 10],
+            "rushing_tds": [0, 1, 0]
+        })
+
+        # Generate summary with SB history
+        summary = generate_player_summary(
+            games,
+            "Patrick Mahomes",
+            "QB",
+            sb_player_history=sb_history
+        )
+
+        # Verify sb_benchmarks exist
+        assert "sb_benchmarks" in summary
+        assert summary["sb_benchmarks"] is not None
+
+        # Verify SB benchmarks have expected stats
+        sb_benchmarks = summary["sb_benchmarks"]
+        assert "avg_passing_yards" in sb_benchmarks
+        assert "avg_passing_tds" in sb_benchmarks
+        assert sb_benchmarks["avg_passing_yards"] == 280.0  # (270 + 290) / 2
+
+        # Verify hit rates include combined metrics
+        assert "hit_rates" in summary
+        for stat_column, hit_rates in summary["hit_rates"].items():
+            for line, metrics in hit_rates.items():
+                assert "hit_rate_over" in metrics
+                assert "over" in metrics
+                assert "under" in metrics
+
+        # Verify best bets include sb_validated flag
+        if summary.get("best_bets"):
+            for bet in summary["best_bets"]:
+                assert "sb_validated" in bet
+                assert isinstance(bet["sb_validated"], bool)
