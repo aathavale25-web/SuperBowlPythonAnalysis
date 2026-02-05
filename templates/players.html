@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% set page = 'players' %}
+
+{% block title %}Player Props - Super Bowl Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Player Prop Analysis</h1>
+    <p>Season statistics, betting line hit rates, and trend analysis</p>
+</div>
+
+{% if data.players.summaries %}
+    {% for player in data.players.summaries %}
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ player.player_name }} ({{ player.position }})</h2>
+        </div>
+
+        <!-- Season Stats -->
+        <h3>Season Statistics</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Avg</th>
+                    <th>Median</th>
+                    <th>High</th>
+                    <th>Low</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in player.stats.items()|sort %}
+                    {% if key.startswith('avg_') %}
+                        {% set stat_name = key.replace('avg_', '').replace('_', ' ')|title %}
+                        {% set median_key = 'median_' + key.replace('avg_', '') %}
+                        {% set high_key = 'high_' + key.replace('avg_', '') %}
+                        {% set low_key = 'low_' + key.replace('avg_', '') %}
+                        <tr>
+                            <td>{{ stat_name }}</td>
+                            <td>{{ "%.1f"|format(value) }}</td>
+                            <td>{{ "%.1f"|format(player.stats[median_key]) }}</td>
+                            <td>{{ "%.0f"|format(player.stats[high_key]) }}</td>
+                            <td>{{ "%.0f"|format(player.stats[low_key]) }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Hit Rates -->
+        <h3 style="margin-top: 2rem;">Betting Line Hit Rates</h3>
+        {% for stat_column, hit_rates in player.hit_rates.items() %}
+            <h4 style="margin-top: 1rem;">{{ stat_column|replace('_', ' ')|title }}</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Over %</th>
+                        <th>Over Count</th>
+                        <th>Under %</th>
+                        <th>Under Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line in hit_rates.keys()|sort %}
+                        {% set data_row = hit_rates[line] %}
+                        <tr>
+                            <td>{{ line }}</td>
+                            <td class="{% if data_row.hit_rate_over >= 0.65 %}stat-good{% elif data_row.hit_rate_over >= 0.50 %}stat-moderate{% endif %}">
+                                {{ "%.1f%%"|format(data_row.hit_rate_over * 100) }}
+                            </td>
+                            <td>{{ data_row.over }}/{{ data_row.over + data_row.under }}</td>
+                            <td>{{ "%.1f%%"|format(data_row.hit_rate_under * 100) }}</td>
+                            <td>{{ data_row.under }}/{{ data_row.over + data_row.under }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+
+        <!-- Best Bets -->
+        {% if player.best_bets %}
+            <h3 style="margin-top: 2rem;">Best Bets (>65% Hit Rate)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stat</th>
+                        <th>Line</th>
+                        <th>Hit Rate</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bet in player.best_bets|sort(attribute='hit_rate', reverse=True) %}
+                    <tr>
+                        <td>{{ bet.stat|replace('_', ' ')|title }}</td>
+                        <td>Over {{ bet.line }}</td>
+                        <td class="stat-good">{{ "%.1f%%"|format(bet.hit_rate * 100) }}</td>
+                        <td>{{ bet.over_count }}/{{ bet.over_count + bet.under_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <!-- Trends -->
+        {% if player.trends %}
+            <h3 style="margin-top: 2rem;">Last 5 Games Trend</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stat</th>
+                        <th>Direction</th>
+                        <th>Last 5 Avg</th>
+                        <th>Previous 5 Avg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat, trend in player.trends.items() %}
+                        {% if trend.direction != 'insufficient_data' %}
+                        <tr>
+                            <td>{{ stat|replace('_', ' ')|title }}</td>
+                            <td>
+                                {% if trend.direction == 'improving' %}
+                                    📈 Improving
+                                {% elif trend.direction == 'declining' %}
+                                    📉 Declining
+                                {% else %}
+                                    ➡️ Stable
+                                {% endif %}
+                            </td>
+                            <td>{{ "%.1f"|format(trend.last_n_avg) }}</td>
+                            <td>{{ "%.1f"|format(trend.previous_n_avg) }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card">
+        <p>⚠️ No player data available. Run player analysis or regenerate.</p>
+    </div>
+{% endif %}
+{% endblock %}

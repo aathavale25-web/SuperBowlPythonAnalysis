@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% set page = 'squares' %}
+
+{% block title %}Squares Analysis - Super Bowl Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Super Bowl Squares Analysis</h1>
+    <p>Quarter-by-quarter probability analysis with recency weighting</p>
+</div>
+
+{% for quarter in ['q1', 'q2', 'q3', 'q4', 'final'] %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ quarter|upper }}{% if quarter == 'final' %} Score{% else %} Quarter{% endif %}</h2>
+    </div>
+
+    {% if data.squares.ranked and quarter in data.squares.ranked %}
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for square in data.squares.ranked[quarter][:10] %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ square.winner }}</td>
+                    <td>{{ square.loser }}</td>
+                    <td class="stat-good">{{ "%.3f%%"|format(square.probability * 100) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for square in data.squares.ranked[quarter][-10:]|reverse %}
+                <tr>
+                    <td>{{ 100 - loop.index + 1 }}</td>
+                    <td>{{ square.winner }}</td>
+                    <td>{{ square.loser }}</td>
+                    <td class="stat-bad">{{ "%.3f%%"|format(square.probability * 100) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data available for {{ quarter|upper }}</p>
+    {% endif %}
+</div>
+{% endfor %}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Methodology</h2>
+    </div>
+    <p>This analysis uses historical Super Bowl data with recency weighting:</p>
+    <ul style="margin-left: 2rem; margin-top: 1rem;">
+        <li>Last 5 years: 3x weight</li>
+        <li>Last 15 years: 2x weight</li>
+        <li>Older games: 1x weight</li>
+    </ul>
+    <p style="margin-top: 1rem;">Probabilities assume independence between winner and loser digits.</p>
+</div>
+{% endblock %}

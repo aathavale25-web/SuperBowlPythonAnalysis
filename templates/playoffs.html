@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% set page = 'playoffs' %}
+
+{% block title %}Playoff Props - Super Bowl Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Playoff Props Analysis</h1>
+    <p>Historical playoff game props and trends (2020-2024)</p>
+</div>
+
+<!-- Game Props -->
+<div class="card">
+    <div class="card-header">
+        <h2>Game Props</h2>
+    </div>
+
+    {% if data.playoffs.game_props.total_points %}
+        <h3>Total Points</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Line</th>
+                    <th>Over %</th>
+                    <th>Over Count</th>
+                    <th>Under %</th>
+                    <th>Under Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in [43.5, 47.5, 51.5] %}
+                    {% if line in data.playoffs.game_props.total_points %}
+                        {% set prop = data.playoffs.game_props.total_points[line] %}
+                        <tr>
+                            <td>O/U {{ line }}</td>
+                            <td class="{% if prop.hit_rate_over >= 0.60 %}stat-good{% elif prop.hit_rate_over >= 0.50 %}stat-moderate{% endif %}">
+                                {{ "%.1f%%"|format(prop.hit_rate_over * 100) }}
+                            </td>
+                            <td>{{ prop.over }}/{{ prop.over + prop.under }}</td>
+                            <td>{{ "%.1f%%"|format(prop.hit_rate_under * 100) }}</td>
+                            <td>{{ prop.under }}/{{ prop.over + prop.under }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if data.playoffs.game_props.winning_margin %}
+        <h3 style="margin-top: 2rem;">Winning Margin</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Margin</th>
+                    <th>Hit Rate</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bucket in ['1-6', '7-12', '13-18', '19+'] %}
+                    {% if bucket in data.playoffs.game_props.winning_margin %}
+                        {% set prop = data.playoffs.game_props.winning_margin[bucket] %}
+                        <tr>
+                            <td>{{ bucket }} points</td>
+                            <td class="{% if prop.percentage >= 0.60 %}stat-good{% elif prop.percentage >= 0.40 %}stat-moderate{% else %}stat-bad{% endif %}">
+                                {{ "%.1f%%"|format(prop.percentage * 100) }}
+                            </td>
+                            <td>{{ prop.count }} games</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if data.playoffs.game_props.defensive_td %}
+        <h3 style="margin-top: 2rem;">Defensive/Special Teams TD</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Outcome</th>
+                    <th>Percentage</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set def_td = data.playoffs.game_props.defensive_td %}
+                {% if 'occurred' in def_td %}
+                <tr>
+                    <td>Occurred</td>
+                    <td class="stat-moderate">{{ "%.1f%%"|format(def_td.occurred.percentage * 100) }}</td>
+                    <td>{{ def_td.occurred.count }} games</td>
+                </tr>
+                <tr>
+                    <td>Did Not Occur</td>
+                    <td>{{ "%.1f%%"|format(def_td.no_occurrence.percentage * 100) }}</td>
+                    <td>{{ def_td.no_occurrence.count }} games</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+<!-- Round Breakdown -->
+{% if data.playoffs.round_breakdown %}
+<div class="card">
+    <div class="card-header">
+        <h2>Breakdown by Round</h2>
+    </div>
+
+    <h3>Total Points O47.5 by Round</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Round</th>
+                <th>Over %</th>
+                <th>Over Count</th>
+                <th>Under Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for round_name in data.playoffs.round_breakdown.keys()|sort %}
+                {% set round_data = data.playoffs.round_breakdown[round_name] %}
+                <tr>
+                    <td>{{ round_name }}</td>
+                    <td class="{% if round_data.hit_rate_over >= 0.60 %}stat-good{% elif round_data.hit_rate_over >= 0.50 %}stat-moderate{% endif %}">
+                        {{ "%.1f%%"|format(round_data.hit_rate_over * 100) }}
+                    </td>
+                    <td>{{ round_data.over }}/{{ round_data.over + round_data.under }}</td>
+                    <td>{{ round_data.under }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Best Props -->
+{% if data.playoffs.best_props %}
+<div class="card">
+    <div class="card-header">
+        <h2>Best Historical Props (>60% Hit Rate)</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Prop</th>
+                <th>Hit Rate</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prop_name, prop_data in data.playoffs.best_props.items() %}
+                <tr>
+                    <td>{{ prop_name }}</td>
+                    {% if 'hit_rate_over' in prop_data %}
+                        <td class="stat-good">{{ "%.1f%%"|format(prop_data.hit_rate_over * 100) }}</td>
+                        <td>{{ prop_data.over }}/{{ prop_data.over + prop_data.under }}</td>
+                    {% elif 'percentage' in prop_data %}
+                        <td class="stat-good">{{ "%.1f%%"|format(prop_data.percentage * 100) }}</td>
+                        <td>{{ prop_data.count }} games</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

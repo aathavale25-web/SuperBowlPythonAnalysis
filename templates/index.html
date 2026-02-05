@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% set page = 'index' %}
+
+{% block title %}Dashboard - Super Bowl Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Super Bowl Analysis Dashboard</h1>
+    <p>Data-driven insights for squares betting, player props, and playoff trends</p>
+</div>
+
+<!-- Key Insights -->
+<div class="grid grid-3">
+    <!-- Best Square -->
+    <div class="card">
+        <div class="card-header">
+            <h3>🎲 Best Square (Final)</h3>
+        </div>
+        {% if data.squares.ranked and data.squares.ranked.final %}
+            {% set best = data.squares.ranked.final[0] %}
+            <p class="stat stat-good">{{ best.winner }}-{{ best.loser }}</p>
+            <p>Probability: <span class="stat">{{ "%.2f%%"|format(best.probability * 100) }}</span></p>
+            <p><a href="squares.html" style="color: var(--accent-blue);">View full analysis →</a></p>
+        {% else %}
+            <p class="stat-bad">No squares data available</p>
+        {% endif %}
+    </div>
+
+    <!-- Best Player Prop -->
+    <div class="card">
+        <div class="card-header">
+            <h3>🏈 Top Player Prop</h3>
+        </div>
+        {% set found_bet = false %}
+        {% if data.players.summaries %}
+            {% for player in data.players.summaries %}
+                {% if player.best_bets and not found_bet %}
+                    {% set bet = player.best_bets[0] %}
+                    {% set found_bet = true %}
+                    <p class="stat stat-good">{{ player.player_name }}</p>
+                    <p>{{ bet.stat|replace('_', ' ')|title }} O{{ bet.line }}</p>
+                    <p>Hit rate: <span class="stat">{{ "%.1f%%"|format(bet.hit_rate * 100) }}</span></p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if not found_bet %}
+            <p class="stat-moderate">No >65% props found</p>
+        {% endif %}
+        <p><a href="players.html" style="color: var(--accent-blue);">View player analysis →</a></p>
+    </div>
+
+    <!-- Best Playoff Prop -->
+    <div class="card">
+        <div class="card-header">
+            <h3>🏆 Best Playoff Prop</h3>
+        </div>
+        {% if data.playoffs.best_props %}
+            {% set prop_items = data.playoffs.best_props.items()|list %}
+            {% if prop_items %}
+                {% set prop_name, prop_data = prop_items[0] %}
+                <p class="stat stat-good">{{ prop_name }}</p>
+                {% if 'hit_rate_over' in prop_data %}
+                    <p>Hit rate: <span class="stat">{{ "%.1f%%"|format(prop_data.hit_rate_over * 100) }}</span></p>
+                {% else %}
+                    <p>Hit rate: <span class="stat">{{ "%.1f%%"|format(prop_data.percentage * 100) }}</span></p>
+                {% endif %}
+            {% else %}
+                <p class="stat-moderate">No >60% props found</p>
+            {% endif %}
+        {% else %}
+            <p class="stat-bad">No playoff data available</p>
+        {% endif %}
+        <p><a href="playoffs.html" style="color: var(--accent-blue);">View playoff analysis →</a></p>
+    </div>
+</div>
+
+<!-- Analysis Sections -->
+<div class="grid grid-3" style="margin-top: 2rem;">
+    <a href="squares.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-header">
+                <h3>🎲 Squares Analysis</h3>
+            </div>
+            <p>Quarter-by-quarter probability analysis for Super Bowl squares betting. Includes heatmaps and rankings for all 100 combinations.</p>
+        </div>
+    </a>
+
+    <a href="players.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-header">
+                <h3>🏈 Player Props</h3>
+            </div>
+            <p>Individual player performance analysis with betting line hit rates, trends, and best bet identification.</p>
+        </div>
+    </a>
+
+    <a href="playoffs.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-header">
+                <h3>🏆 Playoff Props</h3>
+            </div>
+            <p>Historical playoff game analysis covering total points, winning margins, and round-specific trends.</p>
+        </div>
+    </a>
+</div>
+{% endblock %}
