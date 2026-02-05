@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squares Analysis - Super Bowl Analysis</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🏈 Super Bowl<br>Analysis</h1>
+            </div>
+
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" >Dashboard</a></li>
+                    <li><a href="squares.html" class="active">Squares Analysis</a></li>
+                    <li><a href="players.html" >Player Props</a></li>
+                    <li><a href="playoffs.html" >Playoff Props</a></li>
+                    <li><a href="about.html" >About</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="regenerate-btn" onclick="regenerateAnalysis()">
+                    🔄 Regenerate Analysis
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+<div class="page-header">
+    <h1>Super Bowl Squares Analysis</h1>
+    <p>Quarter-by-quarter probability analysis with recency weighting</p>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <h2>Q1 Quarter</h2>
+    </div>
+
+    
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="stat-good">24.640%</td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td class="stat-good">24.640%</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td class="stat-good">15.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>4</td>
+                    <td>7</td>
+                    <td>3</td>
+                    <td class="stat-good">15.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td class="stat-good">6.720%</td>
+                </tr>
+                
+                <tr>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td class="stat-good">4.320%</td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td class="stat-good">3.520%</td>
+                </tr>
+                
+                <tr>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>3</td>
+                    <td class="stat-good">3.520%</td>
+                </tr>
+                
+                <tr>
+                    <td>9</td>
+                    <td>9</td>
+                    <td>7</td>
+                    <td class="stat-good">0.960%</td>
+                </tr>
+                
+                <tr>
+                    <td>10</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td class="stat-good">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>100</td>
+                    <td>9</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>99</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>98</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>97</td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>96</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>95</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>94</td>
+                    <td>9</td>
+                    <td>1</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>93</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>8</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>91</td>
+                    <td>8</td>
+                    <td>7</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Q2 Quarter</h2>
+    </div>
+
+    
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="stat-good">14.080%</td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>7</td>
+                    <td class="stat-good">14.080%</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td class="stat-good">10.240%</td>
+                </tr>
+                
+                <tr>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>7</td>
+                    <td class="stat-good">10.240%</td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td class="stat-good">5.280%</td>
+                </tr>
+                
+                <tr>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>8</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>9</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>10</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>100</td>
+                    <td>9</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>99</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>98</td>
+                    <td>9</td>
+                    <td>7</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>97</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>96</td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>95</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>94</td>
+                    <td>9</td>
+                    <td>3</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>93</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>9</td>
+                    <td>1</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>91</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Q3 Quarter</h2>
+    </div>
+
+    
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="stat-good">28.160%</td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td class="stat-good">17.920%</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>8</td>
+                    <td class="stat-good">7.680%</td>
+                </tr>
+                
+                <tr>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="stat-good">5.280%</td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td class="stat-good">5.120%</td>
+                </tr>
+                
+                <tr>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>9</td>
+                    <td class="stat-good">5.120%</td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td class="stat-good">3.520%</td>
+                </tr>
+                
+                <tr>
+                    <td>8</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td class="stat-good">3.520%</td>
+                </tr>
+                
+                <tr>
+                    <td>9</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td class="stat-good">3.520%</td>
+                </tr>
+                
+                <tr>
+                    <td>10</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td class="stat-good">3.360%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>100</td>
+                    <td>9</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>99</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>98</td>
+                    <td>9</td>
+                    <td>7</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>97</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>96</td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>95</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>94</td>
+                    <td>9</td>
+                    <td>3</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>93</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>9</td>
+                    <td>1</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>91</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Q4 Quarter</h2>
+    </div>
+
+    
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td class="stat-good">13.440%</td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="stat-good">11.200%</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td class="stat-good">6.720%</td>
+                </tr>
+                
+                <tr>
+                    <td>4</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td class="stat-good">6.720%</td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td class="stat-good">4.480%</td>
+                </tr>
+                
+                <tr>
+                    <td>6</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="stat-good">4.480%</td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td class="stat-good">4.480%</td>
+                </tr>
+                
+                <tr>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td class="stat-good">4.480%</td>
+                </tr>
+                
+                <tr>
+                    <td>9</td>
+                    <td>7</td>
+                    <td>3</td>
+                    <td class="stat-good">2.880%</td>
+                </tr>
+                
+                <tr>
+                    <td>10</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td class="stat-good">2.880%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>100</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>99</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>98</td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>97</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>96</td>
+                    <td>9</td>
+                    <td>1</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>95</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>94</td>
+                    <td>8</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>93</td>
+                    <td>8</td>
+                    <td>7</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>8</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>91</td>
+                    <td>8</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>FINAL Score</h2>
+    </div>
+
+    
+        <!-- Top 10 Best Squares -->
+        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td class="stat-good">10.240%</td>
+                </tr>
+                
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="stat-good">6.400%</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td class="stat-good">6.400%</td>
+                </tr>
+                
+                <tr>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td class="stat-good">5.120%</td>
+                </tr>
+                
+                <tr>
+                    <td>5</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td class="stat-good">5.120%</td>
+                </tr>
+                
+                <tr>
+                    <td>6</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>7</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>9</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>9</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td class="stat-good">3.840%</td>
+                </tr>
+                
+                <tr>
+                    <td>10</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td class="stat-good">3.200%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Bottom 10 Worst Squares -->
+        <h3 style="margin-top: 2rem;">Bottom 10 Worst Squares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Winner</th>
+                    <th>Loser</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>100</td>
+                    <td>9</td>
+                    <td>9</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>99</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>98</td>
+                    <td>9</td>
+                    <td>7</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>97</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>96</td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>95</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>94</td>
+                    <td>9</td>
+                    <td>3</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>93</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>9</td>
+                    <td>1</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+                <tr>
+                    <td>91</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td class="stat-bad">0.000%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <h2>Methodology</h2>
+    </div>
+    <p>This analysis uses historical Super Bowl data with recency weighting:</p>
+    <ul style="margin-left: 2rem; margin-top: 1rem;">
+        <li>Last 5 years: 3x weight</li>
+        <li>Last 15 years: 2x weight</li>
+        <li>Older games: 1x weight</li>
+    </ul>
+    <p style="margin-top: 1rem;">Probabilities assume independence between winner and loser digits.</p>
+</div>
+
+
+            <footer class="footer">
+                <p>Last updated: 2026-02-04T19:45:27.017265</p>
+                <p>Data-driven Super Bowl analysis</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Regenerating analysis...</p>
+        <p class="progress-text">This may take up to a minute</p>
+    </div>
+
+    <script>
+        async function regenerateAnalysis() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/regenerate', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            } catch (error) {
+                alert('Regeneration failed: ' + error);
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

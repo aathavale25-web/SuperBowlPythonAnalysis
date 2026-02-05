@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playoff Props - Super Bowl Analysis</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🏈 Super Bowl<br>Analysis</h1>
+            </div>
+
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" >Dashboard</a></li>
+                    <li><a href="squares.html" >Squares Analysis</a></li>
+                    <li><a href="players.html" >Player Props</a></li>
+                    <li><a href="playoffs.html" class="active">Playoff Props</a></li>
+                    <li><a href="about.html" >About</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="regenerate-btn" onclick="regenerateAnalysis()">
+                    🔄 Regenerate Analysis
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+<div class="page-header">
+    <h1>Playoff Props Analysis</h1>
+    <p>Historical playoff game props and trends (2020-2024)</p>
+</div>
+
+<!-- Game Props -->
+<div class="card">
+    <div class="card-header">
+        <h2>Game Props</h2>
+    </div>
+
+    
+        <h3>Total Points</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Line</th>
+                    <th>Over %</th>
+                    <th>Over Count</th>
+                    <th>Under %</th>
+                    <th>Under Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                        
+                        <tr>
+                            <td>O/U 43.5</td>
+                            <td class="stat-good">
+                                60.0%
+                            </td>
+                            <td>9/15</td>
+                            <td>40.0%</td>
+                            <td>6/15</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        <tr>
+                            <td>O/U 47.5</td>
+                            <td class="">
+                                46.7%
+                            </td>
+                            <td>7/15</td>
+                            <td>53.3%</td>
+                            <td>8/15</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        <tr>
+                            <td>O/U 51.5</td>
+                            <td class="">
+                                33.3%
+                            </td>
+                            <td>5/15</td>
+                            <td>66.7%</td>
+                            <td>10/15</td>
+                        </tr>
+                    
+                
+            </tbody>
+        </table>
+    
+
+    
+        <h3 style="margin-top: 2rem;">Winning Margin</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Margin</th>
+                    <th>Hit Rate</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                        
+                        <tr>
+                            <td>1-6 points</td>
+                            <td class="stat-good">
+                                66.7%
+                            </td>
+                            <td>10 games</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        <tr>
+                            <td>7-12 points</td>
+                            <td class="stat-bad">
+                                26.7%
+                            </td>
+                            <td>4 games</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        <tr>
+                            <td>13-18 points</td>
+                            <td class="stat-bad">
+                                0.0%
+                            </td>
+                            <td>0 games</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        <tr>
+                            <td>19+ points</td>
+                            <td class="stat-bad">
+                                6.7%
+                            </td>
+                            <td>1 games</td>
+                        </tr>
+                    
+                
+            </tbody>
+        </table>
+    
+
+    
+        <h3 style="margin-top: 2rem;">Defensive/Special Teams TD</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Outcome</th>
+                    <th>Percentage</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                
+                <tr>
+                    <td>Occurred</td>
+                    <td class="stat-moderate">33.3%</td>
+                    <td>5 games</td>
+                </tr>
+                <tr>
+                    <td>Did Not Occur</td>
+                    <td>66.7%</td>
+                    <td>10 games</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+
+<!-- Round Breakdown -->
+
+<div class="card">
+    <div class="card-header">
+        <h2>Breakdown by Round</h2>
+    </div>
+
+    <h3>Total Points O47.5 by Round</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Round</th>
+                <th>Over %</th>
+                <th>Over Count</th>
+                <th>Under Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                
+                <tr>
+                    <td>Conference</td>
+                    <td class="">
+                        40.0%
+                    </td>
+                    <td>2/5</td>
+                    <td>3</td>
+                </tr>
+            
+                
+                <tr>
+                    <td>Divisional</td>
+                    <td class="stat-good">
+                        60.0%
+                    </td>
+                    <td>3/5</td>
+                    <td>2</td>
+                </tr>
+            
+                
+                <tr>
+                    <td>Super Bowl</td>
+                    <td class="">
+                        40.0%
+                    </td>
+                    <td>2/5</td>
+                    <td>3</td>
+                </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Best Props -->
+
+<div class="card">
+    <div class="card-header">
+        <h2>Best Historical Props (>60% Hit Rate)</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Prop</th>
+                <th>Hit Rate</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    <td>Total Points O43.5</td>
+                    
+                        <td class="stat-good">60.0%</td>
+                        <td>9/15</td>
+                    
+                </tr>
+            
+                <tr>
+                    <td>Margin 1-6</td>
+                    
+                        <td class="stat-good">66.7%</td>
+                        <td>10 games</td>
+                    
+                </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+
+
+            <footer class="footer">
+                <p>Last updated: 2026-02-04T19:45:27.017265</p>
+                <p>Data-driven Super Bowl analysis</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Regenerating analysis...</p>
+        <p class="progress-text">This may take up to a minute</p>
+    </div>
+
+    <script>
+        async function regenerateAnalysis() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/regenerate', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            } catch (error) {
+                alert('Regeneration failed: ' + error);
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

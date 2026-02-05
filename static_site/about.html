@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Super Bowl Analysis</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🏈 Super Bowl<br>Analysis</h1>
+            </div>
+
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" >Dashboard</a></li>
+                    <li><a href="squares.html" >Squares Analysis</a></li>
+                    <li><a href="players.html" >Player Props</a></li>
+                    <li><a href="playoffs.html" >Playoff Props</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="regenerate-btn" onclick="regenerateAnalysis()">
+                    🔄 Regenerate Analysis
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+<div class="page-header">
+    <h1>About This Analysis</h1>
+    <p>Methodology, data sources, and interpretation guide</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Data Sources</h2>
+    </div>
+    <p>All analysis is based on historical data from official NFL sources:</p>
+    <ul style="margin-left: 2rem; margin-top: 1rem;">
+        <li><strong>Super Bowl Games:</strong> Complete game data including quarter-by-quarter scores</li>
+        <li><strong>Player Stats:</strong> Individual game logs from the 2024 season</li>
+        <li><strong>Playoff Games:</strong> Playoff game results from 2020-2024 seasons</li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Methodology</h2>
+    </div>
+
+    <h3>Squares Analysis</h3>
+    <p>The squares analysis applies recency weighting to historical Super Bowl data:</p>
+    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+        <li>Last 5 years: 3x weight</li>
+        <li>Last 15 years: 2x weight</li>
+        <li>Older games: 1x weight</li>
+    </ul>
+    <p style="margin-top: 1rem;">Probabilities are calculated assuming independence between winner and loser digits.</p>
+
+    <h3 style="margin-top: 2rem;">Player Props</h3>
+    <p>Player prop analysis includes:</p>
+    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+        <li><strong>Hit Rates:</strong> Percentage of games where player exceeded the betting line</li>
+        <li><strong>Best Bets:</strong> Props with >65% hit rate</li>
+        <li><strong>Trends:</strong> Comparison of last 5 games vs previous 5 games</li>
+    </ul>
+
+    <h3 style="margin-top: 2rem;">Playoff Props</h3>
+    <p>Playoff analysis covers 15 games from 2020-2024 seasons:</p>
+    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+        <li>Game props: Total points, winning margin, defensive TDs</li>
+        <li>Round-specific trends: Super Bowl, Conference, Divisional</li>
+        <li>Best props: Props with >60% historical hit rate</li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>How to Interpret Hit Rates</h2>
+    </div>
+    <p>Hit rates represent historical performance:</p>
+    <ul style="margin-left: 2rem; margin-top: 1rem;">
+        <li><span class="stat-good">Green (>60-65%):</span> Strong historical trend</li>
+        <li><span class="stat-moderate">Amber (40-60%):</span> Moderate, near coin flip</li>
+        <li><span class="stat-bad">Red (<40%):</span> Weak historical performance</li>
+    </ul>
+    <p style="margin-top: 1rem;"><strong>Important:</strong> Past performance does not guarantee future results. Sample sizes vary - check game counts.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Limitations</h2>
+    </div>
+    <ul style="margin-left: 2rem;">
+        <li>Historical data may not reflect current team/player performance</li>
+        <li>Small sample sizes (especially for playoff props)</li>
+        <li>Does not account for matchups, injuries, or game conditions</li>
+        <li>Squares probabilities assume digit independence</li>
+        <li>Player trends based on season averages, not opponent-adjusted</li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Technology</h2>
+    </div>
+    <p>This analysis is powered by:</p>
+    <ul style="margin-left: 2rem; margin-top: 1rem;">
+        <li>Python 3.14 with Polars for data processing</li>
+        <li>DuckDB for data storage</li>
+        <li>Plotly for interactive visualizations</li>
+        <li>Jinja2 for static site generation</li>
+    </ul>
+</div>
+
+
+            <footer class="footer">
+                <p>Last updated: 2026-02-04T19:45:27.017265</p>
+                <p>Data-driven Super Bowl analysis</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Regenerating analysis...</p>
+        <p class="progress-text">This may take up to a minute</p>
+    </div>
+
+    <script>
+        async function regenerateAnalysis() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/regenerate', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            } catch (error) {
+                alert('Regeneration failed: ' + error);
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Props - Super Bowl Analysis</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🏈 Super Bowl<br>Analysis</h1>
+            </div>
+
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" >Dashboard</a></li>
+                    <li><a href="squares.html" >Squares Analysis</a></li>
+                    <li><a href="players.html" class="active">Player Props</a></li>
+                    <li><a href="playoffs.html" >Playoff Props</a></li>
+                    <li><a href="about.html" >About</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="regenerate-btn" onclick="regenerateAnalysis()">
+                    🔄 Regenerate Analysis
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+<div class="page-header">
+    <h1>Player Prop Analysis</h1>
+    <p>Season statistics, betting line hit rates, and trend analysis</p>
+</div>
+
+
+    
+    <div class="card">
+        <div class="card-header">
+            <h2>Patrick Mahomes (QB)</h2>
+        </div>
+
+        <!-- Season Stats -->
+        <h3>Season Statistics</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Avg</th>
+                    <th>Median</th>
+                    <th>High</th>
+                    <th>Low</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Interceptions</td>
+                            <td>0.6</td>
+                            <td>0.0</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Passing Tds</td>
+                            <td>1.5</td>
+                            <td>1.0</td>
+                            <td>3</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Passing Yards</td>
+                            <td>231.1</td>
+                            <td>260.0</td>
+                            <td>331</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Receiving Tds</td>
+                            <td>0.0</td>
+                            <td>0.0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Receiving Yards</td>
+                            <td>0.1</td>
+                            <td>0.0</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Receptions</td>
+                            <td>0.1</td>
+                            <td>0.0</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Rushing Tds</td>
+                            <td>0.1</td>
+                            <td>0.0</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td>Rushing Yards</td>
+                            <td>18.1</td>
+                            <td>17.0</td>
+                            <td>60</td>
+                            <td>0</td>
+                        </tr>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Hit Rates -->
+        <h3 style="margin-top: 2rem;">Betting Line Hit Rates</h3>
+        
+            <h4 style="margin-top: 1rem;">Passing Yards</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Over %</th>
+                        <th>Over Count</th>
+                        <th>Under %</th>
+                        <th>Under Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td>224.5</td>
+                            <td class="stat-moderate">
+                                58.8%
+                            </td>
+                            <td>10/17</td>
+                            <td>41.2%</td>
+                            <td>7/17</td>
+                        </tr>
+                    
+                        
+                        <tr>
+                            <td>249.5</td>
+                            <td class="stat-moderate">
+                                52.9%
+                            </td>
+                            <td>9/17</td>
+                            <td>47.1%</td>
+                            <td>8/17</td>
+                        </tr>
+                    
+                        
+                        <tr>
+                            <td>274.5</td>
+                            <td class="">
+                                29.4%
+                            </td>
+                            <td>5/17</td>
+                            <td>70.6%</td>
+                            <td>12/17</td>
+                        </tr>
+                    
+                        
+                        <tr>
+                            <td>299.5</td>
+                            <td class="">
+                                17.6%
+                            </td>
+                            <td>3/17</td>
+                            <td>82.4%</td>
+                            <td>14/17</td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        
+            <h4 style="margin-top: 1rem;">Passing Tds</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Over %</th>
+                        <th>Over Count</th>
+                        <th>Under %</th>
+                        <th>Under Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td>1.5</td>
+                            <td class="">
+                                47.1%
+                            </td>
+                            <td>8/17</td>
+                            <td>52.9%</td>
+                            <td>9/17</td>
+                        </tr>
+                    
+                        
+                        <tr>
+                            <td>2.5</td>
+                            <td class="">
+                                23.5%
+                            </td>
+                            <td>4/17</td>
+                            <td>76.5%</td>
+                            <td>13/17</td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        
+            <h4 style="margin-top: 1rem;">Interceptions</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Over %</th>
+                        <th>Over Count</th>
+                        <th>Under %</th>
+                        <th>Under Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td>0.5</td>
+                            <td class="">
+                                47.1%
+                            </td>
+                            <td>8/17</td>
+                            <td>52.9%</td>
+                            <td>9/17</td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        
+
+        <!-- Best Bets -->
+        
+
+        <!-- Trends -->
+        
+            <h3 style="margin-top: 2rem;">Last 5 Games Trend</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stat</th>
+                        <th>Direction</th>
+                        <th>Last 5 Avg</th>
+                        <th>Previous 5 Avg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td>Passing Yards</td>
+                            <td>
+                                
+                                    📉 Declining
+                                
+                            </td>
+                            <td>189.8</td>
+                            <td>265.6</td>
+                        </tr>
+                        
+                    
+                        
+                        <tr>
+                            <td>Passing Tds</td>
+                            <td>
+                                
+                                    📉 Declining
+                                
+                            </td>
+                            <td>1.4</td>
+                            <td>2.2</td>
+                        </tr>
+                        
+                    
+                        
+                        <tr>
+                            <td>Interceptions</td>
+                            <td>
+                                
+                                    📉 Declining
+                                
+                            </td>
+                            <td>0.0</td>
+                            <td>0.4</td>
+                        </tr>
+                        
+                    
+                </tbody>
+            </table>
+        
+    </div>
+    
+
+
+
+            <footer class="footer">
+                <p>Last updated: 2026-02-04T19:45:27.017265</p>
+                <p>Data-driven Super Bowl analysis</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Regenerating analysis...</p>
+        <p class="progress-text">This may take up to a minute</p>
+    </div>
+
+    <script>
+        async function regenerateAnalysis() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/regenerate', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            } catch (error) {
+                alert('Regeneration failed: ' + error);
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

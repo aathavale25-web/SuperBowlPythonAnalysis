@@ -6,6 +6,7 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 ENV/
 build/
 develop-eggs/
@@ -23,12 +24,11 @@ wheels/
 .installed.cfg
 *.egg
 
-# Data files
-*.parquet
+# DuckDB databases (using parquet instead)
 *.db
+*.db-shm
+*.db-wal
 *.duckdb
-data/*.parquet
-data/*.db
 
 # IDE
 .vscode/
@@ -41,10 +41,16 @@ data/*.db
 .DS_Store
 Thumbs.db
 
-# Static site output
-static_site/*.html
-static_site/*.css
-static_site/*.js
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.log
+*.tmp
+.cache/
 
 # Playwright
+.playwright/
 playwright/.cache/
