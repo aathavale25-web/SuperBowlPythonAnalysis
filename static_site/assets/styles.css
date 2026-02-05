@@ -266,6 +266,58 @@ tr:hover {
   max-height: 5000px;
 }
 
+/* Super Bowl Benchmark Indicators */
+.positive {
+  color: var(--accent-green);
+}
+
+.negative {
+  color: var(--accent-red);
+}
+
+.neutral {
+  color: var(--text-secondary);
+}
+
+.strong-bet {
+  background: rgba(74, 222, 128, 0.1);
+  border-left: 3px solid var(--accent-green);
+}
+
+.validated {
+  font-weight: 600;
+  color: var(--accent-green);
+}
+
+.warning {
+  background: rgba(251, 191, 36, 0.1);
+  border-left: 3px solid var(--accent-amber);
+}
+
+.sb-benchmark-table {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.sb-benchmark-table th {
+  background: var(--bg-primary);
+  font-size: 0.85rem;
+}
+
+.combined-prediction {
+  background: var(--bg-card-hover);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.best-bets-summary {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .sidebar {

@@ -3,12 +3,40 @@ Generate static HTML site from analysis results
 """
 
 import duckdb
-import polars as pl
+import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import datetime
 import shutil
+
+# Helper to convert pandas to polars-like API
+class PandasPolarsAdapter:
+    """Adapter to make pandas DataFrames work with Polars-like API"""
+    def __init__(self, df):
+        self.df = df
+
+    def filter(self, condition):
+        # Handle boolean mask
+        return PandasPolarsAdapter(self.df[condition])
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, key):
+        return self.df[key]
+
+    @property
+    def columns(self):
+        return self.df.columns.tolist()
+
+def col(column_name):
+    """Polars-like col() function for pandas"""
+    def compare(df_or_adapter):
+        if isinstance(df_or_adapter, PandasPolarsAdapter):
+            return df_or_adapter.df[column_name]
+        return df_or_adapter[column_name]
+    return compare
 
 # Import analysis modules
 from analysis.squares import (

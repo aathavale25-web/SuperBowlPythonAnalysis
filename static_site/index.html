@@ -1,160 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Super Bowl Analysis</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+    <title>Super Bowl LIX Player Props - Seattle Seahawks</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #002244; }
+        h2 { color: #69BE28; margin-top: 30px; }
+        table { border-collapse: collapse; width: 100%; background: white; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #002244; color: white; }
+        .highlight { background-color: #fff3cd; }
+        .good { color: #28a745; font-weight: bold; }
+        .timestamp { color: #666; font-size: 0.9em; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1>🏈 Super Bowl<br>Analysis</h1>
-            </div>
+    <h1>🏈 Super Bowl LIX Player Props Analysis</h1>
+    <h2>Seattle Seahawks vs New England Patriots</h2>
+    <p class="timestamp">Generated: 2026-02-05 12:10:25</p>
 
-            <nav>
-                <ul class="sidebar-nav">
-                    <li><a href="index.html" class="active">Dashboard</a></li>
-                    <li><a href="squares.html" >Squares Analysis</a></li>
-                    <li><a href="players.html" >Player Props</a></li>
-                    <li><a href="playoffs.html" >Playoff Props</a></li>
-                    <li><a href="about.html" >About</a></li>
-                </ul>
-            </nav>
+    <h2>Seattle Seahawks - 2025 Season Stats</h2>
+    <table>
+        <tr>
+            <th>Player</th>
+            <th>Position</th>
+            <th>Games</th>
+            <th>Pass Yds</th>
+            <th>Pass TD</th>
+            <th>Rush Yds</th>
+            <th>Rush TD</th>
+            <th>Receptions</th>
+            <th>Rec Yds</th>
+            <th>Rec TD</th>
+        </tr>
+        <tr class="">
+            <td><strong>AJ Barner</strong></td>
+            <td>TE</td>
+            <td>19</td>
+            <td>-</td>
+            <td>-</td>
+            <td>1</td>
+            <td>-</td>
+            <td>3</td>
+            <td>28</td>
+            <td>-</td>
+        </tr>
+        <tr class="">
+            <td><strong>Cooper Kupp</strong></td>
+            <td>WR</td>
+            <td>18</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>3</td>
+            <td>38</td>
+            <td>-</td>
+        </tr>
+        <tr class="">
+            <td><strong>Jaxon Smith-Njigba</strong></td>
+            <td>WR</td>
+            <td>19</td>
+            <td>-</td>
+            <td>-</td>
+            <td>2</td>
+            <td>-</td>
+            <td>7</td>
+            <td>103</td>
+            <td>1</td>
+        </tr>
+        <tr class="">
+            <td><strong>Kenneth Walker III</strong></td>
+            <td>RB</td>
+            <td>19</td>
+            <td>-</td>
+            <td>-</td>
+            <td>63</td>
+            <td>-</td>
+            <td>2</td>
+            <td>19</td>
+            <td>-</td>
+        </tr>
+        <tr class="">
+            <td><strong>Sam Darnold</strong></td>
+            <td>QB</td>
+            <td>19</td>
+            <td>238</td>
+            <td>2</td>
+            <td>5</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </table>
 
-            <div class="sidebar-footer">
-                <button class="regenerate-btn" onclick="regenerateAnalysis()">
-                    🔄 Regenerate Analysis
-                </button>
-            </div>
-        </aside>
+    <h2>Super Bowl Historical Benchmarks (by Position)</h2>
+    <table>
+        <tr>
+            <th>Position</th>
+            <th>Avg Pass Yds</th>
+            <th>Avg Rush Yds</th>
+            <th>Avg Receptions</th>
+            <th>Avg Rec Yds</th>
+        </tr>
+        <tr>
+            <td><strong>QB</strong></td>
+            <td>221</td>
+            <td>16</td>
+            <td>-</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td><strong>RB</strong></td>
+            <td>-</td>
+            <td>78</td>
+            <td>3</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td><strong>WR</strong></td>
+            <td>-</td>
+            <td>3</td>
+            <td>6</td>
+            <td>77</td>
+        </tr>
+        <tr>
+            <td><strong>TE</strong></td>
+            <td>-</td>
+            <td>3</td>
+            <td>2</td>
+            <td>16</td>
+        </tr>
+    </table>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            
-<div class="page-header">
-    <h1>Super Bowl Analysis Dashboard</h1>
-    <p>Data-driven insights for squares betting, player props, and playoff trends</p>
-</div>
+    <h2>Key Insights</h2>
+    <ul>
+        <li><strong>AJ Barner (TE):</strong> Averaging 3 receptions, 28 yards per game</li>
+        <li><strong>Cooper Kupp (WR):</strong> Averaging 3 receptions, 38 yards per game</li>
+        <li><strong>Jaxon Smith-Njigba (WR):</strong> Averaging 7 receptions, 103 yards per game</li>
+        <li><strong>Kenneth Walker III (RB):</strong> Averaging 63 rushing yards per game</li>
+        <li><strong>Sam Darnold (QB):</strong> Averaging 238 passing yards per game</li>
+    </ul>
 
-<!-- Key Insights -->
-<div class="grid grid-3">
-    <!-- Best Square -->
-    <div class="card">
-        <div class="card-header">
-            <h3>🎲 Best Square (Final)</h3>
-        </div>
-        
-            
-            <p class="stat stat-good">1-0</p>
-            <p>Probability: <span class="stat">10.24%</span></p>
-            <p><a href="squares.html" style="color: var(--accent-blue);">View full analysis →</a></p>
-        
-    </div>
-
-    <!-- Best Player Prop -->
-    <div class="card">
-        <div class="card-header">
-            <h3>🏈 Top Player Prop</h3>
-        </div>
-        
-        
-            
-                
-            
-        
-        
-            <p class="stat-moderate">No >65% props found</p>
-        
-        <p><a href="players.html" style="color: var(--accent-blue);">View player analysis →</a></p>
-    </div>
-
-    <!-- Best Playoff Prop -->
-    <div class="card">
-        <div class="card-header">
-            <h3>🏆 Best Playoff Prop</h3>
-        </div>
-        
-            
-            
-                
-                <p class="stat stat-good">Total Points O43.5</p>
-                
-                    <p>Hit rate: <span class="stat">60.0%</span></p>
-                
-            
-        
-        <p><a href="playoffs.html" style="color: var(--accent-blue);">View playoff analysis →</a></p>
-    </div>
-</div>
-
-<!-- Analysis Sections -->
-<div class="grid grid-3" style="margin-top: 2rem;">
-    <a href="squares.html" style="text-decoration: none; color: inherit;">
-        <div class="card">
-            <div class="card-header">
-                <h3>🎲 Squares Analysis</h3>
-            </div>
-            <p>Quarter-by-quarter probability analysis for Super Bowl squares betting. Includes heatmaps and rankings for all 100 combinations.</p>
-        </div>
-    </a>
-
-    <a href="players.html" style="text-decoration: none; color: inherit;">
-        <div class="card">
-            <div class="card-header">
-                <h3>🏈 Player Props</h3>
-            </div>
-            <p>Individual player performance analysis with betting line hit rates, trends, and best bet identification.</p>
-        </div>
-    </a>
-
-    <a href="playoffs.html" style="text-decoration: none; color: inherit;">
-        <div class="card">
-            <div class="card-header">
-                <h3>🏆 Playoff Props</h3>
-            </div>
-            <p>Historical playoff game analysis covering total points, winning margins, and round-specific trends.</p>
-        </div>
-    </a>
-</div>
-
-
-            <footer class="footer">
-                <p>Last updated: 2026-02-04T20:02:49.706973</p>
-                <p>Data-driven Super Bowl analysis</p>
-            </footer>
-        </main>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div id="loading-overlay">
-        <div class="spinner"></div>
-        <p>Regenerating analysis...</p>
-        <p class="progress-text">This may take up to a minute</p>
-    </div>
-
-    <script>
-        async function regenerateAnalysis() {
-            document.getElementById('loading-overlay').style.display = 'flex';
-
-            try {
-                const response = await fetch('/regenerate', { method: 'POST' });
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    location.reload();
-                } else {
-                    alert('Error: ' + result.message);
-                    document.getElementById('loading-overlay').style.display = 'none';
-                }
-            } catch (error) {
-                alert('Regeneration failed: ' + error);
-                document.getElementById('loading-overlay').style.display = 'none';
-            }
-        }
-    </script>
+    <p><em>Note: Analysis based on 2025 regular season data and historical Super Bowl performance by position.</em></p>
 </body>
 </html>
