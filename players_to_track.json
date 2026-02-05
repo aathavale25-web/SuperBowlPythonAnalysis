@@ -1,28 +1,64 @@
 {
   "players": [
     {
-      "name": "Patrick Mahomes",
-      "url": "/players/M/MahoPa00.htm",
-      "team": "Kansas City Chiefs",
+      "name": "Player Name NE QB",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "New England Patriots",
       "position": "QB"
     },
     {
-      "name": "Jalen Hurts",
-      "url": "/players/H/HurtJa00.htm",
-      "team": "Philadelphia Eagles",
-      "position": "QB"
+      "name": "Player Name NE RB",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "New England Patriots",
+      "position": "RB"
     },
     {
-      "name": "Travis Kelce",
-      "url": "/players/K/KelcTr00.htm",
-      "team": "Kansas City Chiefs",
+      "name": "Player Name NE WR1",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "New England Patriots",
+      "position": "WR"
+    },
+    {
+      "name": "Player Name NE WR2",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "New England Patriots",
+      "position": "WR"
+    },
+    {
+      "name": "Player Name NE TE",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "New England Patriots",
       "position": "TE"
     },
     {
-      "name": "A.J. Brown",
-      "url": "/players/B/BrowAJ00.htm",
-      "team": "Philadelphia Eagles",
+      "name": "Player Name SEA QB",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "Seattle Seahawks",
+      "position": "QB"
+    },
+    {
+      "name": "Player Name SEA RB",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "Seattle Seahawks",
+      "position": "RB"
+    },
+    {
+      "name": "Player Name SEA WR1",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "Seattle Seahawks",
       "position": "WR"
+    },
+    {
+      "name": "Player Name SEA WR2",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "Seattle Seahawks",
+      "position": "WR"
+    },
+    {
+      "name": "Player Name SEA TE",
+      "url": "/players/X/XXXXXXX00.htm",
+      "team": "Seattle Seahawks",
+      "position": "TE"
     }
   ]
 }
