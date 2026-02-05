@@ -89,6 +89,48 @@ def parse_superbowl_boxscore(html_content, super_bowl, year, team):
     return players
 
 
+def get_superbowl_info(year):
+    """
+    Get Super Bowl number and team info for a given year
+
+    Args:
+        year: Year of Super Bowl
+
+    Returns:
+        dict with sb_number (Roman numeral), url, winner, loser
+    """
+    # Super Bowl mapping for 2000-2024
+    superbowl_map = {
+        2000: {"sb": "XXXIV", "url": "/boxscores/200001300ram.htm", "winner": "St. Louis Rams", "loser": "Tennessee Titans"},
+        2001: {"sb": "XXXV", "url": "/boxscores/200101280rav.htm", "winner": "Baltimore Ravens", "loser": "New York Giants"},
+        2002: {"sb": "XXXVI", "url": "/boxscores/200202030nwe.htm", "winner": "New England Patriots", "loser": "St. Louis Rams"},
+        2003: {"sb": "XXXVII", "url": "/boxscores/200301260tam.htm", "winner": "Tampa Bay Buccaneers", "loser": "Oakland Raiders"},
+        2004: {"sb": "XXXVIII", "url": "/boxscores/200402010nwe.htm", "winner": "New England Patriots", "loser": "Carolina Panthers"},
+        2005: {"sb": "XXXIX", "url": "/boxscores/200502060nwe.htm", "winner": "New England Patriots", "loser": "Philadelphia Eagles"},
+        2006: {"sb": "XL", "url": "/boxscores/200602050pit.htm", "winner": "Pittsburgh Steelers", "loser": "Seattle Seahawks"},
+        2007: {"sb": "XLI", "url": "/boxscores/200702040clt.htm", "winner": "Indianapolis Colts", "loser": "Chicago Bears"},
+        2008: {"sb": "XLII", "url": "/boxscores/200802030nyg.htm", "winner": "New York Giants", "loser": "New England Patriots"},
+        2009: {"sb": "XLIII", "url": "/boxscores/200902010pit.htm", "winner": "Pittsburgh Steelers", "loser": "Arizona Cardinals"},
+        2010: {"sb": "XLIV", "url": "/boxscores/201002070nor.htm", "winner": "New Orleans Saints", "loser": "Indianapolis Colts"},
+        2011: {"sb": "XLV", "url": "/boxscores/201102060gnb.htm", "winner": "Green Bay Packers", "loser": "Pittsburgh Steelers"},
+        2012: {"sb": "XLVI", "url": "/boxscores/201202050nyg.htm", "winner": "New York Giants", "loser": "New England Patriots"},
+        2013: {"sb": "XLVII", "url": "/boxscores/201302030rav.htm", "winner": "Baltimore Ravens", "loser": "San Francisco 49ers"},
+        2014: {"sb": "XLVIII", "url": "/boxscores/201402020sea.htm", "winner": "Seattle Seahawks", "loser": "Denver Broncos"},
+        2015: {"sb": "XLIX", "url": "/boxscores/201502010nwe.htm", "winner": "New England Patriots", "loser": "Seattle Seahawks"},
+        2016: {"sb": "L", "url": "/boxscores/201602070den.htm", "winner": "Denver Broncos", "loser": "Carolina Panthers"},
+        2017: {"sb": "LI", "url": "/boxscores/201702050nwe.htm", "winner": "New England Patriots", "loser": "Atlanta Falcons"},
+        2018: {"sb": "LII", "url": "/boxscores/201802040phi.htm", "winner": "Philadelphia Eagles", "loser": "New England Patriots"},
+        2019: {"sb": "LIII", "url": "/boxscores/201902030nwe.htm", "winner": "New England Patriots", "loser": "Los Angeles Rams"},
+        2020: {"sb": "LIV", "url": "/boxscores/202002020kan.htm", "winner": "Kansas City Chiefs", "loser": "San Francisco 49ers"},
+        2021: {"sb": "LV", "url": "/boxscores/202102070tam.htm", "winner": "Tampa Bay Buccaneers", "loser": "Kansas City Chiefs"},
+        2022: {"sb": "LVI", "url": "/boxscores/202202130ram.htm", "winner": "Los Angeles Rams", "loser": "Cincinnati Bengals"},
+        2023: {"sb": "LVII", "url": "/boxscores/202302120kan.htm", "winner": "Kansas City Chiefs", "loser": "Philadelphia Eagles"},
+        2024: {"sb": "LVIII", "url": "/boxscores/202402110kan.htm", "winner": "Kansas City Chiefs", "loser": "San Francisco 49ers"}
+    }
+
+    return superbowl_map.get(year)
+
+
 def scrape_superbowl_player_stats(start_year=2000, end_year=2024):
     """
     Scrape historical Super Bowl player stats
@@ -99,20 +141,65 @@ def scrape_superbowl_player_stats(start_year=2000, end_year=2024):
     """
     print(f"📊 Starting Super Bowl player stats scraper ({start_year}-{end_year})...\n")
 
-    # Super Bowl Roman numerals mapping
-    # For now, stub implementation
     all_players = []
 
-    # TODO: Implement full scraping logic
+    base_url = "https://www.pro-football-reference.com"
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+
+        for year in range(start_year, end_year + 1):
+            sb_info = get_superbowl_info(year)
+
+            if not sb_info:
+                print(f"⚠️  No Super Bowl data for {year}")
+                continue
+
+            sb_number = sb_info["sb"]
+            sb_url = sb_info["url"]
+            winner = sb_info["winner"]
+            loser = sb_info["loser"]
+
+            print(f"📥 Scraping Super Bowl {sb_number} ({year}) - {winner} vs {loser}...")
+
+            try:
+                # Navigate to boxscore
+                full_url = f"{base_url}{sb_url}"
+                page.goto(full_url, timeout=30000)
+                page.wait_for_timeout(2000)
+
+                html = page.content()
+
+                # Parse both teams
+                winner_players = parse_superbowl_boxscore(html, sb_number, year, winner)
+                print(f"   ✓ {winner}: {len(winner_players)} players")
+
+                # For loser, we need to handle the other team's stats
+                # The page shows both teams, so we parse again with different team name
+                loser_players = parse_superbowl_boxscore(html, sb_number, year, loser)
+                print(f"   ✓ {loser}: {len(loser_players)} players")
+
+                all_players.extend(winner_players)
+                all_players.extend(loser_players)
+
+                # Rate limiting
+                time.sleep(3)
+
+            except Exception as e:
+                print(f"   ✗ Error scraping SB {sb_number}: {str(e)[:100]}")
+                continue
+
+        browser.close()
 
     # Export to parquet
     parquet_path = Path("data/superbowl_player_history.parquet")
     if all_players:
         df = pl.DataFrame(all_players)
         df.write_parquet(parquet_path)
-        print(f"✅ Exported {len(all_players)} player records to {parquet_path}")
+        print(f"\n✅ Exported {len(all_players)} player records to {parquet_path}")
     else:
-        print("⚠️  No data scraped")
+        print("\n⚠️  No data scraped")
 
     print("\n🎉 Super Bowl player stats scraping complete!")
 
