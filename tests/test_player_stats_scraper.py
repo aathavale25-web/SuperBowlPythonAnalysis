@@ -18,7 +18,7 @@ class TestParsePlayerGameLog:
         """Parse Patrick Mahomes 2024 game log"""
         html_content = Path("tests/fixtures/mahomes_2024_gamelog.html").read_text()
 
-        games = parse_player_game_log(html_content, "Patrick Mahomes", "KAN")
+        games = parse_player_game_log(html_content, "Patrick Mahomes", "KAN", season=2024)
 
         # Should have multiple games (2024 season)
         assert len(games) > 0, "Should extract at least one game"
@@ -51,7 +51,7 @@ class TestParsePlayerGameLog:
         """Correctly identify regular season vs playoff games"""
         html_content = Path("tests/fixtures/mahomes_2024_gamelog.html").read_text()
 
-        games = parse_player_game_log(html_content, "Patrick Mahomes", "KAN")
+        games = parse_player_game_log(html_content, "Patrick Mahomes", "KAN", season=2024)
 
         # Check game types
         game_types = {g["game_type"] for g in games}
@@ -79,9 +79,14 @@ class TestLoadPlayersConfig:
         assert "team" in player
         assert "position" in player
 
-        # Verify specific players exist
-        player_names = [p["name"] for p in players]
-        assert "Patrick Mahomes" in player_names
-        assert "Jalen Hurts" in player_names
-        assert "Travis Kelce" in player_names
-        assert "A.J. Brown" in player_names
+        # Verify we have players from both teams
+        teams = {p["team"] for p in players}
+        assert "New England Patriots" in teams
+        assert "Seattle Seahawks" in teams
+
+        # Verify we have key positions
+        positions = {p["position"] for p in players}
+        assert "QB" in positions
+        assert "RB" in positions
+        assert "WR" in positions
+        assert "TE" in positions

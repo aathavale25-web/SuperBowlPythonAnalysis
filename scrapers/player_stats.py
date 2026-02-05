@@ -10,7 +10,7 @@ from pathlib import Path
 import time
 
 
-def parse_player_game_log(html_content, player_name, team_abbr):
+def parse_player_game_log(html_content, player_name, team_abbr, season=2025):
     """
     Parse player game log from HTML
 
@@ -18,6 +18,7 @@ def parse_player_game_log(html_content, player_name, team_abbr):
         html_content: HTML content of player's game log page
         player_name: Player's full name
         team_abbr: Team abbreviation (e.g., "KAN", "PHI")
+        season: Season year (default 2025)
 
     Returns:
         list of game dicts with stats
@@ -87,7 +88,7 @@ def parse_player_game_log(html_content, player_name, team_abbr):
         game = {
             "player_name": player_name,
             "team": team_abbr,
-            "season": 2024,
+            "season": season,
             "week": week,
             "game_type": game_type,
             "passing_yards": passing_yards,
@@ -125,13 +126,13 @@ def load_players_config(config_path="players_to_track.json"):
     return config.get("players", [])
 
 
-def scrape_player_stats(config_path="players_to_track.json", season=2024):
+def scrape_player_stats(config_path="players_to_track.json", season=2025):
     """
     Scrape player game logs and store in DuckDB
 
     Args:
         config_path: Path to players config JSON
-        season: Season to scrape (default 2024)
+        season: Season to scrape (default 2025)
     """
     print(f"📊 Starting player stats scraper for {season} season...\n")
 
@@ -171,7 +172,7 @@ def scrape_player_stats(config_path="players_to_track.json", season=2024):
                 # Extract team abbreviation from player data or parse from page
                 team_abbr = team.split()[-1][:3].upper() if team else "UNK"
 
-                games = parse_player_game_log(html, player_name, team_abbr)
+                games = parse_player_game_log(html, player_name, team_abbr, season)
 
                 print(f"   ✓ Found {len(games)} games")
 
