@@ -158,7 +158,7 @@ def analyze_last_n_games_trend(games, player_name, stat_column, n=5):
     }
 
 
-def load_player_data(parquet_path="data/player_stats_2024.parquet"):
+def load_player_data(parquet_path="data/player_stats_2025.parquet"):
     """Load player data from parquet file"""
     from pathlib import Path
 
@@ -374,7 +374,7 @@ def analyze_player_trends():
     # Load player data
     games = load_player_data()
     if games is None:
-        print("❌ No player data found at data/player_stats_2024.parquet")
+        print("❌ No player data found at data/player_stats_2025.parquet")
         print("   Run scrapers/player_stats.py first to scrape player data")
         return
 

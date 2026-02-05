@@ -171,17 +171,15 @@ def scrape_superbowl_player_stats(start_year=2000, end_year=2024):
 
                 html = page.content()
 
-                # Parse both teams
-                winner_players = parse_superbowl_boxscore(html, sb_number, year, winner)
-                print(f"   ✓ {winner}: {len(winner_players)} players")
+                # Parse the boxscore
+                # NOTE: The HTML contains both teams' stats in the same table.
+                # We cannot distinguish between teams from the HTML structure alone.
+                # All players are parsed with a generic "TBD" team label.
+                # Team names would need to be corrected manually or with additional parsing logic.
+                players = parse_superbowl_boxscore(html, sb_number, year, "TBD")
+                print(f"   ✓ Parsed {len(players)} players (teams: {winner} vs {loser})")
 
-                # For loser, we need to handle the other team's stats
-                # The page shows both teams, so we parse again with different team name
-                loser_players = parse_superbowl_boxscore(html, sb_number, year, loser)
-                print(f"   ✓ {loser}: {len(loser_players)} players")
-
-                all_players.extend(winner_players)
-                all_players.extend(loser_players)
+                all_players.extend(players)
 
                 # Rate limiting
                 time.sleep(3)
