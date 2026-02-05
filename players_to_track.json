@@ -1,32 +1,38 @@
 {
   "players": [
     {
-      "name": "Player Name NE QB",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Drake Maye",
+      "url": "/players/M/MayeDr00/",
       "team": "New England Patriots",
       "position": "QB"
     },
     {
-      "name": "Player Name NE RB",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Rhamondre Stevenson",
+      "url": "/players/S/StevRh00/",
       "team": "New England Patriots",
       "position": "RB"
     },
     {
-      "name": "Player Name NE WR1",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "TreVeyon Henderson",
+      "url": "/players/H/HendTr02/",
+      "team": "New England Patriots",
+      "position": "RB"
+    },
+    {
+      "name": "Stefon Diggs",
+      "url": "/players/D/DiggSt00/",
       "team": "New England Patriots",
       "position": "WR"
     },
     {
-      "name": "Player Name NE WR2",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "DeMario Douglas",
+      "url": "/players/D/DougDe00/",
       "team": "New England Patriots",
       "position": "WR"
     },
     {
-      "name": "Player Name NE TE",
-      "url": "/players/X/XXXXXXX00.htm",
+      "name": "Hunter Henry",
+      "url": "/players/H/HenrHu00/",
       "team": "New England Patriots",
       "position": "TE"
     },
@@ -51,6 +57,12 @@
     {
       "name": "Cooper Kupp",
       "url": "/players/K/KuppCo00/",
+      "team": "Seattle Seahawks",
+      "position": "WR"
+    },
+    {
+      "name": "Rashid Shaheed",
+      "url": "/players/S/ShahRa00/",
       "team": "Seattle Seahawks",
       "position": "WR"
     },

@@ -11,10 +11,19 @@ import time
 
 # ESPN athlete ID mapping (found via ESPN website)
 ESPN_ATHLETE_IDS = {
+    # New England Patriots
+    "Drake Maye": "4431452",
+    "Rhamondre Stevenson": "4569173",
+    "TreVeyon Henderson": "4432710",
+    "Stefon Diggs": "2976212",
+    "DeMario Douglas": "4427095",
+    "Hunter Henry": "3046439",
+    # Seattle Seahawks
     "Sam Darnold": "3912547",
     "Kenneth Walker III": "4567048",
     "Jaxon Smith-Njigba": "4430878",
     "Cooper Kupp": "2977187",
+    "Rashid Shaheed": "4032473",
     "AJ Barner": "4576297"
 }
 
@@ -81,9 +90,13 @@ def parse_espn_gamelog(data, player_name, team_abbr, season=2025):
                 if not stats or not event_id:
                     continue
 
-                # Get week from events metadata
+                # Get week and game info from events metadata
                 event_meta = events_metadata.get(event_id, {})
                 week = event_meta.get("week")
+                game_result = event_meta.get("gameResult", "")  # "W" or "L"
+                opponent_info = event_meta.get("opponent", {})
+                opponent_name = opponent_info.get("displayName", "")
+                opponent_abbr = opponent_info.get("abbreviation", "")
 
                 # Extract stats using indices
                 def get_stat(name):
@@ -113,6 +126,9 @@ def parse_espn_gamelog(data, player_name, team_abbr, season=2025):
                     "season": season,
                     "week": week,
                     "game_type": game_type,
+                    "game_result": game_result,
+                    "opponent": opponent_name,
+                    "opponent_abbr": opponent_abbr,
                     "passing_yards": passing_yards,
                     "passing_tds": passing_tds,
                     "interceptions": interceptions,
@@ -224,11 +240,13 @@ def scrape_espn_player_stats(config_path="players_to_track.json", season=2025):
         conn.execute("""
             INSERT INTO player_game_logs (
                 id, player_name, team, season, week, game_type,
+                game_result, opponent, opponent_abbr,
                 passing_yards, passing_tds, interceptions,
                 rushing_yards, rushing_tds,
                 receptions, receiving_yards, receiving_tds
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [i, log["player_name"], log["team"], log["season"], log["week"], log["game_type"],
+              log["game_result"], log["opponent"], log["opponent_abbr"],
               log["passing_yards"], log["passing_tds"], log["interceptions"],
               log["rushing_yards"], log["rushing_tds"],
               log["receptions"], log["receiving_yards"], log["receiving_tds"]])

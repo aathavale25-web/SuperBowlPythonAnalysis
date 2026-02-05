@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Props - Super Bowl Analysis</title>
+    <title>Super Bowl Analysis</title>
     <link rel="stylesheet" href="assets/styles.css">
     <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
 </head>
@@ -35,390 +35,4305 @@
         <!-- Main Content -->
         <main class="main-content">
             
-<div class="page-header">
-    <h1>Player Prop Analysis</h1>
-    <p>Season statistics, betting line hit rates, and trend analysis</p>
+<h1>Player Props Analysis</h1>
+<p class="subtitle">2025 Season Performance - Both Teams</p>
+
+<!-- Position Filters -->
+<div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterByPosition('all')">All Players</button>
+    <button class="filter-btn" onclick="filterByPosition('QB')">QB</button>
+    <button class="filter-btn" onclick="filterByPosition('RB')">RB</button>
+    <button class="filter-btn" onclick="filterByPosition('WR')">WR</button>
+    <button class="filter-btn" onclick="filterByPosition('TE')">TE</button>
+</div>
+
+<style>
+    .filter-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        padding: 10px 20px;
+        background: white;
+        border: 2px solid #002244;
+        color: #002244;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.3s;
+    }
+    .filter-btn:hover {
+        background: #f0f0f0;
+    }
+    .filter-btn.active {
+        background: #002244;
+        color: white;
+    }
+    .player-name { color: #0066cc; cursor: pointer; text-decoration: underline; }
+    .player-name:hover { color: #004499; }
+    .game-details { display: none; margin: 20px 0; padding: 20px; background: #f8f9fa; border-left: 4px solid #002244; }
+    .game-details.show { display: block; }
+    .game-details table { margin: 10px 0; }
+    .game-details th { background-color: #69BE28; }
+    .close-btn { float: right; cursor: pointer; color: #666; font-weight: bold; font-size: 1.5em; }
+    .close-btn:hover { color: #000; }
+    .stat-card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .stat-card.hidden { display: none; }
+    .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+    .stat-label { font-weight: bold; color: #666; }
+    .stat-value { color: #002244; font-weight: bold; }
+</style>
+
+<script>
+    function toggleGameDetails(playerName) {
+        const detailsId = 'details-' + playerName.replace(/\s+/g, '-');
+        const details = document.getElementById(detailsId);
+        if (details) {
+            details.classList.toggle('show');
+        }
+    }
+
+    function filterByPosition(position) {
+        // Update button states
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        // Filter player cards
+        const cards = document.querySelectorAll('.stat-card[data-position]');
+        cards.forEach(card => {
+            if (position === 'all' || card.dataset.position === position) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+</script>
+
+
+<div class="stat-card" data-position="TE">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('AJ Barner')">
+            AJ Barner
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            TE - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">19</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2.7</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">27 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">2.8 rec/game, 28 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">54 rec, 532 yds, 6 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl TE Benchmark:</span>
+            <span class="stat-value">2 rec, 16 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (16 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>2.3</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>26</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>6.0</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>41</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-AJ-Barner" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('AJ Barner')">&times;</span>
+        <h3>AJ Barner - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                
+                <td>1</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>PIT</td>
+                
+                
+                <td>2</td>
+                <td>26</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>2</td>
+                <td>13</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>1</td>
+                <td>23</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>3</td>
+                <td>32</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                
+                <td>7</td>
+                <td>53</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>JAX</td>
+                
+                
+                <td>3</td>
+                <td>71</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>1</td>
+                <td>7</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>WSH</td>
+                
+                
+                <td>3</td>
+                <td>24</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>10</td>
+                <td>70</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>2</td>
+                <td>18</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                
+                <td>4</td>
+                <td>35</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>3</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                
+                <td>3</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>4</td>
+                <td>49</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>3</td>
+                <td>43</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>2</td>
+                <td>14</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="WR">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Cooper Kupp')">
+            Cooper Kupp
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            WR - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">18</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">3.3</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">42 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">3.1 rec/game, 38 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">56 rec, 689 yds, 3 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl WR Benchmark:</span>
+            <span class="stat-value">6 rec, 77 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (15 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>3.0</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>39</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>3.7</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>32</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Cooper-Kupp" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Cooper Kupp')">&times;</span>
+        <h3>Cooper Kupp - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                
+                <td>2</td>
+                <td>15</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>5</td>
+                <td>60</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>PIT</td>
+                
+                
+                <td>7</td>
+                <td>90</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>4</td>
+                <td>36</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>2</td>
+                <td>31</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>4</td>
+                <td>26</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                
+                <td>6</td>
+                <td>59</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>JAX</td>
+                
+                
+                <td>2</td>
+                <td>40</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>1</td>
+                <td>32</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>2</td>
+                <td>74</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>3</td>
+                <td>23</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>2</td>
+                <td>24</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                
+                <td>3</td>
+                <td>24</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>2</td>
+                <td>35</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                
+                <td>5</td>
+                <td>46</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>3</td>
+                <td>39</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>1</td>
+                <td>6</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>2</td>
+                <td>29</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="WR">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('DeMario Douglas')">
+            DeMario Douglas
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            WR - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2.3</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">30 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">1.7 rec/game, 24 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">34 rec, 486 yds, 4 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl WR Benchmark:</span>
+            <span class="stat-value">6 rec, 77 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (17 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>1.8</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>28</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>1.3</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>2</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-DeMario-Douglas" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('DeMario Douglas')">&times;</span>
+        <h3>DeMario Douglas - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                
+                <td>2</td>
+                <td>-</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>2</td>
+                <td>36</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>1</td>
+                <td>8</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                
+                <td>2</td>
+                <td>7</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                
+                <td>2</td>
+                <td>17</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>3</td>
+                <td>71</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>3</td>
+                <td>17</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                
+                <td>1</td>
+                <td>44</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>4</td>
+                <td>100</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TB</td>
+                
+                
+                <td>2</td>
+                <td>34</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>3</td>
+                <td>36</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                
+                <td>1</td>
+                <td>37</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>3</td>
+                <td>33</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                
+                <td>1</td>
+                <td>6</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>1</td>
+                <td>10</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>2</td>
+                <td>29</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="QB">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Drake Maye')">
+            Drake Maye
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            QB - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Pass Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">244 yards</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Pass TDs:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">246 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">4927 yards, 35 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl QB Benchmark:</span>
+            <span class="stat-value">221 yards avg</span>
+        </div>
+        
+    
+
+    
+
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (17 games)</div>
+            
+            <div style="font-size: 0.9em; color: #334155;">Pass Yds: <strong>248</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>29</strong>/game</div>
+            
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            <div style="font-size: 0.9em; color: #334155;">Pass Yds: <strong>237</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>33</strong>/game</div>
+            
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Drake-Maye" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Drake Maye')">&times;</span>
+        <h3>Drake Maye - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                <th>Pass Yds</th>
+                <th>Pass TD</th>
+                <th>INT</th>
+                
+                
+                <th>Rush Yds</th>
+                <th>Rush TD</th>
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                <td>268</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>66</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                <td>287</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>11</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                <td>179</td>
+                <td>3</td>
+                <td>1</td>
+                
+                
+                <td>10</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                <td>230</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>31</td>
+                <td>1</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                <td>86</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>65</td>
+                <td>1</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                <td>268</td>
+                <td>2</td>
+                <td>1</td>
+                
+                
+                <td>45</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                <td>203</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>11</td>
+                <td>1</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                <td>273</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>12</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                <td>261</td>
+                <td>3</td>
+                <td>-</td>
+                
+                
+                <td>28</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                <td>222</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>62</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                <td>282</td>
+                <td>3</td>
+                <td>1</td>
+                
+                
+                <td>50</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                <td>259</td>
+                <td>2</td>
+                <td>1</td>
+                
+                
+                <td>20</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TB</td>
+                
+                <td>270</td>
+                <td>2</td>
+                <td>1</td>
+                
+                
+                <td>13</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                <td>281</td>
+                <td>1</td>
+                <td>-</td>
+                
+                
+                <td>2</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                <td>294</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>22</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                <td>282</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>12</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                <td>155</td>
+                <td>-</td>
+                <td>1</td>
+                
+                
+                <td>43</td>
+                <td>2</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                <td>380</td>
+                <td>2</td>
+                <td>1</td>
+                
+                
+                <td>25</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                <td>256</td>
+                <td>5</td>
+                <td>-</td>
+                
+                
+                <td>22</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                <td>191</td>
+                <td>1</td>
+                <td>-</td>
+                
+                
+                <td>41</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="TE">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Hunter Henry')">
+            Hunter Henry
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            TE - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">3.3</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">38 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">3.3 rec/game, 42 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">66 rec, 849 yds, 8 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl TE Benchmark:</span>
+            <span class="stat-value">2 rec, 16 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (17 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>3.1</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>40</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>4.3</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>58</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Hunter-Henry" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Hunter Henry')">&times;</span>
+        <h3>Hunter Henry - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                
+                <td>3</td>
+                <td>64</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                
+                <td>4</td>
+                <td>66</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>1</td>
+                <td>5</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>1</td>
+                <td>9</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                
+                <td>2</td>
+                <td>12</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                
+                <td>8</td>
+                <td>90</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>2</td>
+                <td>39</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                
+                <td>2</td>
+                <td>46</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>3</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>4</td>
+                <td>33</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                
+                <td>1</td>
+                <td>7</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>4</td>
+                <td>51</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TB</td>
+                
+                
+                <td>1</td>
+                <td>9</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>4</td>
+                <td>45</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                
+                <td>7</td>
+                <td>115</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>4</td>
+                <td>73</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>1</td>
+                <td>18</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                
+                <td>6</td>
+                <td>35</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>3</td>
+                <td>49</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>5</td>
+                <td>56</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="WR">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Jaxon Smith-Njigba')">
+            Jaxon Smith-Njigba
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            WR - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">19</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">6.9</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">92 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">6.9 rec/game, 103 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">132 rec, 1965 yds, 12 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl WR Benchmark:</span>
+            <span class="stat-value">6 rec, 77 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (16 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>6.6</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>100</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>8.7</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>120</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Jaxon-Smith-Njigba" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Jaxon Smith-Njigba')">&times;</span>
+        <h3>Jaxon Smith-Njigba - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                
+                <td>9</td>
+                <td>124</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>3</td>
+                <td>19</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>PIT</td>
+                
+                
+                <td>8</td>
+                <td>103</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>10</td>
+                <td>153</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>5</td>
+                <td>96</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>4</td>
+                <td>79</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                
+                <td>8</td>
+                <td>132</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>JAX</td>
+                
+                
+                <td>8</td>
+                <td>162</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>8</td>
+                <td>123</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>WSH</td>
+                
+                
+                <td>8</td>
+                <td>129</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>5</td>
+                <td>93</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>9</td>
+                <td>105</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>8</td>
+                <td>167</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                
+                <td>2</td>
+                <td>23</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>7</td>
+                <td>92</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                
+                <td>7</td>
+                <td>113</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>8</td>
+                <td>96</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>9</td>
+                <td>72</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>6</td>
+                <td>84</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="RB">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Kenneth Walker III')">
+            Kenneth Walker III
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            RB - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">19</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rush Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">63 yards</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">63 rush yds/game, 2.0 rec/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">1205 rush yds, 9 rush TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl RB Benchmark:</span>
+            <span class="stat-value">78 rush yds, 3 rec</span>
+        </div>
+        
+    
+
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (16 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>64</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>1.9</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>20</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>58</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>2.3</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>16</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Kenneth-Walker-III" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Kenneth Walker III')">&times;</span>
+        <h3>Kenneth Walker III - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rush Yds</th>
+                <th>Rush TD</th>
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                
+                <td>20</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>4</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>116</td>
+                <td>3</td>
+                
+                <td>3</td>
+                <td>29</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>PIT</td>
+                
+                
+                <td>105</td>
+                <td>1</td>
+                
+                <td>1</td>
+                <td>13</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>62</td>
+                <td>1</td>
+                
+                <td>4</td>
+                <td>49</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>38</td>
+                <td>2</td>
+                
+                <td>1</td>
+                <td>12</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>81</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>29</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                
+                <td>86</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>JAX</td>
+                
+                
+                <td>34</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>66</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>WSH</td>
+                
+                
+                <td>42</td>
+                <td>-</td>
+                
+                <td>2</td>
+                <td>19</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>67</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>67</td>
+                <td>1</td>
+                
+                <td>3</td>
+                <td>44</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>71</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>30</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                
+                <td>56</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>18</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>29</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                
+                <td>17</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>2</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>100</td>
+                <td>1</td>
+                
+                <td>3</td>
+                <td>64</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>51</td>
+                <td>-</td>
+                
+                <td>2</td>
+                <td>6</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>97</td>
+                <td>-</td>
+                
+                <td>4</td>
+                <td>36</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="WR">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Rashid Shaheed')">
+            Rashid Shaheed
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            WR - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">3.1</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">41 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">3.0 rec/game, 37 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">60 rec, 738 yds, 2 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl WR Benchmark:</span>
+            <span class="stat-value">6 rec, 77 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (11 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>1.6</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>30</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (9 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>4.7</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>46</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Rashid-Shaheed" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Rashid Shaheed')">&times;</span>
+        <h3>Rashid Shaheed - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>ARI</td>
+                
+                
+                <td>6</td>
+                <td>33</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                
+                <td>4</td>
+                <td>52</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>1</td>
+                <td>51</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SEA</td>
+                
+                
+                <td>4</td>
+                <td>42</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>4</td>
+                <td>47</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>4</td>
+                <td>114</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>NE</td>
+                
+                
+                <td>4</td>
+                <td>28</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>CHI</td>
+                
+                
+                <td>4</td>
+                <td>40</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                
+                <td>9</td>
+                <td>75</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>5</td>
+                <td>68</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                
+                <td>2</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                
+                <td>1</td>
+                <td>7</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>4</td>
+                <td>67</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                
+                <td>5</td>
+                <td>74</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>1</td>
+                <td>8</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                
+                <td>1</td>
+                <td>2</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="RB">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Rhamondre Stevenson')">
+            Rhamondre Stevenson
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            RB - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">17</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rush Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">61 yards</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">47 rush yds/game, 2.3 rec/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">797 rush yds, 7 rush TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl RB Benchmark:</span>
+            <span class="stat-value">78 rush yds, 3 rec</span>
+        </div>
+        
+    
+
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (14 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>51</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>2.2</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>25</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>28</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>2.7</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>26</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Rhamondre-Stevenson" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Rhamondre Stevenson')">&times;</span>
+        <h3>Rhamondre Stevenson - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rush Yds</th>
+                <th>Rush TD</th>
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                
+                <td>53</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>75</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                
+                <td>15</td>
+                <td>-</td>
+                
+                <td>2</td>
+                <td>12</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>70</td>
+                <td>-</td>
+                
+                <td>4</td>
+                <td>11</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>54</td>
+                <td>-</td>
+                
+                <td>5</td>
+                <td>88</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                
+                <td>71</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                
+                <td>18</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>38</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>38</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                
+                <td>14</td>
+                <td>2</td>
+                
+                <td>2</td>
+                <td>13</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>18</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>88</td>
+                <td>1</td>
+                
+                <td>2</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                
+                <td>34</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>15</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                
+                <td>5</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>5</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>40</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>40</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>50</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                
+                <td>51</td>
+                <td>1</td>
+                
+                <td>2</td>
+                <td>27</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>47</td>
+                <td>1</td>
+                
+                <td>5</td>
+                <td>55</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>131</td>
+                <td>2</td>
+                
+                <td>2</td>
+                <td>22</td>
+                <td>1</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="QB">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Sam Darnold')">
+            Sam Darnold
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            QB - SEA
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">19</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Pass Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">229 yards</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Pass TDs:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">2</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">238 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">4518 yards, 29 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl QB Benchmark:</span>
+            <span class="stat-value">221 yards avg</span>
+        </div>
+        
+    
+
+    
+
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (16 games)</div>
+            
+            <div style="font-size: 0.9em; color: #334155;">Pass Yds: <strong>234</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>5</strong>/game</div>
+            
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            <div style="font-size: 0.9em; color: #334155;">Pass Yds: <strong>257</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>8</strong>/game</div>
+            
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Sam-Darnold" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Sam Darnold')">&times;</span>
+        <h3>Sam Darnold - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                <th>Pass Yds</th>
+                <th>Pass TD</th>
+                <th>INT</th>
+                
+                
+                <th>Rush Yds</th>
+                <th>Rush TD</th>
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>SF</td>
+                
+                <td>150</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>14</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                <td>124</td>
+                <td>1</td>
+                <td>-</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>PIT</td>
+                
+                <td>295</td>
+                <td>2</td>
+                <td>2</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                <td>346</td>
+                <td>3</td>
+                <td>-</td>
+                
+                
+                <td>9</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                <td>218</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                <td>242</td>
+                <td>1</td>
+                <td>-</td>
+                
+                
+                <td>24</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>TB</td>
+                
+                <td>341</td>
+                <td>4</td>
+                <td>1</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>JAX</td>
+                
+                <td>295</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>2</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                <td>213</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>1</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>WSH</td>
+                
+                <td>330</td>
+                <td>4</td>
+                <td>1</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ARI</td>
+                
+                <td>178</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LAR</td>
+                
+                <td>279</td>
+                <td>-</td>
+                <td>4</td>
+                
+                
+                <td>11</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                <td>244</td>
+                <td>2</td>
+                <td>-</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIN</td>
+                
+                <td>128</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>-</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>14</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                <td>249</td>
+                <td>3</td>
+                <td>1</td>
+                
+                
+                <td>23</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>IND</td>
+                
+                <td>271</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>5</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAR</td>
+                
+                <td>270</td>
+                <td>2</td>
+                <td>2</td>
+                
+                
+                <td>7</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                <td>147</td>
+                <td>1</td>
+                <td>1</td>
+                
+                
+                <td>2</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>SF</td>
+                
+                <td>198</td>
+                <td>-</td>
+                <td>-</td>
+                
+                
+                <td>9</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="WR">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('Stefon Diggs')">
+            Stefon Diggs
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            WR - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">5.0</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rec Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">65 yards</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">4.8 rec/game, 54 yds/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">96 rec, 1086 yds, 5 TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl WR Benchmark:</span>
+            <span class="stat-value">6 rec, 77 yds</span>
+        </div>
+        
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (17 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>4.9</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>58</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>4.0</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>35</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-Stefon-Diggs" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('Stefon Diggs')">&times;</span>
+        <h3>Stefon Diggs - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                
+                <td>2</td>
+                <td>16</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                
+                <td>6</td>
+                <td>57</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>4</td>
+                <td>40</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>4</td>
+                <td>32</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                
+                <td>5</td>
+                <td>17</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                
+                <td>3</td>
+                <td>23</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>6</td>
+                <td>101</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                
+                <td>10</td>
+                <td>146</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>3</td>
+                <td>28</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>7</td>
+                <td>69</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                
+                <td>3</td>
+                <td>14</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>3</td>
+                <td>38</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TB</td>
+                
+                
+                <td>5</td>
+                <td>46</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>9</td>
+                <td>105</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                
+                <td>2</td>
+                <td>20</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>3</td>
+                <td>26</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>3</td>
+                <td>26</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                
+                <td>9</td>
+                <td>138</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>6</td>
+                <td>101</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>3</td>
+                <td>43</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+<div class="stat-card" data-position="RB">
+    <h2>
+        <span class="player-name" onclick="toggleGameDetails('TreVeyon Henderson')">
+            TreVeyon Henderson
+        </span>
+        <span style="color: #666; font-size: 0.8em; font-weight: normal;">
+            RB - PAT
+        </span>
+    </h2>
+
+    <div class="stat-row">
+        <span class="stat-label">Games Played:</span>
+        <span class="stat-value">20</span>
+    </div>
+
+    <!-- Super Bowl Projection -->
+    <div class="stat-row" style="background: linear-gradient(90deg, #002244 0%, #69BE28 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">🏆 SUPER BOWL PROJECTION</span>
+    </div>
+
+    
+
+    
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Rush Yards:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">65 yards</span>
+        </div>
+        <div class="stat-row" style="background: #e8f5e9;">
+            <span class="stat-label">📊 Projected Receptions:</span>
+            <span class="stat-value" style="color: #2e7d32; font-size: 1.2em;">1</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Average:</span>
+            <span class="stat-value">48 rush yds/game, 1.9 rec/game</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Season Total:</span>
+            <span class="stat-value">968 rush yds, 9 rush TDs</span>
+        </div>
+        
+        <div class="stat-row" style="background: #fff3cd;">
+            <span class="stat-label">Super Bowl RB Benchmark:</span>
+            <span class="stat-value">78 rush yds, 3 rec</span>
+        </div>
+        
+    
+
+    
+
+    <!-- Win/Loss Splits -->
+    
+    <div class="stat-row" style="background: linear-gradient(90deg, #1e3a8a 0%, #dc2626 100%); color: white; font-weight: bold; margin-top: 10px;">
+        <span style="font-size: 1.1em;">📊 WIN/LOSS SPLITS</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+        <!-- Wins Column -->
+        <div style="background: #e0f2fe; padding: 10px; border-radius: 5px; border-left: 4px solid #1e3a8a;">
+            <div style="font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">✅ IN WINS (17 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>45</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>1.5</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>10</strong>/game</div>
+            
+        </div>
+
+        <!-- Losses Column -->
+        <div style="background: #fee2e2; padding: 10px; border-radius: 5px; border-left: 4px solid #dc2626;">
+            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">❌ IN LOSSES (3 games)</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Rush Yds: <strong>68</strong>/game</div>
+            
+            
+            <div style="font-size: 0.9em; color: #334155;">Receptions: <strong>3.7</strong>/game</div>
+            <div style="font-size: 0.9em; color: #334155;">Rec Yds: <strong>19</strong>/game</div>
+            
+        </div>
+    </div>
+    
+
+    <div id="details-TreVeyon-Henderson" class="game-details">
+        <span class="close-btn" onclick="toggleGameDetails('TreVeyon Henderson')">&times;</span>
+        <h3>TreVeyon Henderson - Game by Game Stats</h3>
+        <table>
+            <tr>
+                <th>Week</th>
+                <th>Result</th>
+                <th>Opponent</th>
+                
+                
+                <th>Rush Yds</th>
+                <th>Rush TD</th>
+                
+                <th>Rec</th>
+                <th>Rec Yds</th>
+                <th>Rec TD</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>LAC</td>
+                
+                
+                <td>27</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>9</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>LV</td>
+                
+                
+                <td>27</td>
+                <td>-</td>
+                
+                <td>6</td>
+                <td>24</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>HOU</td>
+                
+                
+                <td>25</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>10</td>
+                <td>-</td>
+                
+                <td>2</td>
+                <td>30</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>DEN</td>
+                
+                
+                <td>5</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>PIT</td>
+                
+                
+                <td>28</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>19</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CAR</td>
+                
+                
+                <td>32</td>
+                <td>1</td>
+                
+                <td>2</td>
+                <td>14</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BUF</td>
+                
+                
+                <td>24</td>
+                <td>-</td>
+                
+                <td>2</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NO</td>
+                
+                
+                <td>27</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>9</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TEN</td>
+                
+                
+                <td>5</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CLE</td>
+                
+                
+                <td>75</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>ATL</td>
+                
+                
+                <td>55</td>
+                <td>-</td>
+                
+                <td>4</td>
+                <td>32</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>TB</td>
+                
+                
+                <td>147</td>
+                <td>2</td>
+                
+                <td>1</td>
+                <td>3</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>11</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>62</td>
+                <td>2</td>
+                
+                <td>5</td>
+                <td>31</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>12</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>CIN</td>
+                
+                
+                <td>66</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>15</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>13</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYG</td>
+                
+                
+                <td>67</td>
+                <td>-</td>
+                
+                <td>3</td>
+                <td>19</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>15</td>
+                <td><span style="font-weight: bold; color: #dc2626;">L</span></td>
+                <td>BUF</td>
+                
+                
+                <td>148</td>
+                <td>2</td>
+                
+                <td>2</td>
+                <td>13</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>16</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>BAL</td>
+                
+                
+                <td>3</td>
+                <td>-</td>
+                
+                <td>1</td>
+                <td>9</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>17</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>NYJ</td>
+                
+                
+                <td>82</td>
+                <td>-</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+            <tr>
+                <td>18</td>
+                <td><span style="font-weight: bold; color: #16a34a;">W</span></td>
+                <td>MIA</td>
+                
+                
+                <td>53</td>
+                <td>2</td>
+                
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            
+        </table>
+    </div>
 </div>
 
 
-    
-    <div class="card">
-        <div class="card-header">
-            <h2>Patrick Mahomes (QB)</h2>
-        </div>
-
-        <!-- Season Stats -->
-        <h3>Season Statistics</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Stat</th>
-                    <th>Avg</th>
-                    <th>Median</th>
-                    <th>High</th>
-                    <th>Low</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Interceptions</td>
-                            <td>0.6</td>
-                            <td>0.0</td>
-                            <td>2</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Passing Tds</td>
-                            <td>1.5</td>
-                            <td>1.0</td>
-                            <td>3</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Passing Yards</td>
-                            <td>231.1</td>
-                            <td>260.0</td>
-                            <td>331</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Receiving Tds</td>
-                            <td>0.0</td>
-                            <td>0.0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Receiving Yards</td>
-                            <td>0.1</td>
-                            <td>0.0</td>
-                            <td>2</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Receptions</td>
-                            <td>0.1</td>
-                            <td>0.0</td>
-                            <td>1</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Rushing Tds</td>
-                            <td>0.1</td>
-                            <td>0.0</td>
-                            <td>1</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                        
-                        
-                        
-                        
-                        <tr>
-                            <td>Rushing Yards</td>
-                            <td>18.1</td>
-                            <td>17.0</td>
-                            <td>60</td>
-                            <td>0</td>
-                        </tr>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </tbody>
-        </table>
-
-        <!-- Hit Rates -->
-        <h3 style="margin-top: 2rem;">Betting Line Hit Rates</h3>
-        
-            <h4 style="margin-top: 1rem;">Passing Yards</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Line</th>
-                        <th>Over %</th>
-                        <th>Over Count</th>
-                        <th>Under %</th>
-                        <th>Under Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        
-                        <tr>
-                            <td>224.5</td>
-                            <td class="stat-moderate">
-                                58.8%
-                            </td>
-                            <td>10/17</td>
-                            <td>41.2%</td>
-                            <td>7/17</td>
-                        </tr>
-                    
-                        
-                        <tr>
-                            <td>249.5</td>
-                            <td class="stat-moderate">
-                                52.9%
-                            </td>
-                            <td>9/17</td>
-                            <td>47.1%</td>
-                            <td>8/17</td>
-                        </tr>
-                    
-                        
-                        <tr>
-                            <td>274.5</td>
-                            <td class="">
-                                29.4%
-                            </td>
-                            <td>5/17</td>
-                            <td>70.6%</td>
-                            <td>12/17</td>
-                        </tr>
-                    
-                        
-                        <tr>
-                            <td>299.5</td>
-                            <td class="">
-                                17.6%
-                            </td>
-                            <td>3/17</td>
-                            <td>82.4%</td>
-                            <td>14/17</td>
-                        </tr>
-                    
-                </tbody>
-            </table>
-        
-            <h4 style="margin-top: 1rem;">Passing Tds</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Line</th>
-                        <th>Over %</th>
-                        <th>Over Count</th>
-                        <th>Under %</th>
-                        <th>Under Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        
-                        <tr>
-                            <td>1.5</td>
-                            <td class="">
-                                47.1%
-                            </td>
-                            <td>8/17</td>
-                            <td>52.9%</td>
-                            <td>9/17</td>
-                        </tr>
-                    
-                        
-                        <tr>
-                            <td>2.5</td>
-                            <td class="">
-                                23.5%
-                            </td>
-                            <td>4/17</td>
-                            <td>76.5%</td>
-                            <td>13/17</td>
-                        </tr>
-                    
-                </tbody>
-            </table>
-        
-            <h4 style="margin-top: 1rem;">Interceptions</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Line</th>
-                        <th>Over %</th>
-                        <th>Over Count</th>
-                        <th>Under %</th>
-                        <th>Under Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        
-                        <tr>
-                            <td>0.5</td>
-                            <td class="">
-                                47.1%
-                            </td>
-                            <td>8/17</td>
-                            <td>52.9%</td>
-                            <td>9/17</td>
-                        </tr>
-                    
-                </tbody>
-            </table>
-        
-
-        <!-- Best Bets -->
-        
-
-        <!-- Trends -->
-        
-            <h3 style="margin-top: 2rem;">Last 5 Games Trend</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Stat</th>
-                        <th>Direction</th>
-                        <th>Last 5 Avg</th>
-                        <th>Previous 5 Avg</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        
-                        <tr>
-                            <td>Passing Yards</td>
-                            <td>
-                                
-                                    📉 Declining
-                                
-                            </td>
-                            <td>189.8</td>
-                            <td>265.6</td>
-                        </tr>
-                        
-                    
-                        
-                        <tr>
-                            <td>Passing Tds</td>
-                            <td>
-                                
-                                    📉 Declining
-                                
-                            </td>
-                            <td>1.4</td>
-                            <td>2.2</td>
-                        </tr>
-                        
-                    
-                        
-                        <tr>
-                            <td>Interceptions</td>
-                            <td>
-                                
-                                    📉 Declining
-                                
-                            </td>
-                            <td>0.0</td>
-                            <td>0.4</td>
-                        </tr>
-                        
-                    
-                </tbody>
-            </table>
-        
-    </div>
-    
+<div class="stat-card">
+    <h2>About This Analysis</h2>
+    <p>Data based on 2025 regular season performance. Super Bowl benchmarks show historical average performance for each position in Super Bowls from 2000-2024.</p>
+    <p><strong>Click any player name to see game-by-game breakdown.</strong></p>
+</div>
 
 
 
             <footer class="footer">
-                <p>Last updated: 2026-02-04T20:02:49.706973</p>
+                <p>Last updated: 2026-02-05 14:43:13</p>
                 <p>Data-driven Super Bowl analysis</p>
             </footer>
         </main>
