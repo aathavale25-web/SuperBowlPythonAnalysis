@@ -1,0 +1,386 @@
+[
+  {
+    "year": 2000,
+    "game_type": "afc_championship",
+    "winner": "Baltimore Ravens",
+    "loser": "Oakland Raiders",
+    "winner_q1": 0, "winner_q2": 3, "winner_q3": 10, "winner_q4": 16, "winner_final": 16,
+    "loser_q1": 0, "loser_q2": 3, "loser_q3": 3, "loser_q4": 3, "loser_final": 3
+  },
+  {
+    "year": 2000,
+    "game_type": "nfc_championship",
+    "winner": "New York Giants",
+    "loser": "Minnesota Vikings",
+    "winner_q1": 7, "winner_q2": 17, "winner_q3": 34, "winner_q4": 41, "winner_final": 41,
+    "loser_q1": 0, "loser_q2": 0, "loser_q3": 0, "loser_q4": 0, "loser_final": 0
+  },
+  {
+    "year": 2001,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Pittsburgh Steelers",
+    "winner_q1": 7, "winner_q2": 14, "winner_q3": 21, "winner_q4": 24, "winner_final": 24,
+    "loser_q1": 3, "loser_q2": 10, "loser_q3": 13, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2001,
+    "game_type": "nfc_championship",
+    "winner": "St. Louis Rams",
+    "loser": "Philadelphia Eagles",
+    "winner_q1": 0, "winner_q2": 17, "winner_q3": 24, "winner_q4": 29, "winner_final": 29,
+    "loser_q1": 7, "loser_q2": 14, "loser_q3": 17, "loser_q4": 24, "loser_final": 24
+  },
+  {
+    "year": 2002,
+    "game_type": "afc_championship",
+    "winner": "Oakland Raiders",
+    "loser": "Tennessee Titans",
+    "winner_q1": 0, "winner_q2": 17, "winner_q3": 24, "winner_q4": 41, "winner_final": 41,
+    "loser_q1": 14, "loser_q2": 17, "loser_q3": 17, "loser_q4": 24, "loser_final": 24
+  },
+  {
+    "year": 2002,
+    "game_type": "nfc_championship",
+    "winner": "Tampa Bay Buccaneers",
+    "loser": "Philadelphia Eagles",
+    "winner_q1": 7, "winner_q2": 14, "winner_q3": 20, "winner_q4": 27, "winner_final": 27,
+    "loser_q1": 3, "loser_q2": 3, "loser_q3": 10, "loser_q4": 10, "loser_final": 10
+  },
+  {
+    "year": 2003,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Indianapolis Colts",
+    "winner_q1": 6, "winner_q2": 15, "winner_q3": 15, "winner_q4": 24, "winner_final": 24,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 14, "loser_q4": 14, "loser_final": 14
+  },
+  {
+    "year": 2003,
+    "game_type": "nfc_championship",
+    "winner": "Carolina Panthers",
+    "loser": "Philadelphia Eagles",
+    "winner_q1": 0, "winner_q2": 7, "winner_q3": 14, "winner_q4": 14, "winner_final": 14,
+    "loser_q1": 0, "loser_q2": 0, "loser_q3": 3, "loser_q4": 3, "loser_final": 3
+  },
+  {
+    "year": 2004,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Pittsburgh Steelers",
+    "winner_q1": 3, "winner_q2": 17, "winner_q3": 24, "winner_q4": 41, "winner_final": 41,
+    "loser_q1": 0, "loser_q2": 10, "loser_q3": 17, "loser_q4": 27, "loser_final": 27
+  },
+  {
+    "year": 2004,
+    "game_type": "nfc_championship",
+    "winner": "Philadelphia Eagles",
+    "loser": "Atlanta Falcons",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 20, "winner_q4": 27, "winner_final": 27,
+    "loser_q1": 0, "loser_q2": 3, "loser_q3": 10, "loser_q4": 10, "loser_final": 10
+  },
+  {
+    "year": 2005,
+    "game_type": "afc_championship",
+    "winner": "Pittsburgh Steelers",
+    "loser": "Denver Broncos",
+    "winner_q1": 10, "winner_q2": 17, "winner_q3": 24, "winner_q4": 34, "winner_final": 34,
+    "loser_q1": 3, "loser_q2": 10, "loser_q3": 17, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2005,
+    "game_type": "nfc_championship",
+    "winner": "Seattle Seahawks",
+    "loser": "Carolina Panthers",
+    "winner_q1": 14, "winner_q2": 14, "winner_q3": 24, "winner_q4": 34, "winner_final": 34,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 14, "loser_final": 14
+  },
+  {
+    "year": 2006,
+    "game_type": "afc_championship",
+    "winner": "Indianapolis Colts",
+    "loser": "New England Patriots",
+    "winner_q1": 3, "winner_q2": 7, "winner_q3": 21, "winner_q4": 38, "winner_final": 38,
+    "loser_q1": 7, "loser_q2": 21, "loser_q3": 28, "loser_q4": 34, "loser_final": 34
+  },
+  {
+    "year": 2006,
+    "game_type": "nfc_championship",
+    "winner": "Chicago Bears",
+    "loser": "New Orleans Saints",
+    "winner_q1": 16, "winner_q2": 23, "winner_q3": 32, "winner_q4": 39, "winner_final": 39,
+    "loser_q1": 7, "loser_q2": 7, "loser_q3": 14, "loser_q4": 14, "loser_final": 14
+  },
+  {
+    "year": 2007,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "San Diego Chargers",
+    "winner_q1": 6, "winner_q2": 6, "winner_q3": 14, "winner_q4": 21, "winner_final": 21,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 12, "loser_final": 12
+  },
+  {
+    "year": 2007,
+    "game_type": "nfc_championship",
+    "winner": "New York Giants",
+    "loser": "Green Bay Packers",
+    "winner_q1": 0, "winner_q2": 6, "winner_q3": 13, "winner_q4": 20, "winner_final": 23,
+    "loser_q1": 0, "loser_q2": 10, "loser_q3": 10, "loser_q4": 20, "loser_final": 20
+  },
+  {
+    "year": 2008,
+    "game_type": "afc_championship",
+    "winner": "Pittsburgh Steelers",
+    "loser": "Baltimore Ravens",
+    "winner_q1": 3, "winner_q2": 10, "winner_q3": 16, "winner_q4": 23, "winner_final": 23,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 14, "loser_final": 14
+  },
+  {
+    "year": 2008,
+    "game_type": "nfc_championship",
+    "winner": "Arizona Cardinals",
+    "loser": "Philadelphia Eagles",
+    "winner_q1": 0, "winner_q2": 10, "winner_q3": 17, "winner_q4": 32, "winner_final": 32,
+    "loser_q1": 0, "loser_q2": 0, "loser_q3": 18, "loser_q4": 25, "loser_final": 25
+  },
+  {
+    "year": 2009,
+    "game_type": "afc_championship",
+    "winner": "Indianapolis Colts",
+    "loser": "New York Jets",
+    "winner_q1": 7, "winner_q2": 17, "winner_q3": 24, "winner_q4": 30, "winner_final": 30,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 14, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2009,
+    "game_type": "nfc_championship",
+    "winner": "New Orleans Saints",
+    "loser": "Minnesota Vikings",
+    "winner_q1": 0, "winner_q2": 21, "winner_q3": 21, "winner_q4": 28, "winner_final": 31,
+    "loser_q1": 7, "loser_q2": 14, "loser_q3": 21, "loser_q4": 28, "loser_final": 28
+  },
+  {
+    "year": 2010,
+    "game_type": "afc_championship",
+    "winner": "Pittsburgh Steelers",
+    "loser": "New York Jets",
+    "winner_q1": 0, "winner_q2": 7, "winner_q3": 17, "winner_q4": 24, "winner_final": 24,
+    "loser_q1": 0, "loser_q2": 3, "loser_q3": 10, "loser_q4": 19, "loser_final": 19
+  },
+  {
+    "year": 2010,
+    "game_type": "nfc_championship",
+    "winner": "Green Bay Packers",
+    "loser": "Chicago Bears",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 14, "winner_q4": 21, "winner_final": 21,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 14, "loser_final": 14
+  },
+  {
+    "year": 2011,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Baltimore Ravens",
+    "winner_q1": 0, "winner_q2": 13, "winner_q3": 16, "winner_q4": 23, "winner_final": 23,
+    "loser_q1": 0, "loser_q2": 10, "loser_q3": 13, "loser_q4": 20, "loser_final": 20
+  },
+  {
+    "year": 2011,
+    "game_type": "nfc_championship",
+    "winner": "New York Giants",
+    "loser": "San Francisco 49ers",
+    "winner_q1": 0, "winner_q2": 7, "winner_q3": 14, "winner_q4": 17, "winner_final": 20,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 14, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2012,
+    "game_type": "afc_championship",
+    "winner": "Baltimore Ravens",
+    "loser": "New England Patriots",
+    "winner_q1": 7, "winner_q2": 14, "winner_q3": 21, "winner_q4": 28, "winner_final": 28,
+    "loser_q1": 0, "loser_q2": 13, "loser_q3": 13, "loser_q4": 13, "loser_final": 13
+  },
+  {
+    "year": 2012,
+    "game_type": "nfc_championship",
+    "winner": "San Francisco 49ers",
+    "loser": "Atlanta Falcons",
+    "winner_q1": 7, "winner_q2": 17, "winner_q3": 24, "winner_q4": 28, "winner_final": 28,
+    "loser_q1": 7, "loser_q2": 17, "loser_q3": 17, "loser_q4": 24, "loser_final": 24
+  },
+  {
+    "year": 2013,
+    "game_type": "afc_championship",
+    "winner": "Denver Broncos",
+    "loser": "New England Patriots",
+    "winner_q1": 3, "winner_q2": 13, "winner_q3": 13, "winner_q4": 26, "winner_final": 26,
+    "loser_q1": 0, "loser_q2": 3, "loser_q3": 10, "loser_q4": 16, "loser_final": 16
+  },
+  {
+    "year": 2013,
+    "game_type": "nfc_championship",
+    "winner": "Seattle Seahawks",
+    "loser": "San Francisco 49ers",
+    "winner_q1": 0, "winner_q2": 13, "winner_q3": 20, "winner_q4": 23, "winner_final": 23,
+    "loser_q1": 3, "loser_q2": 10, "loser_q3": 10, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2014,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Indianapolis Colts",
+    "winner_q1": 7, "winner_q2": 17, "winner_q3": 38, "winner_q4": 45, "winner_final": 45,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 7, "loser_final": 7
+  },
+  {
+    "year": 2014,
+    "game_type": "nfc_championship",
+    "winner": "Seattle Seahawks",
+    "loser": "Green Bay Packers",
+    "winner_q1": 0, "winner_q2": 0, "winner_q3": 13, "winner_q4": 22, "winner_final": 28,
+    "loser_q1": 7, "loser_q2": 16, "loser_q3": 16, "loser_q4": 19, "loser_final": 22
+  },
+  {
+    "year": 2015,
+    "game_type": "afc_championship",
+    "winner": "Denver Broncos",
+    "loser": "New England Patriots",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 17, "winner_q4": 20, "winner_final": 20,
+    "loser_q1": 6, "loser_q2": 12, "loser_q3": 12, "loser_q4": 18, "loser_final": 18
+  },
+  {
+    "year": 2015,
+    "game_type": "nfc_championship",
+    "winner": "Carolina Panthers",
+    "loser": "Arizona Cardinals",
+    "winner_q1": 7, "winner_q2": 17, "winner_q3": 34, "winner_q4": 49, "winner_final": 49,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 15, "loser_final": 15
+  },
+  {
+    "year": 2016,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Pittsburgh Steelers",
+    "winner_q1": 3, "winner_q2": 17, "winner_q3": 30, "winner_q4": 36, "winner_final": 36,
+    "loser_q1": 3, "loser_q2": 9, "loser_q3": 9, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2016,
+    "game_type": "nfc_championship",
+    "winner": "Atlanta Falcons",
+    "loser": "Green Bay Packers",
+    "winner_q1": 10, "winner_q2": 17, "winner_q3": 24, "winner_q4": 44, "winner_final": 44,
+    "loser_q1": 0, "loser_q2": 14, "loser_q3": 14, "loser_q4": 21, "loser_final": 21
+  },
+  {
+    "year": 2017,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Jacksonville Jaguars",
+    "winner_q1": 0, "winner_q2": 10, "winner_q3": 10, "winner_q4": 24, "winner_final": 24,
+    "loser_q1": 3, "loser_q2": 14, "loser_q3": 20, "loser_q4": 20, "loser_final": 20
+  },
+  {
+    "year": 2017,
+    "game_type": "nfc_championship",
+    "winner": "Philadelphia Eagles",
+    "loser": "Minnesota Vikings",
+    "winner_q1": 7, "winner_q2": 24, "winner_q3": 31, "winner_q4": 38, "winner_final": 38,
+    "loser_q1": 0, "loser_q2": 0, "loser_q3": 7, "loser_q4": 7, "loser_final": 7
+  },
+  {
+    "year": 2018,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Kansas City Chiefs",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 17, "winner_q4": 31, "winner_final": 37,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 14, "loser_q4": 28, "loser_final": 31
+  },
+  {
+    "year": 2018,
+    "game_type": "nfc_championship",
+    "winner": "Los Angeles Rams",
+    "loser": "New Orleans Saints",
+    "winner_q1": 0, "winner_q2": 13, "winner_q3": 20, "winner_q4": 23, "winner_final": 26,
+    "loser_q1": 3, "loser_q2": 10, "loser_q3": 13, "loser_q4": 20, "loser_final": 23
+  },
+  {
+    "year": 2019,
+    "game_type": "afc_championship",
+    "winner": "Kansas City Chiefs",
+    "loser": "Tennessee Titans",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 21, "winner_q4": 35, "winner_final": 35,
+    "loser_q1": 7, "loser_q2": 17, "loser_q3": 17, "loser_q4": 24, "loser_final": 24
+  },
+  {
+    "year": 2019,
+    "game_type": "nfc_championship",
+    "winner": "San Francisco 49ers",
+    "loser": "Green Bay Packers",
+    "winner_q1": 7, "winner_q2": 20, "winner_q3": 27, "winner_q4": 37, "winner_final": 37,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 13, "loser_q4": 20, "loser_final": 20
+  },
+  {
+    "year": 2020,
+    "game_type": "afc_championship",
+    "winner": "Kansas City Chiefs",
+    "loser": "Buffalo Bills",
+    "winner_q1": 9, "winner_q2": 21, "winner_q3": 21, "winner_q4": 38, "winner_final": 38,
+    "loser_q1": 0, "loser_q2": 12, "loser_q3": 12, "loser_q4": 24, "loser_final": 24
+  },
+  {
+    "year": 2020,
+    "game_type": "nfc_championship",
+    "winner": "Tampa Bay Buccaneers",
+    "loser": "Green Bay Packers",
+    "winner_q1": 7, "winner_q2": 14, "winner_q3": 21, "winner_q4": 31, "winner_final": 31,
+    "loser_q1": 7, "loser_q2": 10, "loser_q3": 13, "loser_q4": 26, "loser_final": 26
+  },
+  {
+    "year": 2021,
+    "game_type": "afc_championship",
+    "winner": "Cincinnati Bengals",
+    "loser": "Kansas City Chiefs",
+    "winner_q1": 0, "winner_q2": 14, "winner_q3": 14, "winner_q4": 21, "winner_final": 27,
+    "loser_q1": 3, "loser_q2": 10, "loser_q3": 21, "loser_q4": 21, "loser_final": 24
+  },
+  {
+    "year": 2021,
+    "game_type": "nfc_championship",
+    "winner": "Los Angeles Rams",
+    "loser": "San Francisco 49ers",
+    "winner_q1": 7, "winner_q2": 10, "winner_q3": 10, "winner_q4": 20, "winner_final": 20,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 17, "loser_q4": 17, "loser_final": 17
+  },
+  {
+    "year": 2022,
+    "game_type": "afc_championship",
+    "winner": "Kansas City Chiefs",
+    "loser": "Cincinnati Bengals",
+    "winner_q1": 0, "winner_q2": 6, "winner_q3": 13, "winner_q4": 23, "winner_final": 23,
+    "loser_q1": 0, "loser_q2": 13, "loser_q3": 13, "loser_q4": 20, "loser_final": 20
+  },
+  {
+    "year": 2022,
+    "game_type": "nfc_championship",
+    "winner": "Philadelphia Eagles",
+    "loser": "San Francisco 49ers",
+    "winner_q1": 7, "winner_q2": 21, "winner_q3": 28, "winner_q4": 31, "winner_final": 31,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 7, "loser_final": 7
+  },
+  {
+    "year": 2023,
+    "game_type": "afc_championship",
+    "winner": "Kansas City Chiefs",
+    "loser": "Baltimore Ravens",
+    "winner_q1": 7, "winner_q2": 14, "winner_q3": 14, "winner_q4": 17, "winner_final": 17,
+    "loser_q1": 0, "loser_q2": 7, "loser_q3": 7, "loser_q4": 10, "loser_final": 10
+  },
+  {
+    "year": 2023,
+    "game_type": "nfc_championship",
+    "winner": "San Francisco 49ers",
+    "loser": "Detroit Lions",
+    "winner_q1": 0, "winner_q2": 7, "winner_q3": 24, "winner_q4": 34, "winner_final": 34,
+    "loser_q1": 7, "loser_q2": 24, "loser_q3": 24, "loser_q4": 31, "loser_final": 31
+  }
+]

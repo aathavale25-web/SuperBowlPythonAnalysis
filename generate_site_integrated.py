@@ -287,7 +287,7 @@ def generate_pages(data, output_dir):
     # Generate each page
     pages = {
         'index': 'index.html',
-        'squares': 'squares.html',
+        'squares': 'squares_filtered.html',
         'players': 'players_simple.html',  # Use simplified template
         'prop_lines': 'prop_lines.html',  # Betting prop lines
         'model_comparison': 'model_comparison.html',  # Model comparison
@@ -332,8 +332,19 @@ def generate_site():
         with open(comparison_path) as f:
             model_comparison = json.load(f)
 
+    # Load filtered squares data if available
+    squares_data = {}
+    squares_path = Path("data/squares_with_filters.json")
+    if squares_path.exists():
+        with open(squares_path) as f:
+            squares_data = json.load(f)
+    else:
+        # Fallback to old method if filtered data not available
+        squares_data = {'all': collect_squares_data()}
+
     data = {
-        'squares': collect_squares_data(),
+        'squares_data': squares_data,  # Filtered squares data
+        'squares': collect_squares_data(),  # Keep for index page
         'players': collect_players_data(),
         'prop_lines': prop_lines,
         'model_comparison': model_comparison,

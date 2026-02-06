@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% set page = 'squares' %}
+
+{% block title %}Squares Analysis - Super Bowl Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Super Bowl Squares Analysis</h1>
+    <p>Quarter-by-quarter probability analysis with recency weighting (2000-2023)</p>
+</div>
+
+<style>
+    .filter-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .filter-btn {
+        padding: 12px 24px;
+        background: white;
+        border: 2px solid #002244;
+        color: #002244;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.3s;
+        font-size: 0.95em;
+    }
+    .filter-btn:hover {
+        background: #f0f0f0;
+    }
+    .filter-btn.active {
+        background: #002244;
+        color: white;
+    }
+    .filter-info {
+        text-align: center;
+        margin: 15px 0;
+        font-size: 0.95em;
+        color: #666;
+    }
+    .quarter-tabs {
+        display: flex;
+        gap: 5px;
+        margin: 20px auto;
+        max-width: 700px;
+        justify-content: center;
+    }
+    .quarter-tab {
+        padding: 10px 20px;
+        background: white;
+        border: 2px solid #69BE28;
+        color: #002244;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.3s;
+        flex: 1;
+        text-align: center;
+    }
+    .quarter-tab:hover {
+        background: #f0f9f0;
+    }
+    .quarter-tab.active {
+        background: #69BE28;
+        color: white;
+    }
+    .squares-grid {
+        display: grid;
+        grid-template-columns: 40px repeat(10, 1fr);
+        grid-template-rows: 40px repeat(10, 1fr);
+        gap: 2px;
+        margin: 20px auto;
+        max-width: 700px;
+        background: #002244;
+        padding: 2px;
+        border-radius: 8px;
+    }
+    .grid-cell {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.85em;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+    .grid-header {
+        background: #002244;
+        color: white;
+        font-weight: bold;
+    }
+    .grid-data {
+        cursor: pointer;
+        position: relative;
+    }
+    .grid-data:hover {
+        transform: scale(1.1);
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .grid-label {
+        background: #69BE28;
+        color: white;
+        font-size: 0.9em;
+    }
+    .probability-legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        font-size: 0.9em;
+        flex-wrap: wrap;
+    }
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .legend-box {
+        width: 30px;
+        height: 20px;
+        border-radius: 3px;
+    }
+    .top-squares {
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .top-squares h3 {
+        color: #002244;
+        margin-bottom: 15px;
+    }
+    .square-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .square-item:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<!-- Game Type Filters -->
+<div class="filter-buttons">
+    <button class="filter-btn active" onclick="changeFilter('all')">All Games (72)</button>
+    <button class="filter-btn" onclick="changeFilter('superbowl')">Super Bowl Only (24)</button>
+    <button class="filter-btn" onclick="changeFilter('championship')">Championship Games (48)</button>
+    <button class="filter-btn" onclick="changeFilter('afc_championship')">AFC Championship (24)</button>
+    <button class="filter-btn" onclick="changeFilter('nfc_championship')">NFC Championship (24)</button>
+</div>
+
+<div class="filter-info" id="filter-info">
+    Showing: All Games (72 games, 126 weighted samples)
+</div>
+
+<!-- Quarter Tabs -->
+<div class="quarter-tabs">
+    <button class="quarter-tab active" onclick="changeQuarter('q1')">Q1</button>
+    <button class="quarter-tab" onclick="changeQuarter('q2')">Q2</button>
+    <button class="quarter-tab" onclick="changeQuarter('q3')">Q3</button>
+    <button class="quarter-tab" onclick="changeQuarter('q4')">Q4</button>
+    <button class="quarter-tab" onclick="changeQuarter('final')">Final</button>
+</div>
+
+<!-- Probability Legend -->
+<div class="probability-legend">
+    <div class="legend-item">
+        <div class="legend-box" style="background: #ef4444;"></div>
+        <span>0-2%</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-box" style="background: #f97316;"></div>
+        <span>2-4%</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-box" style="background: #eab308;"></div>
+        <span>4-6%</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-box" style="background: #84cc16;"></div>
+        <span>6-8%</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-box" style="background: #22c55e;"></div>
+        <span>8%+</span>
+    </div>
+</div>
+
+<!-- Squares Grid -->
+<div id="squares-container"></div>
+
+<!-- Top 10 Squares -->
+<div class="top-squares" id="top-squares"></div>
+
+<script>
+// Load the filtered squares data
+const squaresData = {{ data.squares_data|tojson|safe }};
+
+let currentFilter = 'all';
+let currentQuarter = 'q1';
+
+function getColor(probability) {
+    const pct = probability * 100;
+    if (pct >= 8) return '#22c55e';
+    if (pct >= 6) return '#84cc16';
+    if (pct >= 4) return '#eab308';
+    if (pct >= 2) return '#f97316';
+    return '#ef4444';
+}
+
+function renderGrid() {
+    const data = squaresData[currentFilter];
+    if (!data) return;
+
+    const matrix = data.matrices[currentQuarter];
+
+    let html = '<div class="squares-grid">';
+
+    // Top-left corner
+    html += '<div class="grid-cell grid-header"></div>';
+
+    // Top row (loser digits)
+    for (let i = 0; i < 10; i++) {
+        html += `<div class="grid-cell grid-label">${i}</div>`;
+    }
+
+    // Data rows
+    for (let row = 0; row < 10; row++) {
+        // Row label (winner digit)
+        html += `<div class="grid-cell grid-label">${row}</div>`;
+
+        // Data cells
+        for (let col = 0; col < 10; col++) {
+            const prob = matrix[row][col];
+            const color = getColor(prob);
+            const pct = (prob * 100).toFixed(1);
+            html += `<div class="grid-cell grid-data"
+                         style="background: ${color}; color: white;"
+                         title="${row}-${col}: ${pct}%"
+                         onclick="alert('Square ${row}-${col}: ${pct}% probability')">
+                        ${pct}%
+                    </div>`;
+        }
+    }
+
+    html += '</div>';
+
+    // Add axis labels
+    html += '<div style="text-align: center; margin: 10px 0; color: #666;">';
+    html += '<div><strong>Horizontal (Top):</strong> Loser\'s Last Digit</div>';
+    html += '<div><strong>Vertical (Left):</strong> Winner\'s Last Digit</div>';
+    html += '</div>';
+
+    document.getElementById('squares-container').innerHTML = html;
+}
+
+function renderTopSquares() {
+    const data = squaresData[currentFilter];
+    if (!data) return;
+
+    const ranked = data.ranked[currentQuarter];
+
+    let html = '<h3>Top 10 Squares for ' + currentQuarter.toUpperCase() + '</h3>';
+
+    for (let i = 0; i < Math.min(10, ranked.length); i++) {
+        const square = ranked[i];
+        const pct = (square.probability * 100).toFixed(2);
+        html += `<div class="square-item">
+                    <span><strong>${i + 1}.</strong> Winner: ${square.winner}, Loser: ${square.loser}</span>
+                    <span style="color: #69BE28; font-weight: bold;">${pct}%</span>
+                 </div>`;
+    }
+
+    document.getElementById('top-squares').innerHTML = html;
+}
+
+function changeFilter(filter) {
+    currentFilter = filter;
+
+    // Update button states
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    // Update info
+    const data = squaresData[filter];
+    document.getElementById('filter-info').innerHTML =
+        `Showing: ${data.name} (${data.game_count} games, ${data.sample_count} weighted samples)`;
+
+    renderGrid();
+    renderTopSquares();
+}
+
+function changeQuarter(quarter) {
+    currentQuarter = quarter;
+
+    // Update button states
+    document.querySelectorAll('.quarter-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    renderGrid();
+    renderTopSquares();
+}
+
+// Initial render
+renderGrid();
+renderTopSquares();
+</script>
+
+<div class="stat-card" style="margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <h2>About This Analysis</h2>
+    <p><strong>Dataset:</strong> 72 championship games from 2000-2023 (24 Super Bowls, 24 AFC Championships, 24 NFC Championships)</p>
+    <p><strong>Methodology:</strong> Probabilities calculated from actual score combination frequencies, not independence assumptions. Recency weighting applied (3x last 5 years, 2x last 15 years, 1x older).</p>
+    <p><strong>How to Use:</strong></p>
+    <ul>
+        <li>Select a game type filter to see probabilities for specific types of games</li>
+        <li>Select a quarter to see how probabilities change throughout the game</li>
+        <li>Hover over squares to see exact probabilities</li>
+        <li>Green squares are best, red squares are worst</li>
+    </ul>
+</div>
+
+{% endblock %}

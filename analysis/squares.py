@@ -138,7 +138,7 @@ def load_superbowl_games():
 
     try:
         result = conn.execute("""
-            SELECT year, winner, loser,
+            SELECT year, game_type, winner, loser,
                    winner_q1, winner_q2, winner_q3, winner_q4, winner_final,
                    loser_q1, loser_q2, loser_q3, loser_q4, loser_final
             FROM superbowl_games
@@ -149,18 +149,19 @@ def load_superbowl_games():
         for row in result:
             games.append({
                 "year": row[0],
-                "winner": row[1],
-                "loser": row[2],
-                "winner_q1": row[3],
-                "winner_q2": row[4],
-                "winner_q3": row[5],
-                "winner_q4": row[6],
-                "winner_final": row[7],
-                "loser_q1": row[8],
-                "loser_q2": row[9],
-                "loser_q3": row[10],
-                "loser_q4": row[11],
-                "loser_final": row[12]
+                "game_type": row[1],
+                "winner": row[2],
+                "loser": row[3],
+                "winner_q1": row[4],
+                "winner_q2": row[5],
+                "winner_q3": row[6],
+                "winner_q4": row[7],
+                "winner_final": row[8],
+                "loser_q1": row[9],
+                "loser_q2": row[10],
+                "loser_q3": row[11],
+                "loser_q4": row[12],
+                "loser_final": row[13]
             })
 
         return games
