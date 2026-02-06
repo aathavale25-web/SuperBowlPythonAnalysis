@@ -147,6 +147,77 @@
     .square-item:last-child {
         border-bottom: none;
     }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: auto;
+    }
+    .modal-content {
+        background-color: white;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 700px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #002244;
+    }
+    .modal-header h2 {
+        color: #002244;
+        margin: 0;
+    }
+    .close-modal {
+        font-size: 2em;
+        font-weight: bold;
+        color: #666;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .close-modal:hover {
+        color: #000;
+    }
+    .game-item {
+        padding: 15px;
+        margin: 10px 0;
+        background: #f8f9fa;
+        border-left: 4px solid #69BE28;
+        border-radius: 4px;
+    }
+    .game-type-badge {
+        display: inline-block;
+        background: #002244;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.75em;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .game-score {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #002244;
+        margin: 5px 0;
+    }
+    .game-meta {
+        font-size: 0.9em;
+        color: #666;
+    }
 </style>
 
 <!-- Game Type Filters -->
@@ -201,6 +272,17 @@
 <!-- Top 10 Squares -->
 <div class="top-squares" id="top-squares"></div>
 
+<!-- Game Details Modal -->
+<div id="gameModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title"></h2>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+        </div>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
 <script>
 // Load the filtered squares data
 const squaresData = {{ data.squares_data|tojson|safe }};
@@ -245,8 +327,8 @@ function renderGrid() {
             const pct = (prob * 100).toFixed(1);
             html += `<div class="grid-cell grid-data"
                          style="background: ${color}; color: white;"
-                         title="${row}-${col}: ${pct}%"
-                         onclick="alert('Square ${row}-${col}: ${pct}% probability')">
+                         title="${row}-${col}: ${pct}% - Click to see games"
+                         onclick="showGameDetails(${row}, ${col}, ${pct})">
                         ${pct}%
                     </div>`;
         }
@@ -312,6 +394,69 @@ function changeQuarter(quarter) {
 
     renderGrid();
     renderTopSquares();
+}
+
+function showGameDetails(winnerDigit, loserDigit, probability) {
+    const data = squaresData[currentFilter];
+    if (!data) return;
+
+    const gameDetails = data.game_details[currentQuarter];
+    const key = `${winnerDigit}-${loserDigit}`;
+    const games = gameDetails[key] || [];
+
+    // Set modal title
+    document.getElementById('modal-title').innerHTML =
+        `Square ${winnerDigit}-${loserDigit} (${probability}% probability)`;
+
+    // Build modal body
+    let html = '';
+
+    if (games.length === 0) {
+        html = '<p style="text-align: center; color: #666; padding: 20px;">No games found for this square combination.</p>';
+    } else {
+        html += `<p style="margin-bottom: 15px; color: #666;">
+                    <strong>${games.length} game${games.length !== 1 ? 's' : ''}</strong> with this score combination in ${currentQuarter.toUpperCase()}
+                 </p>`;
+
+        // Sort by year descending
+        games.sort((a, b) => b.year - a.year);
+
+        for (const game of games) {
+            const gameTypeName = game.game_type === 'superbowl' ? 'Super Bowl' :
+                               game.game_type === 'afc_championship' ? 'AFC Championship' :
+                               game.game_type === 'nfc_championship' ? 'NFC Championship' : game.game_type;
+
+            html += `<div class="game-item">
+                        <div>
+                            <span class="game-type-badge">${gameTypeName}</span>
+                            <span class="game-meta">${game.year}</span>
+                        </div>
+                        <div class="game-score">
+                            ${game.winner} ${game.winner_score} - ${game.loser} ${game.loser_score}
+                        </div>
+                        <div class="game-meta">
+                            Final Score: ${game.winner} ${game.winner_final} - ${game.loser} ${game.loser_final}
+                        </div>
+                     </div>`;
+        }
+    }
+
+    document.getElementById('modal-body').innerHTML = html;
+
+    // Show modal
+    document.getElementById('gameModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('gameModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('gameModal');
+    if (event.target == modal) {
+        closeModal();
+    }
 }
 
 // Initial render
