@@ -291,6 +291,7 @@ def generate_pages(data, output_dir):
         'players': 'players_simple.html',  # Use simplified template
         'prop_lines': 'prop_lines.html',  # Betting prop lines
         'model_comparison': 'model_comparison.html',  # Model comparison
+        'safe_overs': 'safe_overs.html',  # Safe over bets
         'about': 'about.html'
     }
 
@@ -349,9 +350,17 @@ def generate_site():
         with open(progression_path) as f:
             progression_data = json.load(f)
 
+    # Load safe overs data
+    safe_overs = {}
+    safe_overs_path = Path("data/safe_overs.json")
+    if safe_overs_path.exists():
+        with open(safe_overs_path) as f:
+            safe_overs = json.load(f)
+
     data = {
         'squares_data': squares_data,  # Filtered squares data
         'progression_data': progression_data,  # Game progression data
+        'safe_overs': safe_overs,  # Safe over bets
         'squares': collect_squares_data(),  # Keep for index page
         'players': collect_players_data(),
         'prop_lines': prop_lines,

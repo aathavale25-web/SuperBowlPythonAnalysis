@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Bowl Analysis</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🏈 Super Bowl<br>Analysis</h1>
+            </div>
+
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" >Dashboard</a></li>
+                    <li><a href="squares.html" >Squares Analysis</a></li>
+                    <li><a href="players.html" >Player Stats</a></li>
+                    <li><a href="prop_lines.html" >Betting Props</a></li>
+                    <li><a href="safe_overs.html" class="active">Safe Overs</a></li>
+                    <li><a href="model_comparison.html" >Model Comparison</a></li>
+                    <li><a href="about.html" >About</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="regenerate-btn" onclick="regenerateAnalysis()">
+                    🔄 Regenerate Analysis
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+<h1>Safe OVER Bets</h1>
+<p class="subtitle">High-Probability Props Based on 2025 Season Consistency</p>
+
+<style>
+    .confidence-section {
+        margin: 30px 0;
+    }
+    .confidence-header {
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    .elite-header {
+        background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    }
+    .strong-header {
+        background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+    }
+    .good-header {
+        background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%);
+    }
+    .bet-card {
+        background: white;
+        padding: 20px;
+        margin: 0 0 15px 0;
+        border-left: 4px solid;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .elite-card { border-left-color: #22c55e; }
+    .strong-card { border-left-color: #38bdf8; }
+    .good-card { border-left-color: #fbbf24; }
+
+    .bet-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #002244;
+        margin-bottom: 10px;
+    }
+    .bet-prop {
+        font-size: 1.1em;
+        color: #69BE28;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .hit-rate {
+        display: inline-block;
+        background: #002244;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin: 10px 0;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+    }
+    .stat-item {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+    }
+    .stat-label {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .stat-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #002244;
+    }
+    .game-history {
+        margin-top: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+    .game-history-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #002244;
+    }
+    .game-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .game-value {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+    .over-value {
+        background: #dcfce7;
+        color: #15803d;
+    }
+    .under-value {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+</style>
+
+<!-- Summary Stats -->
+<div class="stat-card" style="background: linear-gradient(135deg, #002244 0%, #69BE28 100%); color: white; margin-bottom: 30px;">
+    <h2 style="margin-top: 0; color: white;">📊 Summary</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">5</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Elite Bets (85%+)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">3</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Strong Bets (75-84%)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">8</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Good Bets (65-74%)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">16</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Total Safe Overs</div>
+        </div>
+    </div>
+</div>
+
+<!-- ELITE BETS -->
+<div class="confidence-section">
+    <div class="confidence-header elite-header">
+        🔥 ELITE BETS (85%+ Hit Rate) - Most Consistent Performers
+    </div>
+
+    
+    <div class="bet-card elite-card">
+        <div class="bet-title">Drake Maye (QB)</div>
+        <div class="bet-prop">Rushing Yards OVER 9.5</div>
+        <div class="hit-rate">95.0% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">19/20</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">29.6</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">28.6</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-66</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    66
+                </span>
+                
+                <span class="game-value over-value">
+                    11
+                </span>
+                
+                <span class="game-value over-value">
+                    10
+                </span>
+                
+                <span class="game-value over-value">
+                    31
+                </span>
+                
+                <span class="game-value over-value">
+                    65
+                </span>
+                
+                <span class="game-value over-value">
+                    45
+                </span>
+                
+                <span class="game-value over-value">
+                    11
+                </span>
+                
+                <span class="game-value over-value">
+                    12
+                </span>
+                
+                <span class="game-value over-value">
+                    28
+                </span>
+                
+                <span class="game-value over-value">
+                    62
+                </span>
+                
+                <span class="game-value over-value">
+                    50
+                </span>
+                
+                <span class="game-value over-value">
+                    20
+                </span>
+                
+                <span class="game-value over-value">
+                    13
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    22
+                </span>
+                
+                <span class="game-value over-value">
+                    12
+                </span>
+                
+                <span class="game-value over-value">
+                    43
+                </span>
+                
+                <span class="game-value over-value">
+                    25
+                </span>
+                
+                <span class="game-value over-value">
+                    22
+                </span>
+                
+                <span class="game-value over-value">
+                    41
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card elite-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receptions OVER 3.5</div>
+        <div class="hit-rate">89.5% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">17/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">6.9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">7.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-10</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value under-value">
+                    3
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    10
+                </span>
+                
+                <span class="game-value over-value">
+                    5
+                </span>
+                
+                <span class="game-value over-value">
+                    4
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    5
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    6
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card elite-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receiving Yards OVER 49.5</div>
+        <div class="hit-rate">89.5% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">17/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">103.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">91.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">19-167</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    124
+                </span>
+                
+                <span class="game-value under-value">
+                    19
+                </span>
+                
+                <span class="game-value over-value">
+                    103
+                </span>
+                
+                <span class="game-value over-value">
+                    153
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    79
+                </span>
+                
+                <span class="game-value over-value">
+                    132
+                </span>
+                
+                <span class="game-value over-value">
+                    162
+                </span>
+                
+                <span class="game-value over-value">
+                    123
+                </span>
+                
+                <span class="game-value over-value">
+                    129
+                </span>
+                
+                <span class="game-value over-value">
+                    93
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    167
+                </span>
+                
+                <span class="game-value under-value">
+                    23
+                </span>
+                
+                <span class="game-value over-value">
+                    92
+                </span>
+                
+                <span class="game-value over-value">
+                    113
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    72
+                </span>
+                
+                <span class="game-value over-value">
+                    84
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card elite-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receiving Yards OVER 59.5</div>
+        <div class="hit-rate">89.5% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">17/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">103.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">91.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">19-167</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    124
+                </span>
+                
+                <span class="game-value under-value">
+                    19
+                </span>
+                
+                <span class="game-value over-value">
+                    103
+                </span>
+                
+                <span class="game-value over-value">
+                    153
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    79
+                </span>
+                
+                <span class="game-value over-value">
+                    132
+                </span>
+                
+                <span class="game-value over-value">
+                    162
+                </span>
+                
+                <span class="game-value over-value">
+                    123
+                </span>
+                
+                <span class="game-value over-value">
+                    129
+                </span>
+                
+                <span class="game-value over-value">
+                    93
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    167
+                </span>
+                
+                <span class="game-value under-value">
+                    23
+                </span>
+                
+                <span class="game-value over-value">
+                    92
+                </span>
+                
+                <span class="game-value over-value">
+                    113
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    72
+                </span>
+                
+                <span class="game-value over-value">
+                    84
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card elite-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receiving Yards OVER 69.5</div>
+        <div class="hit-rate">89.5% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">17/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">103.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">91.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">19-167</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    124
+                </span>
+                
+                <span class="game-value under-value">
+                    19
+                </span>
+                
+                <span class="game-value over-value">
+                    103
+                </span>
+                
+                <span class="game-value over-value">
+                    153
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    79
+                </span>
+                
+                <span class="game-value over-value">
+                    132
+                </span>
+                
+                <span class="game-value over-value">
+                    162
+                </span>
+                
+                <span class="game-value over-value">
+                    123
+                </span>
+                
+                <span class="game-value over-value">
+                    129
+                </span>
+                
+                <span class="game-value over-value">
+                    93
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    167
+                </span>
+                
+                <span class="game-value under-value">
+                    23
+                </span>
+                
+                <span class="game-value over-value">
+                    92
+                </span>
+                
+                <span class="game-value over-value">
+                    113
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value over-value">
+                    72
+                </span>
+                
+                <span class="game-value over-value">
+                    84
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- STRONG BETS -->
+<div class="confidence-section">
+    <div class="confidence-header strong-header">
+        💪 STRONG BETS (75-84% Hit Rate) - Highly Reliable
+    </div>
+
+    
+    <div class="bet-card strong-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receptions OVER 4.5</div>
+        <div class="hit-rate">84.2% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">16/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">6.9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">7.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-10</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value under-value">
+                    3
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    10
+                </span>
+                
+                <span class="game-value over-value">
+                    5
+                </span>
+                
+                <span class="game-value under-value">
+                    4
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    5
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    6
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card strong-card">
+        <div class="bet-title">Drake Maye (QB)</div>
+        <div class="bet-prop">Passing Yards OVER 199.5</div>
+        <div class="hit-rate">80.0% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">16/20</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">246.3</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">252.8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">86-380</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value over-value">
+                    287
+                </span>
+                
+                <span class="game-value under-value">
+                    179
+                </span>
+                
+                <span class="game-value over-value">
+                    230
+                </span>
+                
+                <span class="game-value under-value">
+                    86
+                </span>
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value over-value">
+                    203
+                </span>
+                
+                <span class="game-value over-value">
+                    273
+                </span>
+                
+                <span class="game-value over-value">
+                    261
+                </span>
+                
+                <span class="game-value over-value">
+                    222
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value over-value">
+                    259
+                </span>
+                
+                <span class="game-value over-value">
+                    270
+                </span>
+                
+                <span class="game-value over-value">
+                    281
+                </span>
+                
+                <span class="game-value over-value">
+                    294
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value under-value">
+                    155
+                </span>
+                
+                <span class="game-value over-value">
+                    380
+                </span>
+                
+                <span class="game-value over-value">
+                    256
+                </span>
+                
+                <span class="game-value under-value">
+                    191
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card strong-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receiving Yards OVER 79.5</div>
+        <div class="hit-rate">78.9% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">15/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">103.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">91.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">19-167</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    124
+                </span>
+                
+                <span class="game-value under-value">
+                    19
+                </span>
+                
+                <span class="game-value over-value">
+                    103
+                </span>
+                
+                <span class="game-value over-value">
+                    153
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value under-value">
+                    79
+                </span>
+                
+                <span class="game-value over-value">
+                    132
+                </span>
+                
+                <span class="game-value over-value">
+                    162
+                </span>
+                
+                <span class="game-value over-value">
+                    123
+                </span>
+                
+                <span class="game-value over-value">
+                    129
+                </span>
+                
+                <span class="game-value over-value">
+                    93
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    167
+                </span>
+                
+                <span class="game-value under-value">
+                    23
+                </span>
+                
+                <span class="game-value over-value">
+                    92
+                </span>
+                
+                <span class="game-value over-value">
+                    113
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value under-value">
+                    72
+                </span>
+                
+                <span class="game-value over-value">
+                    84
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- GOOD BETS -->
+<div class="confidence-section">
+    <div class="confidence-header good-header">
+        ✅ GOOD BETS (65-74% Hit Rate) - Solid Options
+    </div>
+
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receptions OVER 5.5</div>
+        <div class="hit-rate">73.7% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">14/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">6.9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">7.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-10</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value under-value">
+                    3
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    10
+                </span>
+                
+                <span class="game-value under-value">
+                    5
+                </span>
+                
+                <span class="game-value under-value">
+                    4
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    5
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    6
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receiving Yards OVER 89.5</div>
+        <div class="hit-rate">73.7% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">14/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">103.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">91.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">19-167</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    124
+                </span>
+                
+                <span class="game-value under-value">
+                    19
+                </span>
+                
+                <span class="game-value over-value">
+                    103
+                </span>
+                
+                <span class="game-value over-value">
+                    153
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value under-value">
+                    79
+                </span>
+                
+                <span class="game-value over-value">
+                    132
+                </span>
+                
+                <span class="game-value over-value">
+                    162
+                </span>
+                
+                <span class="game-value over-value">
+                    123
+                </span>
+                
+                <span class="game-value over-value">
+                    129
+                </span>
+                
+                <span class="game-value over-value">
+                    93
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    167
+                </span>
+                
+                <span class="game-value under-value">
+                    23
+                </span>
+                
+                <span class="game-value over-value">
+                    92
+                </span>
+                
+                <span class="game-value over-value">
+                    113
+                </span>
+                
+                <span class="game-value over-value">
+                    96
+                </span>
+                
+                <span class="game-value under-value">
+                    72
+                </span>
+                
+                <span class="game-value under-value">
+                    84
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Drake Maye (QB)</div>
+        <div class="bet-prop">Passing Yards OVER 224.5</div>
+        <div class="hit-rate">70.0% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">14/20</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">246.3</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">252.8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">86-380</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value over-value">
+                    287
+                </span>
+                
+                <span class="game-value under-value">
+                    179
+                </span>
+                
+                <span class="game-value over-value">
+                    230
+                </span>
+                
+                <span class="game-value under-value">
+                    86
+                </span>
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value under-value">
+                    203
+                </span>
+                
+                <span class="game-value over-value">
+                    273
+                </span>
+                
+                <span class="game-value over-value">
+                    261
+                </span>
+                
+                <span class="game-value under-value">
+                    222
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value over-value">
+                    259
+                </span>
+                
+                <span class="game-value over-value">
+                    270
+                </span>
+                
+                <span class="game-value over-value">
+                    281
+                </span>
+                
+                <span class="game-value over-value">
+                    294
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value under-value">
+                    155
+                </span>
+                
+                <span class="game-value over-value">
+                    380
+                </span>
+                
+                <span class="game-value over-value">
+                    256
+                </span>
+                
+                <span class="game-value under-value">
+                    191
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Sam Darnold (QB)</div>
+        <div class="bet-prop">Passing Yards OVER 199.5</div>
+        <div class="hit-rate">68.4% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">13/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">237.8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">227.0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">124-346</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value under-value">
+                    150
+                </span>
+                
+                <span class="game-value under-value">
+                    124
+                </span>
+                
+                <span class="game-value over-value">
+                    295
+                </span>
+                
+                <span class="game-value over-value">
+                    346
+                </span>
+                
+                <span class="game-value over-value">
+                    218
+                </span>
+                
+                <span class="game-value over-value">
+                    242
+                </span>
+                
+                <span class="game-value over-value">
+                    341
+                </span>
+                
+                <span class="game-value over-value">
+                    295
+                </span>
+                
+                <span class="game-value over-value">
+                    213
+                </span>
+                
+                <span class="game-value over-value">
+                    330
+                </span>
+                
+                <span class="game-value under-value">
+                    178
+                </span>
+                
+                <span class="game-value over-value">
+                    279
+                </span>
+                
+                <span class="game-value over-value">
+                    244
+                </span>
+                
+                <span class="game-value under-value">
+                    128
+                </span>
+                
+                <span class="game-value over-value">
+                    249
+                </span>
+                
+                <span class="game-value over-value">
+                    271
+                </span>
+                
+                <span class="game-value over-value">
+                    270
+                </span>
+                
+                <span class="game-value under-value">
+                    147
+                </span>
+                
+                <span class="game-value under-value">
+                    198
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Kenneth Walker III (RB)</div>
+        <div class="bet-prop">Rushing Yards OVER 49.5</div>
+        <div class="hit-rate">68.4% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">13/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">63.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">58.8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">17-116</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value under-value">
+                    20
+                </span>
+                
+                <span class="game-value over-value">
+                    116
+                </span>
+                
+                <span class="game-value over-value">
+                    105
+                </span>
+                
+                <span class="game-value over-value">
+                    62
+                </span>
+                
+                <span class="game-value under-value">
+                    38
+                </span>
+                
+                <span class="game-value over-value">
+                    81
+                </span>
+                
+                <span class="game-value over-value">
+                    86
+                </span>
+                
+                <span class="game-value under-value">
+                    34
+                </span>
+                
+                <span class="game-value over-value">
+                    66
+                </span>
+                
+                <span class="game-value under-value">
+                    42
+                </span>
+                
+                <span class="game-value over-value">
+                    67
+                </span>
+                
+                <span class="game-value over-value">
+                    67
+                </span>
+                
+                <span class="game-value over-value">
+                    71
+                </span>
+                
+                <span class="game-value over-value">
+                    56
+                </span>
+                
+                <span class="game-value under-value">
+                    29
+                </span>
+                
+                <span class="game-value under-value">
+                    17
+                </span>
+                
+                <span class="game-value over-value">
+                    100
+                </span>
+                
+                <span class="game-value over-value">
+                    51
+                </span>
+                
+                <span class="game-value over-value">
+                    97
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Jaxon Smith-Njigba (WR)</div>
+        <div class="bet-prop">Receptions OVER 6.5</div>
+        <div class="hit-rate">68.4% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">13/19</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">6.9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">7.4</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-10</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value under-value">
+                    3
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    10
+                </span>
+                
+                <span class="game-value under-value">
+                    5
+                </span>
+                
+                <span class="game-value under-value">
+                    4
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    5
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    7
+                </span>
+                
+                <span class="game-value over-value">
+                    8
+                </span>
+                
+                <span class="game-value over-value">
+                    9
+                </span>
+                
+                <span class="game-value under-value">
+                    6
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Drake Maye (QB)</div>
+        <div class="bet-prop">Passing Yards OVER 249.5</div>
+        <div class="hit-rate">65.0% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">13/20</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">246.3</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">252.8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">86-380</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value over-value">
+                    287
+                </span>
+                
+                <span class="game-value under-value">
+                    179
+                </span>
+                
+                <span class="game-value under-value">
+                    230
+                </span>
+                
+                <span class="game-value under-value">
+                    86
+                </span>
+                
+                <span class="game-value over-value">
+                    268
+                </span>
+                
+                <span class="game-value under-value">
+                    203
+                </span>
+                
+                <span class="game-value over-value">
+                    273
+                </span>
+                
+                <span class="game-value over-value">
+                    261
+                </span>
+                
+                <span class="game-value under-value">
+                    222
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value over-value">
+                    259
+                </span>
+                
+                <span class="game-value over-value">
+                    270
+                </span>
+                
+                <span class="game-value over-value">
+                    281
+                </span>
+                
+                <span class="game-value over-value">
+                    294
+                </span>
+                
+                <span class="game-value over-value">
+                    282
+                </span>
+                
+                <span class="game-value under-value">
+                    155
+                </span>
+                
+                <span class="game-value over-value">
+                    380
+                </span>
+                
+                <span class="game-value over-value">
+                    256
+                </span>
+                
+                <span class="game-value under-value">
+                    191
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="bet-card good-card">
+        <div class="bet-title">Drake Maye (QB)</div>
+        <div class="bet-prop">Rushing Yards OVER 19.5</div>
+        <div class="hit-rate">65.0% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">13/20</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">29.6</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">28.6</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">2-66</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                
+                <span class="game-value over-value">
+                    66
+                </span>
+                
+                <span class="game-value under-value">
+                    11
+                </span>
+                
+                <span class="game-value under-value">
+                    10
+                </span>
+                
+                <span class="game-value over-value">
+                    31
+                </span>
+                
+                <span class="game-value over-value">
+                    65
+                </span>
+                
+                <span class="game-value over-value">
+                    45
+                </span>
+                
+                <span class="game-value under-value">
+                    11
+                </span>
+                
+                <span class="game-value under-value">
+                    12
+                </span>
+                
+                <span class="game-value over-value">
+                    28
+                </span>
+                
+                <span class="game-value over-value">
+                    62
+                </span>
+                
+                <span class="game-value over-value">
+                    50
+                </span>
+                
+                <span class="game-value over-value">
+                    20
+                </span>
+                
+                <span class="game-value under-value">
+                    13
+                </span>
+                
+                <span class="game-value under-value">
+                    2
+                </span>
+                
+                <span class="game-value over-value">
+                    22
+                </span>
+                
+                <span class="game-value under-value">
+                    12
+                </span>
+                
+                <span class="game-value over-value">
+                    43
+                </span>
+                
+                <span class="game-value over-value">
+                    25
+                </span>
+                
+                <span class="game-value over-value">
+                    22
+                </span>
+                
+                <span class="game-value over-value">
+                    41
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- Methodology -->
+<div class="stat-card" style="margin-top: 40px;">
+    <h2>📖 How This Works</h2>
+    <ul>
+        <li><strong>Data Source:</strong> 2025 regular season game logs for all tracked players</li>
+        <li><strong>Hit Rate:</strong> Percentage of games where the player went OVER the line</li>
+        <li><strong>Minimum Games:</strong> Players need at least 3 games to be included</li>
+        <li><strong>Elite (85%+):</strong> Extremely consistent - hit the over in almost every game</li>
+        <li><strong>Strong (75-84%):</strong> Very reliable - hit the over in 3 out of 4 games</li>
+        <li><strong>Good (65-74%):</strong> Solid option - hit the over in 2 out of 3 games</li>
+        <li><strong>Green Values:</strong> Games where player went OVER the line</li>
+        <li><strong>Red Values:</strong> Games where player stayed UNDER the line</li>
+    </ul>
+    <p><strong>Note:</strong> Past performance doesn't guarantee future results, but consistency is a strong indicator. Use this data alongside other factors like opponent, weather, and game script.</p>
+</div>
+
+
+
+            <footer class="footer">
+                <p>Last updated: 2026-02-05 22:49:39</p>
+                <p>Data-driven Super Bowl analysis</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Regenerating analysis...</p>
+        <p class="progress-text">This may take up to a minute</p>
+    </div>
+
+    <script>
+        async function regenerateAnalysis() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/regenerate', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            } catch (error) {
+                alert('Regeneration failed: ' + error);
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

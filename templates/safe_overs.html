@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{% set page = 'safe_overs' %}
+
+{% block content %}
+<h1>Safe OVER Bets</h1>
+<p class="subtitle">High-Probability Props Based on 2025 Season Consistency</p>
+
+<style>
+    .confidence-section {
+        margin: 30px 0;
+    }
+    .confidence-header {
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    .elite-header {
+        background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    }
+    .strong-header {
+        background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+    }
+    .good-header {
+        background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%);
+    }
+    .bet-card {
+        background: white;
+        padding: 20px;
+        margin: 0 0 15px 0;
+        border-left: 4px solid;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .elite-card { border-left-color: #22c55e; }
+    .strong-card { border-left-color: #38bdf8; }
+    .good-card { border-left-color: #fbbf24; }
+
+    .bet-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #002244;
+        margin-bottom: 10px;
+    }
+    .bet-prop {
+        font-size: 1.1em;
+        color: #69BE28;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .hit-rate {
+        display: inline-block;
+        background: #002244;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin: 10px 0;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+    }
+    .stat-item {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+    }
+    .stat-label {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .stat-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #002244;
+    }
+    .game-history {
+        margin-top: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+    .game-history-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #002244;
+    }
+    .game-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .game-value {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+    .over-value {
+        background: #dcfce7;
+        color: #15803d;
+    }
+    .under-value {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+</style>
+
+<!-- Summary Stats -->
+<div class="stat-card" style="background: linear-gradient(135deg, #002244 0%, #69BE28 100%); color: white; margin-bottom: 30px;">
+    <h2 style="margin-top: 0; color: white;">📊 Summary</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">{{ data.safe_overs.elite|length }}</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Elite Bets (85%+)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">{{ data.safe_overs.strong|length }}</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Strong Bets (75-84%)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">{{ data.safe_overs.good|length }}</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Good Bets (65-74%)</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5em; font-weight: bold;">{{ data.safe_overs.all|length }}</div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Total Safe Overs</div>
+        </div>
+    </div>
+</div>
+
+<!-- ELITE BETS -->
+<div class="confidence-section">
+    <div class="confidence-header elite-header">
+        🔥 ELITE BETS (85%+ Hit Rate) - Most Consistent Performers
+    </div>
+
+    {% for bet in data.safe_overs.elite %}
+    <div class="bet-card elite-card">
+        <div class="bet-title">{{ bet.player }} ({{ bet.position }})</div>
+        <div class="bet-prop">{{ bet.stat.replace('_', ' ').title() }} OVER {{ bet.line }}</div>
+        <div class="hit-rate">{{ "%.1f"|format(bet.hit_rate) }}% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">{{ bet.overs }}/{{ bet.games }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.recent_avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">{{ bet.min }}-{{ bet.max }}</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                {% for value in bet['values'] %}
+                <span class="game-value {% if value > bet.line %}over-value{% else %}under-value{% endif %}">
+                    {{ value }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- STRONG BETS -->
+<div class="confidence-section">
+    <div class="confidence-header strong-header">
+        💪 STRONG BETS (75-84% Hit Rate) - Highly Reliable
+    </div>
+
+    {% for bet in data.safe_overs.strong %}
+    <div class="bet-card strong-card">
+        <div class="bet-title">{{ bet.player }} ({{ bet.position }})</div>
+        <div class="bet-prop">{{ bet.stat.replace('_', ' ').title() }} OVER {{ bet.line }}</div>
+        <div class="hit-rate">{{ "%.1f"|format(bet.hit_rate) }}% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">{{ bet.overs }}/{{ bet.games }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.recent_avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">{{ bet.min }}-{{ bet.max }}</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                {% for value in bet['values'] %}
+                <span class="game-value {% if value > bet.line %}over-value{% else %}under-value{% endif %}">
+                    {{ value }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- GOOD BETS -->
+<div class="confidence-section">
+    <div class="confidence-header good-header">
+        ✅ GOOD BETS (65-74% Hit Rate) - Solid Options
+    </div>
+
+    {% for bet in data.safe_overs.good %}
+    <div class="bet-card good-card">
+        <div class="bet-title">{{ bet.player }} ({{ bet.position }})</div>
+        <div class="bet-prop">{{ bet.stat.replace('_', ' ').title() }} OVER {{ bet.line }}</div>
+        <div class="hit-rate">{{ "%.1f"|format(bet.hit_rate) }}% Hit Rate</div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Games Hit</div>
+                <div class="stat-value">{{ bet.overs }}/{{ bet.games }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Season Average</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Recent Average (L5)</div>
+                <div class="stat-value">{{ "%.1f"|format(bet.recent_avg) }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Range</div>
+                <div class="stat-value">{{ bet.min }}-{{ bet.max }}</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <div class="game-history-title">📈 Game-by-Game Performance</div>
+            <div class="game-values">
+                {% for value in bet['values'] %}
+                <span class="game-value {% if value > bet.line %}over-value{% else %}under-value{% endif %}">
+                    {{ value }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Methodology -->
+<div class="stat-card" style="margin-top: 40px;">
+    <h2>📖 How This Works</h2>
+    <ul>
+        <li><strong>Data Source:</strong> 2025 regular season game logs for all tracked players</li>
+        <li><strong>Hit Rate:</strong> Percentage of games where the player went OVER the line</li>
+        <li><strong>Minimum Games:</strong> Players need at least 3 games to be included</li>
+        <li><strong>Elite (85%+):</strong> Extremely consistent - hit the over in almost every game</li>
+        <li><strong>Strong (75-84%):</strong> Very reliable - hit the over in 3 out of 4 games</li>
+        <li><strong>Good (65-74%):</strong> Solid option - hit the over in 2 out of 3 games</li>
+        <li><strong>Green Values:</strong> Games where player went OVER the line</li>
+        <li><strong>Red Values:</strong> Games where player stayed UNDER the line</li>
+    </ul>
+    <p><strong>Note:</strong> Past performance doesn't guarantee future results, but consistency is a strong indicator. Use this data alongside other factors like opponent, weather, and game script.</p>
+</div>
+
+{% endblock %}
