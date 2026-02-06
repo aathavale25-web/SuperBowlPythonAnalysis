@@ -342,8 +342,16 @@ def generate_site():
         # Fallback to old method if filtered data not available
         squares_data = {'all': collect_squares_data()}
 
+    # Load game progression data for conditional probabilities
+    progression_data = {}
+    progression_path = Path("data/game_progressions.json")
+    if progression_path.exists():
+        with open(progression_path) as f:
+            progression_data = json.load(f)
+
     data = {
         'squares_data': squares_data,  # Filtered squares data
+        'progression_data': progression_data,  # Game progression data
         'squares': collect_squares_data(),  # Keep for index page
         'players': collect_players_data(),
         'prop_lines': prop_lines,

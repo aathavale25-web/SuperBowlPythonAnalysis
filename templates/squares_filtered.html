@@ -242,6 +242,38 @@
     <button class="quarter-tab" onclick="changeQuarter('final')">Final</button>
 </div>
 
+<!-- Conditional Probability Calculator -->
+<div style="max-width: 700px; margin: 20px auto; padding: 20px; background: linear-gradient(135deg, #002244 0%, #69BE28 100%); border-radius: 8px; color: white;">
+    <h3 style="margin-top: 0; color: white;">🎯 Live Game Calculator</h3>
+    <p style="font-size: 0.9em; opacity: 0.9; margin-bottom: 15px;">Enter the current quarter's final score to see how it affects the next quarter's probabilities</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
+        <div>
+            <label style="display: block; font-size: 0.9em; margin-bottom: 5px;">Winner Score:</label>
+            <input type="number" id="winner-score" min="0" max="99" placeholder="e.g., 7"
+                   style="width: 100%; padding: 10px; border: none; border-radius: 4px; font-size: 1em;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 0.9em; margin-bottom: 5px;">Loser Score:</label>
+            <input type="number" id="loser-score" min="0" max="99" placeholder="e.g., 3"
+                   style="width: 100%; padding: 10px; border: none; border-radius: 4px; font-size: 1em;">
+        </div>
+        <div style="display: flex; gap: 5px;">
+            <button onclick="calculateConditional()"
+                    style="padding: 10px 20px; background: white; color: #002244; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                Calculate
+            </button>
+            <button onclick="resetConditional()"
+                    style="padding: 10px 20px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="conditional-info" style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px; font-size: 0.9em; display: none;">
+    </div>
+</div>
+
 <!-- Probability Legend -->
 <div class="probability-legend">
     <div class="legend-item">
@@ -286,9 +318,12 @@
 <script>
 // Load the filtered squares data
 const squaresData = {{ data.squares_data|tojson|safe }};
+const progressionData = {{ data.progression_data|tojson|safe }};
 
 let currentFilter = 'all';
 let currentQuarter = 'q1';
+let conditionalMode = false;
+let conditionalData = null;
 
 function getColor(probability) {
     const pct = probability * 100;
@@ -303,7 +338,8 @@ function renderGrid() {
     const data = squaresData[currentFilter];
     if (!data) return;
 
-    const matrix = data.matrices[currentQuarter];
+    // Use conditional data if in conditional mode, otherwise use regular data
+    const matrix = conditionalMode && conditionalData ? conditionalData.matrix : data.matrices[currentQuarter];
 
     let html = '<div class="squares-grid">';
 
@@ -457,6 +493,102 @@ window.onclick = function(event) {
     if (event.target == modal) {
         closeModal();
     }
+}
+
+function calculateConditional() {
+    const winnerScore = parseInt(document.getElementById('winner-score').value);
+    const loserScore = parseInt(document.getElementById('loser-score').value);
+
+    if (isNaN(winnerScore) || isNaN(loserScore)) {
+        alert('Please enter valid scores for both teams');
+        return;
+    }
+
+    // Determine current quarter and next quarter
+    const quarterOrder = ['q1', 'q2', 'q3', 'q4', 'final'];
+    const currentIndex = quarterOrder.indexOf(currentQuarter);
+
+    if (currentIndex === quarterOrder.length - 1) {
+        alert('Cannot calculate conditional probability for Final quarter (no next quarter)');
+        return;
+    }
+
+    const prevQuarter = currentQuarter;
+    const nextQuarter = quarterOrder[currentIndex + 1];
+    const progressionKey = `${prevQuarter}_to_${nextQuarter}`;
+
+    // Get progression data for current filter
+    const filterProgressions = progressionData[currentFilter];
+    if (!filterProgressions || !filterProgressions.progressions) {
+        alert('Progression data not available for this filter');
+        return;
+    }
+
+    const progressions = filterProgressions.progressions[progressionKey];
+    if (!progressions) {
+        alert('No progression data available for this quarter transition');
+        return;
+    }
+
+    const prevKey = `${winnerScore % 10}-${loserScore % 10}`;
+    const conditionalProbs = progressions[prevKey];
+
+    if (!conditionalProbs || Object.keys(conditionalProbs).length === 0) {
+        document.getElementById('conditional-info').style.display = 'block';
+        document.getElementById('conditional-info').innerHTML =
+            `❌ No historical games found where ${prevQuarter.toUpperCase()} ended with last digits ${winnerScore % 10}-${loserScore % 10}`;
+        return;
+    }
+
+    // Build conditional probability matrix
+    const conditionalMatrix = Array(10).fill(0).map(() => Array(10).fill(0));
+
+    let totalGames = 0;
+    for (const nextKey in conditionalProbs) {
+        totalGames += conditionalProbs[nextKey].count;
+    }
+
+    for (const nextKey in conditionalProbs) {
+        const [winner, loser] = nextKey.split('-').map(Number);
+        conditionalMatrix[winner][loser] = conditionalProbs[nextKey].probability;
+    }
+
+    // Store conditional data and switch to conditional mode
+    conditionalMode = true;
+    conditionalData = {
+        matrix: conditionalMatrix,
+        prevQuarter: prevQuarter,
+        prevScore: `${winnerScore}-${loserScore}`,
+        nextQuarter: nextQuarter,
+        totalGames: totalGames
+    };
+
+    // Switch to next quarter
+    currentQuarter = nextQuarter;
+    document.querySelectorAll('.quarter-tab').forEach((btn, idx) => {
+        btn.classList.remove('active');
+        if (idx === currentIndex + 1) btn.classList.add('active');
+    });
+
+    // Show info
+    document.getElementById('conditional-info').style.display = 'block';
+    document.getElementById('conditional-info').innerHTML =
+        `✅ Conditional probabilities for ${nextQuarter.toUpperCase()} given ${prevQuarter.toUpperCase()} ended ${winnerScore}-${loserScore}<br>
+        <small>Based on ${totalGames} historical game(s) with this ${prevQuarter.toUpperCase()} score pattern</small>`;
+
+    renderGrid();
+    renderTopSquares();
+}
+
+function resetConditional() {
+    conditionalMode = false;
+    conditionalData = null;
+    document.getElementById('winner-score').value = '';
+    document.getElementById('loser-score').value = '';
+    document.getElementById('conditional-info').style.display = 'none';
+
+    renderGrid();
+    renderTopSquares();
 }
 
 // Initial render
