@@ -219,6 +219,17 @@
         <span class="close-btn" onclick="toggleGameDetails('{{ player.name }}')">&times;</span>
         <h3>{{ player.name }} - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-{{ player.name|replace(' ', '-') }}" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-{{ player.name|replace(' ', '-') }}"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-{{ player.name|replace(' ', '-') }}" style="margin: 20px 0;"></div>
         <script>
@@ -227,65 +238,103 @@
                 const gameData = {{ player.game_by_game|tojson }};
                 const position = '{{ player.position }}';
                 const playerName = '{{ player.name }}';
+                const chartId = 'chart-{{ player.name|replace(' ', '-') }}';
+                const sliderId = 'line-slider-{{ player.name|replace(' ', '-') }}';
+                const valueDisplayId = 'line-value-{{ player.name|replace(' ', '-') }}';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 {% if player.position == 'QB' %}
                     statIndex = 5; // passing_yards
                     statName = 'Passing Yards';
                     {% if player.name in data.prop_lines %}
-                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.passing_yards[1].line if data.prop_lines[player.name].alternate_lines.passing_yards|length > 1 else 249.5 }};
+                        defaultLine = {{ data.prop_lines[player.name].alternate_lines.passing_yards[1].line if data.prop_lines[player.name].alternate_lines.passing_yards|length > 1 else 249.5 }};
                     {% else %}
-                        bettingLine = 249.5;
+                        defaultLine = 249.5;
                     {% endif %}
                 {% elif player.position == 'RB' %}
                     statIndex = 8; // rushing_yards
                     statName = 'Rushing Yards';
                     {% if player.name in data.prop_lines %}
-                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.rushing_yards[0].line if data.prop_lines[player.name].alternate_lines.rushing_yards|length > 0 else 69.5 }};
+                        defaultLine = {{ data.prop_lines[player.name].alternate_lines.rushing_yards[0].line if data.prop_lines[player.name].alternate_lines.rushing_yards|length > 0 else 69.5 }};
                     {% else %}
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     {% endif %}
                 {% elif player.position in ['WR', 'TE'] %}
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     {% if player.name in data.prop_lines %}
-                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.receiving_yards[1].line if data.prop_lines[player.name].alternate_lines.receiving_yards|length > 1 else 69.5 }};
+                        defaultLine = {{ data.prop_lines[player.name].alternate_lines.receiving_yards[1].line if data.prop_lines[player.name].alternate_lines.receiving_yards|length > 1 else 69.5 }};
                     {% else %}
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     {% endif %}
                 {% endif %}
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -293,9 +342,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -307,9 +359,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-{{ player.name|replace(' ', '-') }}', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 

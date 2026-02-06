@@ -200,6 +200,17 @@
         <span class="close-btn" onclick="toggleGameDetails('AJ Barner')">&times;</span>
         <h3>AJ Barner - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-AJ-Barner" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-AJ-Barner"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-AJ-Barner" style="margin: 20px 0;"></div>
         <script>
@@ -208,47 +219,85 @@
                 const gameData = [[1, "regular", "L", "San Francisco 49ers", "SF", 0, 0, 0, 2, 0, 1, 0, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 0, 0, 0, 2, 0, 0, 0, 0], [2, "regular", "W", "Pittsburgh Steelers", "PIT", 0, 0, 0, 2, 0, 2, 26, 1], [3, "playoff", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 2, 13, 0], [3, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 1, 23, 0], [4, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 0, 0, 3, 32, 1], [5, "regular", "L", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 7, 53, 2], [6, "regular", "W", "Jacksonville Jaguars", "JAX", 0, 0, 0, 0, 0, 3, 71, 0], [7, "regular", "W", "Houston Texans", "HOU", 0, 0, 0, 2, 0, 1, 7, 0], [9, "regular", "W", "Washington Commanders", "WSH", 0, 0, 0, 1, 1, 3, 24, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 3, 0, 0, 0, 0], [11, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 1, 0, 10, 70, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 0, 0, 2, 18, 0], [13, "regular", "W", "Minnesota Vikings", "MIN", 0, 0, 0, 2, 0, 4, 35, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 3, 27, 0], [15, "regular", "W", "Indianapolis Colts", "IND", 0, 0, 0, 0, 0, 3, 27, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 1, 0, 4, 49, 1], [17, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 3, 43, 1], [18, "regular", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 2, 14, 0]];
                 const position = 'TE';
                 const playerName = 'AJ Barner';
+                const chartId = 'chart-AJ-Barner';
+                const sliderId = 'line-slider-AJ-Barner';
+                const valueDisplayId = 'line-value-AJ-Barner';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 49.5;
+                        defaultLine = 49.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -256,9 +305,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -270,9 +322,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-AJ-Barner', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -586,6 +641,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Cooper Kupp')">&times;</span>
         <h3>Cooper Kupp - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Cooper-Kupp" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Cooper-Kupp"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Cooper-Kupp" style="margin: 20px 0;"></div>
         <script>
@@ -594,47 +660,85 @@
                 const gameData = [[1, "regular", "L", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 2, 15, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 5, 60, 0], [2, "regular", "W", "Pittsburgh Steelers", "PIT", 0, 0, 0, 0, 0, 7, 90, 0], [3, "playoff", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 4, 36, 1], [3, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 2, 31, 0], [4, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 0, 0, 4, 26, 0], [5, "regular", "L", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 6, 59, 0], [6, "regular", "W", "Jacksonville Jaguars", "JAX", 0, 0, 0, 0, 0, 2, 40, 1], [7, "regular", "W", "Houston Texans", "HOU", 0, 0, 0, 0, 0, 1, 32, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 0, 0, 2, 74, 0], [11, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 3, 23, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 0, 0, 2, 24, 0], [13, "regular", "W", "Minnesota Vikings", "MIN", 0, 0, 0, 0, 0, 3, 24, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 2, 35, 1], [15, "regular", "W", "Indianapolis Colts", "IND", 0, 0, 0, 0, 0, 5, 46, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 3, 39, 0], [17, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 1, 6, 0], [18, "regular", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 2, 29, 0]];
                 const position = 'WR';
                 const playerName = 'Cooper Kupp';
+                const chartId = 'chart-Cooper-Kupp';
+                const sliderId = 'line-slider-Cooper-Kupp';
+                const valueDisplayId = 'line-value-Cooper-Kupp';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -642,9 +746,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -656,9 +763,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Cooper-Kupp', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -961,6 +1071,17 @@
         <span class="close-btn" onclick="toggleGameDetails('DeMario Douglas')">&times;</span>
         <h3>DeMario Douglas - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-DeMario-Douglas" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-DeMario-Douglas"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-DeMario-Douglas" style="margin: 20px 0;"></div>
         <script>
@@ -969,47 +1090,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 0, 0, 0, 0, 0, 1, 3, 0], [1, "regular", "L", "Las Vegas Raiders", "LV", 0, 0, 0, 4, 0, 2, -2, 1], [2, "playoff", "W", "Houston Texans", "HOU", 0, 0, 0, 0, 0, 2, 36, 1], [2, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 1, 8, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 0, 0, 0, 0, 0, 0, 0, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 0, 0, 0, 0, 0, 2, 7, 0], [4, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 0, 0, 0], [5, "regular", "W", "Buffalo Bills", "BUF", 0, 0, 0, 0, 0, 2, 17, 0], [6, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 3, 71, 1], [7, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 0, 0, 3, 17, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 0, 0, 0, 3, 0, 1, 44, 0], [9, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 4, 100, 1], [10, "regular", "W", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 2, 34, 0], [11, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, -5, 0, 3, 36, 0], [12, "regular", "W", "Cincinnati Bengals", "CIN", 0, 0, 0, 14, 0, 1, 37, 0], [13, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 0, 0, 3, 33, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 5, 0, 0, 0, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 0, 0, 0, 0, 0, 1, 6, 0], [17, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 0, 0, 1, 10, 0], [18, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 2, 29, 0]];
                 const position = 'WR';
                 const playerName = 'DeMario Douglas';
+                const chartId = 'chart-DeMario-Douglas';
+                const sliderId = 'line-slider-DeMario-Douglas';
+                const valueDisplayId = 'line-value-DeMario-Douglas';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -1017,9 +1176,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -1031,9 +1193,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-DeMario-Douglas', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -1360,6 +1525,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Drake Maye')">&times;</span>
         <h3>Drake Maye - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Drake-Maye" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Drake-Maye"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Drake-Maye" style="margin: 20px 0;"></div>
         <script>
@@ -1368,47 +1544,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 268, 1, 1, 66, 0, 0, 0, 0], [1, "regular", "L", "Las Vegas Raiders", "LV", 287, 1, 1, 11, 0, 0, 0, 0], [2, "playoff", "W", "Houston Texans", "HOU", 179, 3, 1, 10, 0, 0, 0, 0], [2, "regular", "W", "Miami Dolphins", "MIA", 230, 2, 0, 31, 1, 0, 0, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 86, 0, 0, 65, 1, 0, 0, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 268, 2, 1, 45, 0, 0, 0, 0], [4, "regular", "W", "Carolina Panthers", "CAR", 203, 2, 0, 11, 1, 0, 0, 0], [5, "regular", "W", "Buffalo Bills", "BUF", 273, 0, 0, 12, 0, 0, 0, 0], [6, "regular", "W", "New Orleans Saints", "NO", 261, 3, 0, 28, 0, 0, 0, 0], [7, "regular", "W", "Tennessee Titans", "TEN", 222, 2, 0, 62, 0, 0, 0, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 282, 3, 1, 50, 0, 0, 0, 0], [9, "regular", "W", "Atlanta Falcons", "ATL", 259, 2, 1, 20, 0, 0, 0, 0], [10, "regular", "W", "Tampa Bay Buccaneers", "TB", 270, 2, 1, 13, 0, 0, 0, 0], [11, "regular", "W", "New York Jets", "NYJ", 281, 1, 0, 2, 0, 0, 0, 0], [12, "regular", "W", "Cincinnati Bengals", "CIN", 294, 1, 1, 22, 0, 0, 0, 0], [13, "regular", "W", "New York Giants", "NYG", 282, 2, 0, 12, 0, 0, 0, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 155, 0, 1, 43, 2, 0, 0, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 380, 2, 1, 25, 0, 0, 0, 0], [17, "regular", "W", "New York Jets", "NYJ", 256, 5, 0, 22, 0, 0, 0, 0], [18, "regular", "W", "Miami Dolphins", "MIA", 191, 1, 0, 41, 0, 0, 0, 0]];
                 const position = 'QB';
                 const playerName = 'Drake Maye';
+                const chartId = 'chart-Drake-Maye';
+                const sliderId = 'line-slider-Drake-Maye';
+                const valueDisplayId = 'line-value-Drake-Maye';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 5; // passing_yards
                     statName = 'Passing Yards';
                     
-                        bettingLine = 249.5;
+                        defaultLine = 249.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -1416,9 +1630,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -1430,9 +1647,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Drake-Maye', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -1904,6 +2124,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Hunter Henry')">&times;</span>
         <h3>Hunter Henry - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Hunter-Henry" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Hunter-Henry"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Hunter-Henry" style="margin: 20px 0;"></div>
         <script>
@@ -1912,47 +2143,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 0, 0, 0, 0, 0, 3, 64, 1], [1, "regular", "L", "Las Vegas Raiders", "LV", 0, 0, 0, 0, 0, 4, 66, 0], [2, "playoff", "W", "Houston Texans", "HOU", 0, 0, 0, 0, 0, 1, 5, 0], [2, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 1, 9, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 0, 0, 0, 0, 0, 2, 12, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 0, 0, 0, 0, 0, 8, 90, 2], [4, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 2, 39, 1], [5, "regular", "W", "Buffalo Bills", "BUF", 0, 0, 0, 0, 0, 2, 46, 0], [6, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 3, 27, 0], [7, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 0, 0, 4, 33, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 0, 0, 0, 0, 0, 1, 7, 1], [9, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 4, 51, 0], [10, "regular", "W", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 1, 9, 0], [11, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 0, 0, 4, 45, 0], [12, "regular", "W", "Cincinnati Bengals", "CIN", 0, 0, 0, 0, 0, 7, 115, 1], [13, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 0, 0, 4, 73, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 0, 0, 1, 18, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 0, 0, 0, 0, 0, 6, 35, 1], [17, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 0, 0, 3, 49, 1], [18, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 5, 56, 0]];
                 const position = 'TE';
                 const playerName = 'Hunter Henry';
+                const chartId = 'chart-Hunter-Henry';
+                const sliderId = 'line-slider-Hunter-Henry';
+                const valueDisplayId = 'line-value-Hunter-Henry';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 49.5;
+                        defaultLine = 49.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -1960,9 +2229,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -1974,9 +2246,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Hunter-Henry', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -2301,6 +2576,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Jaxon Smith-Njigba')">&times;</span>
         <h3>Jaxon Smith-Njigba - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Jaxon-Smith-Njigba" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Jaxon-Smith-Njigba"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Jaxon-Smith-Njigba" style="margin: 20px 0;"></div>
         <script>
@@ -2309,47 +2595,85 @@
                 const gameData = [[1, "regular", "L", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 9, 124, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 3, 19, 1], [2, "regular", "W", "Pittsburgh Steelers", "PIT", 0, 0, 0, 0, 0, 8, 103, 0], [3, "playoff", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 10, 153, 1], [3, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 5, 96, 1], [4, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 11, 0, 4, 79, 0], [5, "regular", "L", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 8, 132, 1], [6, "regular", "W", "Jacksonville Jaguars", "JAX", 0, 0, 0, 0, 0, 8, 162, 1], [7, "regular", "W", "Houston Texans", "HOU", 0, 0, 0, 0, 0, 8, 123, 1], [9, "regular", "W", "Washington Commanders", "WSH", 0, 0, 0, 11, 0, 8, 129, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 0, 0, 5, 93, 1], [11, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 11, 0, 9, 105, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 4, 0, 8, 167, 2], [13, "regular", "W", "Minnesota Vikings", "MIN", 0, 0, 0, 0, 0, 2, 23, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, -1, 0, 7, 92, 2], [15, "regular", "W", "Indianapolis Colts", "IND", 0, 0, 0, 0, 0, 7, 113, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 8, 96, 1], [17, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 9, 72, 0], [18, "regular", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 6, 84, 0]];
                 const position = 'WR';
                 const playerName = 'Jaxon Smith-Njigba';
+                const chartId = 'chart-Jaxon-Smith-Njigba';
+                const sliderId = 'line-slider-Jaxon-Smith-Njigba';
+                const valueDisplayId = 'line-value-Jaxon-Smith-Njigba';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -2357,9 +2681,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -2371,9 +2698,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Jaxon-Smith-Njigba', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -2691,6 +3021,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Kenneth Walker III')">&times;</span>
         <h3>Kenneth Walker III - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Kenneth-Walker-III" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Kenneth-Walker-III"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Kenneth-Walker-III" style="margin: 20px 0;"></div>
         <script>
@@ -2699,47 +3040,85 @@
                 const gameData = [[1, "regular", "L", "San Francisco 49ers", "SF", 0, 0, 0, 20, 0, 3, 4, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 0, 0, 0, 116, 3, 3, 29, 0], [2, "regular", "W", "Pittsburgh Steelers", "PIT", 0, 0, 0, 105, 1, 1, 13, 0], [3, "playoff", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 62, 1, 4, 49, 0], [3, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 38, 2, 1, 12, 0], [4, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 81, 0, 1, 29, 0], [5, "regular", "L", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 86, 0, 1, 0, 0], [6, "regular", "W", "Jacksonville Jaguars", "JAX", 0, 0, 0, 34, 0, 1, 3, 0], [7, "regular", "W", "Houston Texans", "HOU", 0, 0, 0, 66, 0, 0, 0, 0], [9, "regular", "W", "Washington Commanders", "WSH", 0, 0, 0, 42, 0, 2, 19, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 67, 0, 1, 3, 0], [11, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 67, 1, 3, 44, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 71, 0, 3, 30, 0], [13, "regular", "W", "Minnesota Vikings", "MIN", 0, 0, 0, 56, 0, 3, 18, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 29, 0, 1, -1, 0], [15, "regular", "W", "Indianapolis Colts", "IND", 0, 0, 0, 17, 0, 1, 2, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 100, 1, 3, 64, 0], [17, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 51, 0, 2, 6, 0], [18, "regular", "W", "San Francisco 49ers", "SF", 0, 0, 0, 97, 0, 4, 36, 0]];
                 const position = 'RB';
                 const playerName = 'Kenneth Walker III';
+                const chartId = 'chart-Kenneth-Walker-III';
+                const sliderId = 'line-slider-Kenneth-Walker-III';
+                const valueDisplayId = 'line-value-Kenneth-Walker-III';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 8; // rushing_yards
                     statName = 'Rushing Yards';
                     
-                        bettingLine = 49.5;
+                        defaultLine = 49.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -2747,9 +3126,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -2761,9 +3143,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Kenneth-Walker-III', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -3137,6 +3522,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Rashid Shaheed')">&times;</span>
         <h3>Rashid Shaheed - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Rashid-Shaheed" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Rashid-Shaheed"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Rashid-Shaheed" style="margin: 20px 0;"></div>
         <script>
@@ -3145,47 +3541,85 @@
                 const gameData = [[1, "regular", "L", "Arizona Cardinals", "ARI", 0, 0, 0, 0, 0, 6, 33, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 0, 0, 0, 27, 0, 0, 0, 0], [2, "regular", "L", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 4, 52, 1], [3, "playoff", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 1, 51, 0], [3, "regular", "L", "Seattle Seahawks", "SEA", 0, 0, 0, 0, 0, 4, 42, 0], [4, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 5, 0, 4, 47, 0], [5, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 0, 0, 4, 114, 1], [6, "regular", "L", "New England Patriots", "NE", 0, 0, 0, 0, 0, 4, 28, 0], [7, "regular", "L", "Chicago Bears", "CHI", 0, 0, 0, 0, 0, 4, 40, 0], [8, "regular", "L", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 9, 75, 0], [9, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 0, 0, 5, 68, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 0, 0, 0, 20, 0, 1, 3, 0], [11, "regular", "L", "Los Angeles Rams", "LAR", 0, 0, 0, 2, 0, 2, 27, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 5, 0, 0, 0, 0], [13, "regular", "W", "Minnesota Vikings", "MIN", 0, 0, 0, 9, 0, 1, 7, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 4, 67, 0], [15, "regular", "W", "Indianapolis Colts", "IND", 0, 0, 0, -3, 0, 5, 74, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 0, 0, 0, 31, 0, 0, 0, 0], [17, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 1, 8, 0], [18, "regular", "W", "San Francisco 49ers", "SF", 0, 0, 0, 0, 0, 1, 2, 0]];
                 const position = 'WR';
                 const playerName = 'Rashid Shaheed';
+                const chartId = 'chart-Rashid-Shaheed';
+                const sliderId = 'line-slider-Rashid-Shaheed';
+                const valueDisplayId = 'line-value-Rashid-Shaheed';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -3193,9 +3627,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -3207,9 +3644,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Rashid-Shaheed', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -3538,6 +3978,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Rhamondre Stevenson')">&times;</span>
         <h3>Rhamondre Stevenson - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Rhamondre-Stevenson" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Rhamondre-Stevenson"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Rhamondre-Stevenson" style="margin: 20px 0;"></div>
         <script>
@@ -3546,47 +3997,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 0, 0, 0, 53, 0, 3, 75, 0], [1, "regular", "L", "Las Vegas Raiders", "LV", 0, 0, 0, 15, 0, 2, 12, 0], [2, "playoff", "W", "Houston Texans", "HOU", 0, 0, 0, 70, 0, 4, 11, 0], [2, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 54, 0, 5, 88, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 0, 0, 0, 71, 0, 0, 0, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 0, 0, 0, 18, 0, 3, 38, 0], [4, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 38, 0, 1, 3, 0], [5, "regular", "W", "Buffalo Bills", "BUF", 0, 0, 0, 14, 2, 2, 13, 0], [6, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 18, 0, 0, 0, 0], [7, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 88, 1, 2, 0, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 0, 0, 0, 34, 0, 1, 15, 0], [12, "regular", "W", "Cincinnati Bengals", "CIN", 0, 0, 0, 5, 0, 1, 5, 0], [13, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 40, 0, 3, 40, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 50, 0, 3, 27, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 0, 0, 0, 51, 1, 2, 27, 0], [17, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 47, 1, 5, 55, 1], [18, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 131, 2, 2, 22, 1]];
                 const position = 'RB';
                 const playerName = 'Rhamondre Stevenson';
+                const chartId = 'chart-Rhamondre-Stevenson';
+                const sliderId = 'line-slider-Rhamondre-Stevenson';
+                const valueDisplayId = 'line-value-Rhamondre-Stevenson';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 8; // rushing_yards
                     statName = 'Rushing Yards';
                     
-                        bettingLine = 49.5;
+                        defaultLine = 49.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -3594,9 +4083,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -3608,9 +4100,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Rhamondre-Stevenson', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -3958,6 +4453,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Sam Darnold')">&times;</span>
         <h3>Sam Darnold - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Sam-Darnold" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Sam-Darnold"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Sam-Darnold" style="margin: 20px 0;"></div>
         <script>
@@ -3966,47 +4472,85 @@
                 const gameData = [[1, "regular", "L", "San Francisco 49ers", "SF", 150, 0, 0, 14, 0, 0, 0, 0], [2, "playoff", "W", "San Francisco 49ers", "SF", 124, 1, 0, 0, 0, 0, 0, 0], [2, "regular", "W", "Pittsburgh Steelers", "PIT", 295, 2, 2, 0, 0, 0, 0, 0], [3, "playoff", "W", "Los Angeles Rams", "LAR", 346, 3, 0, 9, 0, 0, 0, 0], [3, "regular", "W", "New Orleans Saints", "NO", 218, 2, 0, 0, 0, 0, 0, 0], [4, "regular", "W", "Arizona Cardinals", "ARI", 242, 1, 0, 24, 0, 0, 0, 0], [5, "regular", "L", "Tampa Bay Buccaneers", "TB", 341, 4, 1, 0, 0, 0, 0, 0], [6, "regular", "W", "Jacksonville Jaguars", "JAX", 295, 2, 0, 2, 0, 0, 0, 0], [7, "regular", "W", "Houston Texans", "HOU", 213, 1, 1, 1, 0, 0, 0, 0], [9, "regular", "W", "Washington Commanders", "WSH", 330, 4, 1, 0, 0, 0, 0, 0], [10, "regular", "W", "Arizona Cardinals", "ARI", 178, 1, 1, -2, 0, 0, 0, 0], [11, "regular", "L", "Los Angeles Rams", "LAR", 279, 0, 4, 11, 0, 0, 0, 0], [12, "regular", "W", "Tennessee Titans", "TEN", 244, 2, 0, -1, 0, 0, 0, 0], [13, "regular", "W", "Minnesota Vikings", "MIN", 128, 0, 0, 0, 0, 0, 0, 0], [14, "regular", "W", "Atlanta Falcons", "ATL", 249, 3, 1, 23, 0, 0, 0, 0], [15, "regular", "W", "Indianapolis Colts", "IND", 271, 0, 0, 5, 0, 0, 0, 0], [16, "regular", "W", "Los Angeles Rams", "LAR", 270, 2, 2, 7, 0, 0, 0, 0], [17, "regular", "W", "Carolina Panthers", "CAR", 147, 1, 1, 2, 0, 0, 0, 0], [18, "regular", "W", "San Francisco 49ers", "SF", 198, 0, 0, 9, 0, 0, 0, 0]];
                 const position = 'QB';
                 const playerName = 'Sam Darnold';
+                const chartId = 'chart-Sam-Darnold';
+                const sliderId = 'line-slider-Sam-Darnold';
+                const valueDisplayId = 'line-value-Sam-Darnold';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 5; // passing_yards
                     statName = 'Passing Yards';
                     
-                        bettingLine = 249.5;
+                        defaultLine = 249.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -4014,9 +4558,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -4028,9 +4575,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Sam-Darnold', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -4484,6 +5034,17 @@
         <span class="close-btn" onclick="toggleGameDetails('Stefon Diggs')">&times;</span>
         <h3>Stefon Diggs - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-Stefon-Diggs" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-Stefon-Diggs"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-Stefon-Diggs" style="margin: 20px 0;"></div>
         <script>
@@ -4492,47 +5053,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 0, 0, 0, 0, 0, 2, 16, 0], [1, "regular", "L", "Las Vegas Raiders", "LV", 0, 0, 0, 0, 0, 6, 57, 0], [2, "playoff", "W", "Houston Texans", "HOU", 0, 0, 0, 0, 0, 4, 40, 1], [2, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 4, 32, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 0, 0, 0, 0, 0, 5, 17, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 0, 0, 0, 0, 0, 3, 23, 0], [4, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 0, 0, 6, 101, 0], [5, "regular", "W", "Buffalo Bills", "BUF", 0, 0, 0, 0, 0, 10, 146, 0], [6, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 0, 0, 3, 28, 0], [7, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 0, 0, 7, 69, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 0, 0, 0, 0, 0, 3, 14, 1], [9, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 0, 0, 3, 38, 1], [10, "regular", "W", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 0, 0, 5, 46, 1], [11, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 0, 0, 9, 105, 0], [12, "regular", "W", "Cincinnati Bengals", "CIN", 0, 0, 0, 0, 0, 2, 20, 0], [13, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 0, 0, 3, 26, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 0, 0, 3, 26, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 0, 0, 0, 0, 0, 9, 138, 0], [17, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 0, 0, 6, 101, 1], [18, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 0, 0, 3, 43, 0]];
                 const position = 'WR';
                 const playerName = 'Stefon Diggs';
+                const chartId = 'chart-Stefon-Diggs';
+                const sliderId = 'line-slider-Stefon-Diggs';
+                const valueDisplayId = 'line-value-Stefon-Diggs';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 11; // receiving_yards
                     statName = 'Receiving Yards';
                     
-                        bettingLine = 69.5;
+                        defaultLine = 69.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -4540,9 +5139,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -4554,9 +5156,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-Stefon-Diggs', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -4885,6 +5490,17 @@
         <span class="close-btn" onclick="toggleGameDetails('TreVeyon Henderson')">&times;</span>
         <h3>TreVeyon Henderson - Game by Game Stats</h3>
 
+        <!-- Bar Chart Controls -->
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <label style="font-weight: bold; color: #002244; display: block; margin-bottom: 10px;">
+                Adjust Betting Line: <span id="line-value-TreVeyon-Henderson" style="color: #69BE28;">0</span>
+            </label>
+            <input type="range"
+                   id="line-slider-TreVeyon-Henderson"
+                   style="width: 100%;"
+                   step="0.5">
+        </div>
+
         <!-- Bar Chart -->
         <div id="chart-TreVeyon-Henderson" style="margin: 20px 0;"></div>
         <script>
@@ -4893,47 +5509,85 @@
                 const gameData = [[1, "playoff", "W", "Los Angeles Chargers", "LAC", 0, 0, 0, 27, 0, 1, 9, 0], [1, "regular", "L", "Las Vegas Raiders", "LV", 0, 0, 0, 27, 0, 6, 24, 0], [2, "playoff", "W", "Houston Texans", "HOU", 0, 0, 0, 25, 0, 1, -2, 0], [2, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 10, 0, 2, 30, 0], [3, "playoff", "W", "Denver Broncos", "DEN", 0, 0, 0, 5, 0, 0, 0, 0], [3, "regular", "L", "Pittsburgh Steelers", "PIT", 0, 0, 0, 28, 0, 3, 19, 0], [4, "regular", "W", "Carolina Panthers", "CAR", 0, 0, 0, 32, 1, 2, 14, 0], [5, "regular", "W", "Buffalo Bills", "BUF", 0, 0, 0, 24, 0, 2, 3, 0], [6, "regular", "W", "New Orleans Saints", "NO", 0, 0, 0, 27, 0, 1, 9, 0], [7, "regular", "W", "Tennessee Titans", "TEN", 0, 0, 0, 5, 0, 0, 0, 0], [8, "regular", "W", "Cleveland Browns", "CLE", 0, 0, 0, 75, 0, 0, 0, 0], [9, "regular", "W", "Atlanta Falcons", "ATL", 0, 0, 0, 55, 0, 4, 32, 0], [10, "regular", "W", "Tampa Bay Buccaneers", "TB", 0, 0, 0, 147, 2, 1, 3, 0], [11, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 62, 2, 5, 31, 1], [12, "regular", "W", "Cincinnati Bengals", "CIN", 0, 0, 0, 66, 0, 3, 15, 0], [13, "regular", "W", "New York Giants", "NYG", 0, 0, 0, 67, 0, 3, 19, 0], [15, "regular", "L", "Buffalo Bills", "BUF", 0, 0, 0, 148, 2, 2, 13, 0], [16, "regular", "W", "Baltimore Ravens", "BAL", 0, 0, 0, 3, 0, 1, 9, 0], [17, "regular", "W", "New York Jets", "NYJ", 0, 0, 0, 82, 0, 0, 0, 0], [18, "regular", "W", "Miami Dolphins", "MIA", 0, 0, 0, 53, 2, 0, 0, 0]];
                 const position = 'RB';
                 const playerName = 'TreVeyon Henderson';
+                const chartId = 'chart-TreVeyon-Henderson';
+                const sliderId = 'line-slider-TreVeyon-Henderson';
+                const valueDisplayId = 'line-value-TreVeyon-Henderson';
 
                 // Determine which stat to plot based on position
-                let statIndex, statName, bettingLine;
+                let statIndex, statName, defaultLine;
 
                 
                     statIndex = 8; // rushing_yards
                     statName = 'Rushing Yards';
                     
-                        bettingLine = 49.5;
+                        defaultLine = 49.5;
                     
                 
 
-                // Extract values and calculate hit rate
+                // Extract values
                 const weeks = gameData.map((g, i) => `Week ${i + 1}`);
                 const values = gameData.map(g => g[statIndex] || 0);
-                const hitsOver = values.filter(v => v > bettingLine).length;
-                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+                const maxValue = Math.max(...values);
+                const minValue = Math.min(...values);
 
-                // Create bar colors (green if over line, red if under)
-                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+                // Setup slider
+                const slider = document.getElementById(sliderId);
+                slider.min = Math.max(0, minValue - 20);
+                slider.max = maxValue + 20;
+                slider.value = defaultLine;
+                document.getElementById(valueDisplayId).textContent = defaultLine.toFixed(1);
 
-                // Create bar chart
+                // Function to update chart
+                function updateChart(bettingLine) {
+                    // Calculate hit rate
+                    const hitsOver = values.filter(v => v > bettingLine).length;
+                    const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                    // Update bar colors
+                    const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                    // Update chart
+                    const update = {
+                        'marker.color': [colors],
+                        y: [Array(weeks.length).fill(bettingLine)]
+                    };
+
+                    const layoutUpdate = {
+                        title: {
+                            text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine.toFixed(1)})</sub>`,
+                            font: { size: 16 }
+                        }
+                    };
+
+                    Plotly.update(chartId, update, layoutUpdate, [0, 1]);
+                }
+
+                // Slider event
+                slider.addEventListener('input', function() {
+                    const newLine = parseFloat(this.value);
+                    document.getElementById(valueDisplayId).textContent = newLine.toFixed(1);
+                    updateChart(newLine);
+                });
+
+                // Initial chart
                 const trace1 = {
                     x: weeks,
                     y: values,
                     type: 'bar',
                     name: statName,
                     marker: {
-                        color: colors
+                        color: values.map(v => v > defaultLine ? '#22c55e' : '#dc2626')
                     },
                     text: values.map(v => v.toFixed(0)),
                     textposition: 'auto',
                 };
 
-                // Horizontal line for betting line
                 const trace2 = {
                     x: weeks,
-                    y: Array(weeks.length).fill(bettingLine),
+                    y: Array(weeks.length).fill(defaultLine),
                     type: 'scatter',
                     mode: 'lines',
-                    name: `Line: ${bettingLine}`,
+                    name: `Line: ${defaultLine.toFixed(1)}`,
                     line: {
                         color: '#002244',
                         width: 3,
@@ -4941,9 +5595,12 @@
                     }
                 };
 
+                const hitsOver = values.filter(v => v > defaultLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
                 const layout = {
                     title: {
-                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${defaultLine.toFixed(1)})</sub>`,
                         font: { size: 16 }
                     },
                     xaxis: { title: 'Game' },
@@ -4955,9 +5612,12 @@
                     paper_bgcolor: '#f8f9fa'
                 };
 
-                const config = { responsive: true };
+                const config = {
+                    responsive: true,
+                    displayModeBar: false  // Disable zoom/pan toolbar
+                };
 
-                Plotly.newPlot('chart-TreVeyon-Henderson', [trace1, trace2], layout, config);
+                Plotly.newPlot(chartId, [trace1, trace2], layout, config);
             })();
         </script>
 
@@ -5271,7 +5931,7 @@
 
 
             <footer class="footer">
-                <p>Last updated: 2026-02-05 22:50:46</p>
+                <p>Last updated: 2026-02-05 22:58:40</p>
                 <p>Data-driven Super Bowl analysis</p>
             </footer>
         </main>
