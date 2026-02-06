@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% set page = 'prop_lines' %}
+
+{% block content %}
+<h1>Player Prop Betting Lines</h1>
+<p class="subtitle">Monte Carlo Simulated Probabilities - Data-Driven Edge Analysis</p>
+
+<style>
+    .prop-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .prop-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #002244;
+        padding-bottom: 10px;
+    }
+    .player-info {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #002244;
+    }
+    .position-badge {
+        background: #69BE28;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+    .prop-table {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .prop-table th {
+        background: #f0f0f0;
+        padding: 10px;
+        text-align: left;
+        font-size: 0.9em;
+    }
+    .prop-table td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .edge-strong {
+        background: #dcfce7;
+        font-weight: bold;
+        color: #15803d;
+    }
+    .edge-moderate {
+        background: #fef3c7;
+        color: #854d0e;
+    }
+    .edge-none {
+        color: #666;
+    }
+    .trend-up { color: #15803d; }
+    .trend-down { color: #dc2626; }
+    .trend-stable { color: #64748b; }
+    .prob-bar {
+        display: flex;
+        height: 25px;
+        border-radius: 4px;
+        overflow: hidden;
+        font-size: 0.85em;
+    }
+    .prob-over {
+        background: #22c55e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+    .prob-under {
+        background: #ef4444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+    .confidence-range {
+        font-size: 0.85em;
+        color: #666;
+        font-style: italic;
+    }
+    .best-bets-section {
+        background: linear-gradient(135deg, #002244 0%, #69BE28 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .best-bet-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #69BE28;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+    .edge-badge {
+        display: inline-block;
+        background: #69BE28;
+        color: #002244;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+</style>
+
+<!-- Best Bets Summary -->
+<div class="best-bets-section">
+    <h2 style="margin-top: 0;">🎯 Top Betting Edges (60%+ Probability)</h2>
+    <p style="opacity: 0.9; margin-bottom: 20px;">Props where our Monte Carlo model shows significant edge over typical lines</p>
+
+    {% set best_bets = [] %}
+    {% for player_name, player_data in data.prop_lines.items() %}
+        {% for stat_name, alternates in player_data.alternate_lines.items() %}
+            {% for alt in alternates %}
+                {% set max_prob = [alt.over_prob, alt.under_prob]|max %}
+                {% if max_prob >= 60 %}
+                    {% set side = "OVER" if alt.over_prob > alt.under_prob else "UNDER" %}
+                    {% set _ = best_bets.append({
+                        'player': player_name,
+                        'position': player_data.position,
+                        'stat': stat_name.replace('_', ' ').title(),
+                        'line': alt.line,
+                        'side': side,
+                        'edge': max_prob,
+                        'trend': alt.trend
+                    }) %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+
+    {% for bet in best_bets[:10] %}
+    <div class="best-bet-item">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong style="font-size: 1.1em;">{{ bet.player }}</strong> ({{ bet.position }})
+                <br>
+                {{ bet.stat }}: <strong>{{ bet.side }} {{ bet.line }}</strong>
+                <br>
+                <span style="font-size: 0.9em; opacity: 0.9;">
+                    {% if bet.trend == 'up' %}📈 Trending Up
+                    {% elif bet.trend == 'down' %}📉 Trending Down
+                    {% else %}➡️ Stable{% endif %}
+                </span>
+            </div>
+            <div>
+                <span class="edge-badge">{{ "%.1f"|format(bet.edge) }}% Edge</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Individual Player Props -->
+<h2 style="margin-top: 40px;">📊 All Player Props</h2>
+
+{% for player_name, player_data in data.prop_lines.items() %}
+<div class="prop-card">
+    <div class="prop-header">
+        <div class="player-info">{{ player_name }}</div>
+        <div class="position-badge">{{ player_data.position }}</div>
+    </div>
+
+    {% for stat_name, alternates in player_data.alternate_lines.items() %}
+    <h3 style="color: #002244; margin-top: 20px;">{{ stat_name.replace('_', ' ').title() }}</h3>
+
+    <table class="prop-table">
+        <thead>
+            <tr>
+                <th>Line</th>
+                <th>Probability</th>
+                <th>Recommendation</th>
+                <th>Trend</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alt in alternates %}
+            <tr class="{% if [alt.over_prob, alt.under_prob]|max >= 60 %}edge-strong{% elif [alt.over_prob, alt.under_prob]|max >= 55 %}edge-moderate{% else %}edge-none{% endif %}">
+                <td><strong>{{ alt.line }}</strong></td>
+                <td>
+                    <div class="prob-bar">
+                        <div class="prob-over" style="width: {{ alt.over_prob }}%">
+                            {% if alt.over_prob > 15 %}{{ "%.0f"|format(alt.over_prob) }}%{% endif %}
+                        </div>
+                        <div class="prob-under" style="width: {{ alt.under_prob }}%">
+                            {% if alt.under_prob > 15 %}{{ "%.0f"|format(alt.under_prob) }}%{% endif %}
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85em; color: #666; margin-top: 3px;">
+                        Over: {{ "%.1f"|format(alt.over_prob) }}% | Under: {{ "%.1f"|format(alt.under_prob) }}%
+                    </div>
+                </td>
+                <td>{{ alt.recommendation }}</td>
+                <td class="trend-{{ alt.trend }}">
+                    {% if alt.trend == 'up' %}📈 Up
+                    {% elif alt.trend == 'down' %}📉 Down
+                    {% else %}➡️ Stable{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Show base stats for context -->
+    {% if stat_name in player_data.base_props %}
+    {% set base = player_data.base_props[stat_name] %}
+    <div class="confidence-range">
+        Model Stats: Mean {{ "%.1f"|format(base.mean) }},
+        80% Confidence Range: {{ "%.0f"|format(base.confidence_80_low) }}-{{ "%.0f"|format(base.confidence_80_high) }}
+    </div>
+    {% endif %}
+
+    {% endfor %}
+</div>
+{% endfor %}
+
+<div class="stat-card" style="margin-top: 30px;">
+    <h2>📖 How to Read This</h2>
+    <ul>
+        <li><strong>Line:</strong> The prop bet threshold (Over/Under this number)</li>
+        <li><strong>Probability:</strong> Monte Carlo simulated chance of hitting Over or Under</li>
+        <li><strong>Edge:</strong> Bets with 60%+ probability show strong edge, 55-60% moderate edge</li>
+        <li><strong>Trend:</strong> Recent performance direction based on last 3 games vs season</li>
+        <li><strong>Green bars:</strong> Over probability | <strong>Red bars:</strong> Under probability</li>
+        <li><strong>80% Confidence Range:</strong> Historical performance typically falls in this range</li>
+    </ul>
+    <p><strong>Model:</strong> 10,000 Monte Carlo simulations per prop using historical data weighted 70% recent (last 5 games), 30% season average, with 10% variance increase for Super Bowl environment.</p>
+</div>
+
+{% endblock %}

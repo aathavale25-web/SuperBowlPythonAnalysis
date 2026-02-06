@@ -1,0 +1,1297 @@
+{
+  "Drake Maye": {
+    "position": "QB",
+    "base_props": {
+      "passing_yards": {
+        "line": 251.65561827324524,
+        "mean": 251.40912668882055,
+        "median": 251.65561827324524,
+        "std_dev": 65.57101584136022,
+        "confidence_80_low": 167.286250997988,
+        "confidence_80_high": 335.5830159280997,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "passing_tds": {
+        "line": 1.9184231894096508,
+        "mean": 1.9726405835274803,
+        "median": 1.9184231894096508,
+        "std_dev": 1.2302299144961306,
+        "confidence_80_low": 0.27524466646178997,
+        "confidence_80_high": 3.6154045552430656,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "interceptions": {
+        "line": 0.42818837921080044,
+        "mean": 0.49994327490731666,
+        "median": 0.42818837921080044,
+        "std_dev": 0.4512573085684258,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.1415570497728917,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "rushing_yards": {
+        "line": 29.01715801732648,
+        "mean": 29.881056515251014,
+        "median": 29.01715801732648,
+        "std_dev": 19.873650748867846,
+        "confidence_80_low": 1.5361457816049027,
+        "confidence_80_high": 56.789201589767494,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "passing_yards": [
+        {
+          "line": 225.5,
+          "over_prob": 64.58,
+          "under_prob": 35.42,
+          "recommendation": "\u2705 OVER (Edge: 64.6%)",
+          "trend": "stable"
+        },
+        {
+          "line": 249.5,
+          "over_prob": 51.49,
+          "under_prob": 48.51,
+          "recommendation": "\u2696\ufe0f No edge (51.5% / 48.5%)",
+          "trend": "stable"
+        },
+        {
+          "line": 274.5,
+          "over_prob": 36.46,
+          "under_prob": 63.54,
+          "recommendation": "\u2705 UNDER (Edge: 63.5%)",
+          "trend": "stable"
+        }
+      ],
+      "passing_tds": [
+        {
+          "line": 1.5,
+          "over_prob": 62.55,
+          "under_prob": 37.45,
+          "recommendation": "\u2705 OVER (Edge: 62.5%)",
+          "trend": "up"
+        },
+        {
+          "line": 2.5,
+          "over_prob": 33.019999999999996,
+          "under_prob": 66.98,
+          "recommendation": "\u2705 UNDER (Edge: 67.0%)",
+          "trend": "up"
+        }
+      ],
+      "interceptions": [
+        {
+          "line": 0.5,
+          "over_prob": 45.22,
+          "under_prob": 54.78,
+          "recommendation": "\u2696\ufe0f No edge (45.2% / 54.8%)",
+          "trend": "down"
+        },
+        {
+          "line": 1.5,
+          "over_prob": 2.5700000000000003,
+          "under_prob": 97.43,
+          "recommendation": "\u2705 UNDER (Edge: 97.4%)",
+          "trend": "down"
+        }
+      ],
+      "rushing_yards": [
+        {
+          "line": 19.5,
+          "over_prob": 66.97,
+          "under_prob": 33.03,
+          "recommendation": "\u2705 OVER (Edge: 67.0%)",
+          "trend": "stable"
+        },
+        {
+          "line": 29.5,
+          "over_prob": 48.620000000000005,
+          "under_prob": 51.379999999999995,
+          "recommendation": "\u2696\ufe0f No edge (48.6% / 51.4%)",
+          "trend": "stable"
+        }
+      ]
+    }
+  },
+  "Rhamondre Stevenson": {
+    "position": "RB",
+    "base_props": {
+      "rushing_yards": {
+        "line": 58.50932451967378,
+        "mean": 59.316749894535114,
+        "median": 58.50932451967378,
+        "std_dev": 32.2551048054003,
+        "confidence_80_low": 15.944594592237472,
+        "confidence_80_high": 101.67001743777703,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "rushing_tds": {
+        "line": 0.6672380946159555,
+        "mean": 0.7497883652445053,
+        "median": 0.6672380946159555,
+        "std_dev": 0.6395087593330228,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.6559539368201954,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receptions": {
+        "line": 2.8238950372580236,
+        "mean": 2.825887002601098,
+        "median": 2.8238950372580236,
+        "std_dev": 1.5328596885601267,
+        "confidence_80_low": 0.7379794774894759,
+        "confidence_80_high": 4.823566553307422,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 31.92904186891556,
+        "mean": 33.90798540231774,
+        "median": 31.92904186891556,
+        "std_dev": 25.20431469096793,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 67.81557491785591,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "rushing_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 60.86,
+          "under_prob": 39.14,
+          "recommendation": "\u2705 OVER (Edge: 60.9%)",
+          "trend": "up"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 37.88,
+          "under_prob": 62.12,
+          "recommendation": "\u2705 UNDER (Edge: 62.1%)",
+          "trend": "up"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 17.61,
+          "under_prob": 82.39,
+          "recommendation": "\u2705 UNDER (Edge: 82.4%)",
+          "trend": "up"
+        }
+      ],
+      "rushing_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 59.28,
+          "under_prob": 40.72,
+          "recommendation": "\u2197\ufe0f Lean OVER (59.3%)",
+          "trend": "up"
+        }
+      ],
+      "receptions": [
+        {
+          "line": 2.5,
+          "over_prob": 57.199999999999996,
+          "under_prob": 42.800000000000004,
+          "recommendation": "\u2197\ufe0f Lean OVER (57.2%)",
+          "trend": "up"
+        },
+        {
+          "line": 3.5,
+          "over_prob": 33.550000000000004,
+          "under_prob": 66.44999999999999,
+          "recommendation": "\u2705 UNDER (Edge: 66.4%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 19.5,
+          "over_prob": 66.75999999999999,
+          "under_prob": 33.24000000000001,
+          "recommendation": "\u2705 OVER (Edge: 66.8%)",
+          "trend": "up"
+        },
+        {
+          "line": 29.5,
+          "over_prob": 53.74,
+          "under_prob": 46.26,
+          "recommendation": "\u2696\ufe0f No edge (53.7% / 46.3%)",
+          "trend": "up"
+        }
+      ]
+    }
+  },
+  "TreVeyon Henderson": {
+    "position": "RB",
+    "base_props": {
+      "rushing_yards": {
+        "line": 63.18462281307261,
+        "mean": 64.80853094483484,
+        "median": 63.18462281307261,
+        "std_dev": 41.93971626403215,
+        "confidence_80_low": 6.149653408369538,
+        "confidence_80_high": 120.59659421600459,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "rushing_tds": {
+        "line": 0.6896422598355252,
+        "mean": 0.7996692418691664,
+        "median": 0.6896422598355252,
+        "std_dev": 0.7279078128408552,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.8114536030685604,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receptions": {
+        "line": 1.40355490911114,
+        "mean": 1.6380430112395603,
+        "median": 1.40355490911114,
+        "std_dev": 1.5019954444315444,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 3.759021673870535,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 9.410274641339798,
+        "mean": 10.879646024000328,
+        "median": 9.410274641339798,
+        "std_dev": 9.933858842589071,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 24.983183155957096,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "rushing_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 63.580000000000005,
+          "under_prob": 36.419999999999995,
+          "recommendation": "\u2705 OVER (Edge: 63.6%)",
+          "trend": "stable"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 44.18,
+          "under_prob": 55.82,
+          "recommendation": "\u2198\ufe0f Lean UNDER (55.8%)",
+          "trend": "stable"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 28.050000000000004,
+          "under_prob": 71.94999999999999,
+          "recommendation": "\u2705 UNDER (Edge: 71.9%)",
+          "trend": "stable"
+        }
+      ],
+      "rushing_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 58.07,
+          "under_prob": 41.93,
+          "recommendation": "\u2197\ufe0f Lean OVER (58.1%)",
+          "trend": "up"
+        }
+      ],
+      "receptions": [
+        {
+          "line": 2.5,
+          "over_prob": 28.28,
+          "under_prob": 71.72,
+          "recommendation": "\u2705 UNDER (Edge: 71.7%)",
+          "trend": "down"
+        },
+        {
+          "line": 3.5,
+          "over_prob": 13.209999999999999,
+          "under_prob": 86.79,
+          "recommendation": "\u2705 UNDER (Edge: 86.8%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 19.5,
+          "over_prob": 19.13,
+          "under_prob": 80.87,
+          "recommendation": "\u2705 UNDER (Edge: 80.9%)",
+          "trend": "down"
+        },
+        {
+          "line": 29.5,
+          "over_prob": 4.8,
+          "under_prob": 95.2,
+          "recommendation": "\u2705 UNDER (Edge: 95.2%)",
+          "trend": "down"
+        }
+      ]
+    }
+  },
+  "Stefon Diggs": {
+    "position": "WR",
+    "base_props": {
+      "receptions": {
+        "line": 4.799080873445675,
+        "mean": 4.83196191921914,
+        "median": 4.799080873445675,
+        "std_dev": 2.528322702003998,
+        "confidence_80_low": 1.4299627507233206,
+        "confidence_80_high": 8.120953778856949,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 63.19535962463247,
+        "mean": 64.2710201349696,
+        "median": 63.19535962463247,
+        "std_dev": 41.16303388139528,
+        "confidence_80_low": 7.080255952811845,
+        "confidence_80_high": 118.46719357036767,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.20981320399109804,
+        "mean": 0.31097212188480755,
+        "median": 0.20981320399109804,
+        "std_dev": 0.34427271533336834,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 0.8041948700673951,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 4.5,
+          "over_prob": 54.81,
+          "under_prob": 45.19,
+          "recommendation": "\u2696\ufe0f No edge (54.8% / 45.2%)",
+          "trend": "up"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 39.910000000000004,
+          "under_prob": 60.089999999999996,
+          "recommendation": "\u2705 UNDER (Edge: 60.1%)",
+          "trend": "up"
+        },
+        {
+          "line": 6.5,
+          "over_prob": 25.419999999999998,
+          "under_prob": 74.58,
+          "recommendation": "\u2705 UNDER (Edge: 74.6%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 61.86000000000001,
+          "under_prob": 38.13999999999999,
+          "recommendation": "\u2705 OVER (Edge: 61.9%)",
+          "trend": "up"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 43.82,
+          "under_prob": 56.18,
+          "recommendation": "\u2198\ufe0f Lean UNDER (56.2%)",
+          "trend": "up"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 27.41,
+          "under_prob": 72.59,
+          "recommendation": "\u2705 UNDER (Edge: 72.6%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 27.1,
+          "under_prob": 72.9,
+          "recommendation": "\u2705 UNDER (Edge: 72.9%)",
+          "trend": "up"
+        }
+      ]
+    }
+  },
+  "DeMario Douglas": {
+    "position": "WR",
+    "base_props": {
+      "receptions": {
+        "line": 1.5142196008279254,
+        "mean": 1.5625411729964218,
+        "median": 1.5142196008279254,
+        "std_dev": 1.0943393198058626,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 3.0317349357745624,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 18.177936532170648,
+        "mean": 22.600329787183437,
+        "median": 18.177936532170648,
+        "std_dev": 21.848193224529382,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 53.425894337492466,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.06593555368643832,
+        "mean": 0.2102837986510475,
+        "median": 0.06593555368643832,
+        "std_dev": 0.27812671101668923,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 0.6316550855657939,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 4.5,
+          "over_prob": 0.6799999999999999,
+          "under_prob": 99.32,
+          "recommendation": "\u2705 UNDER (Edge: 99.3%)",
+          "trend": "down"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 0.02,
+          "under_prob": 99.98,
+          "recommendation": "\u2705 UNDER (Edge: 100.0%)",
+          "trend": "down"
+        },
+        {
+          "line": 6.5,
+          "over_prob": 0.0,
+          "under_prob": 100.0,
+          "recommendation": "\u2705 UNDER (Edge: 100.0%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 13.05,
+          "under_prob": 86.95,
+          "recommendation": "\u2705 UNDER (Edge: 87.0%)",
+          "trend": "down"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 3.66,
+          "under_prob": 96.34,
+          "recommendation": "\u2705 UNDER (Edge: 96.3%)",
+          "trend": "down"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 0.54,
+          "under_prob": 99.46,
+          "recommendation": "\u2705 UNDER (Edge: 99.5%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 15.67,
+          "under_prob": 84.33,
+          "recommendation": "\u2705 UNDER (Edge: 84.3%)",
+          "trend": "down"
+        }
+      ]
+    }
+  },
+  "Hunter Henry": {
+    "position": "TE",
+    "base_props": {
+      "receptions": {
+        "line": 3.6582358676712,
+        "mean": 3.6862923728562613,
+        "median": 3.6582358676712,
+        "std_dev": 2.0995744578511277,
+        "confidence_80_low": 0.8368760441542495,
+        "confidence_80_high": 6.487756037724912,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 45.027484451519626,
+        "mean": 46.18409381722928,
+        "median": 45.027484451519626,
+        "std_dev": 29.47189870149496,
+        "confidence_80_low": 4.8100859035549295,
+        "confidence_80_high": 85.24990269967641,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.38845346643837597,
+        "mean": 0.4962726072037151,
+        "median": 0.38845346643837597,
+        "std_dev": 0.4971921201929181,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.205067660112302,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 3.5,
+          "over_prob": 52.900000000000006,
+          "under_prob": 47.099999999999994,
+          "recommendation": "\u2696\ufe0f No edge (52.9% / 47.1%)",
+          "trend": "up"
+        },
+        {
+          "line": 4.5,
+          "over_prob": 33.800000000000004,
+          "under_prob": 66.19999999999999,
+          "recommendation": "\u2705 UNDER (Edge: 66.2%)",
+          "trend": "up"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 20.349999999999998,
+          "under_prob": 79.65,
+          "recommendation": "\u2705 UNDER (Edge: 79.7%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 39.5,
+          "over_prob": 56.730000000000004,
+          "under_prob": 43.269999999999996,
+          "recommendation": "\u2197\ufe0f Lean OVER (56.7%)",
+          "trend": "stable"
+        },
+        {
+          "line": 49.5,
+          "over_prob": 45.08,
+          "under_prob": 54.92,
+          "recommendation": "\u2696\ufe0f No edge (45.1% / 54.9%)",
+          "trend": "stable"
+        },
+        {
+          "line": 59.5,
+          "over_prob": 32.019999999999996,
+          "under_prob": 67.98,
+          "recommendation": "\u2705 UNDER (Edge: 68.0%)",
+          "trend": "stable"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 44.18,
+          "under_prob": 55.82,
+          "recommendation": "\u2198\ufe0f Lean UNDER (55.8%)",
+          "trend": "up"
+        }
+      ]
+    }
+  },
+  "Sam Darnold": {
+    "position": "QB",
+    "base_props": {
+      "passing_yards": {
+        "line": 230.5469965623703,
+        "mean": 230.6925005685038,
+        "median": 230.5469965623703,
+        "std_dev": 74.54145594816598,
+        "confidence_80_low": 135.41276652313772,
+        "confidence_80_high": 326.6090969140324,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "passing_tds": {
+        "line": 1.301515797721895,
+        "mean": 1.4384610110932183,
+        "median": 1.301515797721895,
+        "std_dev": 1.193371679887316,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 3.092017078803653,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "interceptions": {
+        "line": 0.7590456023970952,
+        "mean": 0.92950460008924,
+        "median": 0.7590456023970952,
+        "std_dev": 0.8876688864825495,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 2.204575092211939,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "rushing_yards": {
+        "line": 8.193447855705198,
+        "mean": 8.89436231356901,
+        "median": 8.193447855705198,
+        "std_dev": 7.248435760126273,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 19.08906614755539,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "passing_yards": [
+        {
+          "line": 225.5,
+          "over_prob": 52.370000000000005,
+          "under_prob": 47.629999999999995,
+          "recommendation": "\u2696\ufe0f No edge (52.4% / 47.6%)",
+          "trend": "down"
+        },
+        {
+          "line": 249.5,
+          "over_prob": 40.22,
+          "under_prob": 59.78,
+          "recommendation": "\u2198\ufe0f Lean UNDER (59.8%)",
+          "trend": "down"
+        },
+        {
+          "line": 274.5,
+          "over_prob": 27.589999999999996,
+          "under_prob": 72.41,
+          "recommendation": "\u2705 UNDER (Edge: 72.4%)",
+          "trend": "down"
+        }
+      ],
+      "passing_tds": [
+        {
+          "line": 1.5,
+          "over_prob": 44.56,
+          "under_prob": 55.44,
+          "recommendation": "\u2198\ufe0f Lean UNDER (55.4%)",
+          "trend": "down"
+        },
+        {
+          "line": 2.5,
+          "over_prob": 20.0,
+          "under_prob": 80.0,
+          "recommendation": "\u2705 UNDER (Edge: 80.0%)",
+          "trend": "down"
+        }
+      ],
+      "interceptions": [
+        {
+          "line": 0.5,
+          "over_prob": 59.48,
+          "under_prob": 40.52,
+          "recommendation": "\u2197\ufe0f Lean OVER (59.5%)",
+          "trend": "up"
+        },
+        {
+          "line": 1.5,
+          "over_prob": 26.19,
+          "under_prob": 73.81,
+          "recommendation": "\u2705 UNDER (Edge: 73.8%)",
+          "trend": "up"
+        }
+      ],
+      "rushing_yards": [
+        {
+          "line": 19.5,
+          "over_prob": 8.72,
+          "under_prob": 91.28,
+          "recommendation": "\u2705 UNDER (Edge: 91.3%)",
+          "trend": "stable"
+        },
+        {
+          "line": 29.5,
+          "over_prob": 0.58,
+          "under_prob": 99.42,
+          "recommendation": "\u2705 UNDER (Edge: 99.4%)",
+          "trend": "stable"
+        }
+      ]
+    }
+  },
+  "Kenneth Walker III": {
+    "position": "RB",
+    "base_props": {
+      "rushing_yards": {
+        "line": 60.47058490679976,
+        "mean": 61.000039116116575,
+        "median": 60.47058490679976,
+        "std_dev": 30.456848825198087,
+        "confidence_80_low": 20.804589438934393,
+        "confidence_80_high": 100.99938237944008,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "rushing_tds": {
+        "line": 0.29393486457303586,
+        "mean": 0.5251883228296829,
+        "median": 0.29393486457303586,
+        "std_dev": 0.6243815998632304,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.457596376904562,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receptions": {
+        "line": 2.125116341357153,
+        "mean": 2.149158263071457,
+        "median": 2.125116341357153,
+        "std_dev": 1.2233606368343624,
+        "confidence_80_low": 0.47490978997872524,
+        "confidence_80_high": 3.7741376066150147,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 20.554772711619513,
+        "mean": 22.181030062816948,
+        "median": 20.554772711619513,
+        "std_dev": 17.789799299408905,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 46.35898714058343,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "rushing_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 63.959999999999994,
+          "under_prob": 36.040000000000006,
+          "recommendation": "\u2705 OVER (Edge: 64.0%)",
+          "trend": "up"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 38.31,
+          "under_prob": 61.69,
+          "recommendation": "\u2705 UNDER (Edge: 61.7%)",
+          "trend": "up"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 17.740000000000002,
+          "under_prob": 82.25999999999999,
+          "recommendation": "\u2705 UNDER (Edge: 82.3%)",
+          "trend": "up"
+        }
+      ],
+      "rushing_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 40.97,
+          "under_prob": 59.03,
+          "recommendation": "\u2198\ufe0f Lean UNDER (59.0%)",
+          "trend": "down"
+        }
+      ],
+      "receptions": [
+        {
+          "line": 2.5,
+          "over_prob": 38.67,
+          "under_prob": 61.33,
+          "recommendation": "\u2705 UNDER (Edge: 61.3%)",
+          "trend": "up"
+        },
+        {
+          "line": 3.5,
+          "over_prob": 13.98,
+          "under_prob": 86.02,
+          "recommendation": "\u2705 UNDER (Edge: 86.0%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 19.5,
+          "over_prob": 51.83,
+          "under_prob": 48.17,
+          "recommendation": "\u2696\ufe0f No edge (51.8% / 48.2%)",
+          "trend": "up"
+        },
+        {
+          "line": 29.5,
+          "over_prob": 33.82,
+          "under_prob": 66.18,
+          "recommendation": "\u2705 UNDER (Edge: 66.2%)",
+          "trend": "up"
+        }
+      ]
+    }
+  },
+  "Jaxon Smith-Njigba": {
+    "position": "WR",
+    "base_props": {
+      "receptions": {
+        "line": 7.2661653966009645,
+        "mean": 7.2714671926285535,
+        "median": 7.2661653966009645,
+        "std_dev": 2.3592099549675494,
+        "confidence_80_low": 4.257368807054369,
+        "confidence_80_high": 10.292250678349424,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 94.88276401351091,
+        "mean": 95.31966044985363,
+        "median": 94.88276401351091,
+        "std_dev": 41.78811885242139,
+        "confidence_80_low": 41.32880388435416,
+        "confidence_80_high": 149.04806628567985,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.6092799121099097,
+        "mean": 0.6872172903184155,
+        "median": 0.6092799121099097,
+        "std_dev": 0.6032365760418293,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.533338292967027,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 4.5,
+          "over_prob": 88.17,
+          "under_prob": 11.829999999999998,
+          "recommendation": "\u2705 OVER (Edge: 88.2%)",
+          "trend": "stable"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 77.66999999999999,
+          "under_prob": 22.330000000000013,
+          "recommendation": "\u2705 OVER (Edge: 77.7%)",
+          "trend": "stable"
+        },
+        {
+          "line": 6.5,
+          "over_prob": 62.64999999999999,
+          "under_prob": 37.35000000000001,
+          "recommendation": "\u2705 OVER (Edge: 62.6%)",
+          "trend": "stable"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 85.88,
+          "under_prob": 14.120000000000005,
+          "recommendation": "\u2705 OVER (Edge: 85.9%)",
+          "trend": "down"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 72.71,
+          "under_prob": 27.290000000000006,
+          "recommendation": "\u2705 OVER (Edge: 72.7%)",
+          "trend": "down"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 55.54,
+          "under_prob": 44.46,
+          "recommendation": "\u2197\ufe0f Lean OVER (55.5%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 55.279999999999994,
+          "under_prob": 44.720000000000006,
+          "recommendation": "\u2197\ufe0f Lean OVER (55.3%)",
+          "trend": "down"
+        }
+      ]
+    }
+  },
+  "Cooper Kupp": {
+    "position": "WR",
+    "base_props": {
+      "receptions": {
+        "line": 2.75389653589231,
+        "mean": 2.7908701536316896,
+        "median": 2.75389653589231,
+        "std_dev": 1.7194679808324134,
+        "confidence_80_low": 0.37311276465375137,
+        "confidence_80_high": 5.081805721646842,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 33.29870029331205,
+        "mean": 33.89160285530957,
+        "median": 33.29870029331205,
+        "std_dev": 20.99517899518698,
+        "confidence_80_low": 4.7801699769979535,
+        "confidence_80_high": 61.494519315808425,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.1807864245242606,
+        "mean": 0.2708565193208297,
+        "median": 0.1807864245242606,
+        "std_dev": 0.2989050713795837,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 0.7094626469376354,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 4.5,
+          "over_prob": 17.2,
+          "under_prob": 82.8,
+          "recommendation": "\u2705 UNDER (Edge: 82.8%)",
+          "trend": "down"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 6.36,
+          "under_prob": 93.64,
+          "recommendation": "\u2705 UNDER (Edge: 93.6%)",
+          "trend": "down"
+        },
+        {
+          "line": 6.5,
+          "over_prob": 2.16,
+          "under_prob": 97.84,
+          "recommendation": "\u2705 UNDER (Edge: 97.8%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 23.31,
+          "under_prob": 76.69,
+          "recommendation": "\u2705 UNDER (Edge: 76.7%)",
+          "trend": "down"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 4.81,
+          "under_prob": 95.19,
+          "recommendation": "\u2705 UNDER (Edge: 95.2%)",
+          "trend": "down"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 0.69,
+          "under_prob": 99.31,
+          "recommendation": "\u2705 UNDER (Edge: 99.3%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 22.14,
+          "under_prob": 77.86,
+          "recommendation": "\u2705 UNDER (Edge: 77.9%)",
+          "trend": "down"
+        }
+      ]
+    }
+  },
+  "Rashid Shaheed": {
+    "position": "WR",
+    "base_props": {
+      "receptions": {
+        "line": 2.438202206545827,
+        "mean": 2.6744866289598073,
+        "median": 2.438202206545827,
+        "std_dev": 2.185705688596362,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 5.707396010546689,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 32.572952349362,
+        "mean": 35.85977810357748,
+        "median": 32.572952349362,
+        "std_dev": 29.73909123238746,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 77.59342061016628,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.03074427099606931,
+        "mean": 0.1454530866708954,
+        "median": 0.03074427099606931,
+        "std_dev": 0.20222591215992317,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 0.44600761878947814,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "down",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 4.5,
+          "over_prob": 20.89,
+          "under_prob": 79.11,
+          "recommendation": "\u2705 UNDER (Edge: 79.1%)",
+          "trend": "down"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 11.39,
+          "under_prob": 88.61,
+          "recommendation": "\u2705 UNDER (Edge: 88.6%)",
+          "trend": "down"
+        },
+        {
+          "line": 6.5,
+          "over_prob": 5.63,
+          "under_prob": 94.37,
+          "recommendation": "\u2705 UNDER (Edge: 94.4%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 49.5,
+          "over_prob": 30.880000000000003,
+          "under_prob": 69.12,
+          "recommendation": "\u2705 UNDER (Edge: 69.1%)",
+          "trend": "down"
+        },
+        {
+          "line": 69.5,
+          "over_prob": 13.889999999999999,
+          "under_prob": 86.11,
+          "recommendation": "\u2705 UNDER (Edge: 86.1%)",
+          "trend": "down"
+        },
+        {
+          "line": 89.5,
+          "over_prob": 4.5600000000000005,
+          "under_prob": 95.44,
+          "recommendation": "\u2705 UNDER (Edge: 95.4%)",
+          "trend": "down"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 7.75,
+          "under_prob": 92.25,
+          "recommendation": "\u2705 UNDER (Edge: 92.2%)",
+          "trend": "down"
+        }
+      ]
+    }
+  },
+  "AJ Barner": {
+    "position": "TE",
+    "base_props": {
+      "receptions": {
+        "line": 2.8989891244906634,
+        "mean": 3.072022099491768,
+        "median": 2.8989891244906634,
+        "std_dev": 2.256676198117159,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 6.162271037249668,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "stable",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_yards": {
+        "line": 30.566545807570932,
+        "mean": 31.724598433797084,
+        "median": 30.566545807570932,
+        "std_dev": 21.33914153711108,
+        "confidence_80_low": 1.4644361157323462,
+        "confidence_80_high": 60.183953127864505,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      },
+      "receiving_tds": {
+        "line": 0.3753029214790086,
+        "mean": 0.4799835955608607,
+        "median": 0.3753029214790086,
+        "std_dev": 0.48039911436538146,
+        "confidence_80_low": 0.0,
+        "confidence_80_high": 1.1819570735025633,
+        "over_prob": 50.0,
+        "under_prob": 50.0,
+        "trend": "up",
+        "recommendation": "\u2696\ufe0f No edge (50.0% / 50.0%)"
+      }
+    },
+    "alternate_lines": {
+      "receptions": [
+        {
+          "line": 3.5,
+          "over_prob": 42.0,
+          "under_prob": 58.0,
+          "recommendation": "\u2198\ufe0f Lean UNDER (58.0%)",
+          "trend": "stable"
+        },
+        {
+          "line": 4.5,
+          "over_prob": 26.950000000000003,
+          "under_prob": 73.05,
+          "recommendation": "\u2705 UNDER (Edge: 73.0%)",
+          "trend": "stable"
+        },
+        {
+          "line": 5.5,
+          "over_prob": 15.68,
+          "under_prob": 84.32,
+          "recommendation": "\u2705 UNDER (Edge: 84.3%)",
+          "trend": "stable"
+        }
+      ],
+      "receiving_yards": [
+        {
+          "line": 39.5,
+          "over_prob": 35.96,
+          "under_prob": 64.03999999999999,
+          "recommendation": "\u2705 UNDER (Edge: 64.0%)",
+          "trend": "up"
+        },
+        {
+          "line": 49.5,
+          "over_prob": 20.59,
+          "under_prob": 79.41,
+          "recommendation": "\u2705 UNDER (Edge: 79.4%)",
+          "trend": "up"
+        },
+        {
+          "line": 59.5,
+          "over_prob": 11.12,
+          "under_prob": 88.88,
+          "recommendation": "\u2705 UNDER (Edge: 88.9%)",
+          "trend": "up"
+        }
+      ],
+      "receiving_tds": [
+        {
+          "line": 0.5,
+          "over_prob": 42.32,
+          "under_prob": 57.68,
+          "recommendation": "\u2198\ufe0f Lean UNDER (57.7%)",
+          "trend": "up"
+        }
+      ]
+    }
+  }
+}

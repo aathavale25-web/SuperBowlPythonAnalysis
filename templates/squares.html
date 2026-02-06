@@ -9,15 +9,155 @@
     <p>Quarter-by-quarter probability analysis with recency weighting</p>
 </div>
 
+<style>
+    .squares-grid {
+        display: grid;
+        grid-template-columns: 40px repeat(10, 1fr);
+        grid-template-rows: 40px repeat(10, 1fr);
+        gap: 2px;
+        margin: 20px auto;
+        max-width: 700px;
+        background: #002244;
+        padding: 2px;
+        border-radius: 8px;
+    }
+
+    .grid-cell {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.85em;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+    .grid-header {
+        background: #002244;
+        color: white;
+        font-weight: bold;
+    }
+
+    .grid-data {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .grid-data:hover {
+        transform: scale(1.1);
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .grid-label {
+        background: #69BE28;
+        color: white;
+        font-size: 0.9em;
+    }
+
+    .probability-legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        font-size: 0.9em;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .legend-box {
+        width: 30px;
+        height: 20px;
+        border-radius: 3px;
+    }
+</style>
+
 {% for quarter in ['q1', 'q2', 'q3', 'q4', 'final'] %}
-<div class="card">
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>{{ quarter|upper }}{% if quarter == 'final' %} Score{% else %} Quarter{% endif %}</h2>
     </div>
 
+    {% if data.squares.matrices and quarter in data.squares.matrices %}
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            {% for col in range(10) %}
+            <div class="grid-cell grid-label">{{ col }}</div>
+            {% endfor %}
+
+            <!-- Rows with row header + data cells -->
+            {% for row in range(10) %}
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">{{ row }}</div>
+
+                <!-- Data cells -->
+                {% for col in range(10) %}
+                    {% set prob = data.squares.matrices[quarter][row][col] * 100 %}
+                    {% if prob >= 8 %}
+                        {% set color = '#22c55e' %}
+                    {% elif prob >= 6 %}
+                        {% set color = '#84cc16' %}
+                    {% elif prob >= 4 %}
+                        {% set color = '#fbbf24' %}
+                    {% elif prob >= 2 %}
+                        {% set color = '#f97316' %}
+                    {% else %}
+                        {% set color = '#dc2626' %}
+                    {% endif %}
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: {{ color }}; color: {% if prob >= 4 %}#000{% else %}#fff{% endif %};"
+                         title="{{ row }}-{{ col }}: {{ '%.2f'|format(prob) }}%">
+                        {{ '%.1f'|format(prob) }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    {% endif %}
+
     {% if data.squares.ranked and quarter in data.squares.ranked %}
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -53,7 +193,7 @@
             <tbody>
                 {% for square in data.squares.ranked[quarter][-10:]|reverse %}
                 <tr>
-                    <td>{{ 100 - loop.index + 1 }}</td>
+                    <td>{{ data.squares.ranked[quarter]|length - loop.index + 1 }}</td>
                     <td>{{ square.winner }}</td>
                     <td>{{ square.loser }}</td>
                     <td class="stat-bad">{{ "%.3f%%"|format(square.probability * 100) }}</td>
@@ -61,22 +201,16 @@
                 {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <p>No data available for {{ quarter|upper }}</p>
     {% endif %}
 </div>
 {% endfor %}
 
+<!-- Methodology -->
 <div class="card">
-    <div class="card-header">
-        <h2>Methodology</h2>
-    </div>
-    <p>This analysis uses historical Super Bowl data with recency weighting:</p>
-    <ul style="margin-left: 2rem; margin-top: 1rem;">
-        <li>Last 5 years: 3x weight</li>
-        <li>Last 15 years: 2x weight</li>
-        <li>Older games: 1x weight</li>
-    </ul>
-    <p style="margin-top: 1rem;">Probabilities assume independence between winner and loser digits.</p>
+    <h2>📊 Methodology</h2>
+    <p><strong>Recency Weighting:</strong> More recent Super Bowls are weighted higher (exponential decay)</p>
+    <p><strong>Data Source:</strong> Historical Super Bowl scores from 2000-2024 (25 games)</p>
+    <p><strong>Probability Calculation:</strong> Frequency analysis with smoothing to account for rare combinations</p>
 </div>
+
 {% endblock %}

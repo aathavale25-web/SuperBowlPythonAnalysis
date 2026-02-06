@@ -289,6 +289,8 @@ def generate_pages(data, output_dir):
         'index': 'index.html',
         'squares': 'squares.html',
         'players': 'players_simple.html',  # Use simplified template
+        'prop_lines': 'prop_lines.html',  # Betting prop lines
+        'model_comparison': 'model_comparison.html',  # Model comparison
         'about': 'about.html'
     }
 
@@ -315,15 +317,34 @@ def generate_site():
     print("🏈 Generating complete static site...\n")
 
     print("📊 Collecting analysis data...")
+
+    # Load prop lines if available
+    prop_lines = {}
+    prop_lines_path = Path("data/player_prop_lines.json")
+    if prop_lines_path.exists():
+        with open(prop_lines_path) as f:
+            prop_lines = json.load(f)
+
+    # Load model comparison if available
+    model_comparison = {}
+    comparison_path = Path("data/model_comparison.json")
+    if comparison_path.exists():
+        with open(comparison_path) as f:
+            model_comparison = json.load(f)
+
     data = {
         'squares': collect_squares_data(),
         'players': collect_players_data(),
-        'playoffs': {'game_props': {}, 'best_props': {}},  # Empty for now
+        'prop_lines': prop_lines,
+        'model_comparison': model_comparison,
+        'playoffs': {'game_props': {}, 'best_props': {}},  # Legacy, kept for compatibility
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
     print(f"   - {len(data['players']['summaries'])} players")
     print(f"   - {len(data['squares']['ranked'])} quarters for squares")
+    print(f"   - {len(prop_lines)} players with prop lines")
+    print(f"   - {len(model_comparison)} players with model comparisons")
 
     print("\n📝 Generating HTML pages...")
     output_dir = Path("static_site")

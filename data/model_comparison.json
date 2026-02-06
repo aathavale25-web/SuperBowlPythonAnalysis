@@ -1,0 +1,1543 @@
+{
+  "Drake Maye": {
+    "player_name": "Drake Maye",
+    "position": "QB",
+    "stats": {
+      "rushing_yards": {
+        "monte_carlo": {
+          "prediction": 29.59114983244453,
+          "median": 28.575871779568956,
+          "std_dev": 19.745325080525056,
+          "confidence_80": [
+            1.2400493448928847,
+            55.80204741816345
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 24.5
+        },
+        "hybrid": {
+          "prediction": 44.778622185733994,
+          "confidence_80": [
+            41.866577638575016,
+            47.53625264816695
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 24.5
+        },
+        "difference": {
+          "prediction_diff": 15.187472353289465,
+          "prediction_diff_pct": 51.3243738052974,
+          "over_prob_diff": 0.0
+        }
+      },
+      "passing_tds": {
+        "monte_carlo": {
+          "prediction": 1.9439988829431525,
+          "median": 1.8821548509821846,
+          "std_dev": 1.2242246037059066,
+          "confidence_80": [
+            0.24181264752791604,
+            3.5843190866216386
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 1.5
+        },
+        "hybrid": {
+          "prediction": 2.009,
+          "confidence_80": [
+            0.0,
+            4.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 31.900000000000002,
+          "under_prob": 68.1,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 1.5
+        },
+        "difference": {
+          "prediction_diff": 0.06500111705684741,
+          "prediction_diff_pct": 3.343680782287168,
+          "over_prob_diff": -18.099999999999998
+        }
+      },
+      "interceptions": {
+        "monte_carlo": {
+          "prediction": 0.5104185900661158,
+          "median": 0.4438044708867209,
+          "std_dev": 0.45435458213905566,
+          "confidence_80": [
+            0.0,
+            1.1436204096514337
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.472,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 36.4,
+          "under_prob": 63.6,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.03841859006611581,
+          "prediction_diff_pct": -7.526879078040507,
+          "over_prob_diff": -13.600000000000001
+        }
+      },
+      "passing_yards": {
+        "monte_carlo": {
+          "prediction": 250.2628271441979,
+          "median": 249.58846168970476,
+          "std_dev": 65.89811592215366,
+          "confidence_80": [
+            165.01282262862867,
+            334.5975717586892
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 249.5
+        },
+        "hybrid": {
+          "prediction": 360.987511681807,
+          "confidence_80": [
+            353.9463865817164,
+            368.1708281423025
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 249.5
+        },
+        "difference": {
+          "prediction_diff": 110.72468453760911,
+          "prediction_diff_pct": 44.24336039079871,
+          "over_prob_diff": 0.0
+        }
+      }
+    }
+  },
+  "Rhamondre Stevenson": {
+    "player_name": "Rhamondre Stevenson",
+    "position": "RB",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 2.818782234865514,
+          "median": 2.788947465401055,
+          "std_dev": 1.5380687683729006,
+          "confidence_80": [
+            0.7569231058990619,
+            4.833175530376092
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 3.5
+        },
+        "hybrid": {
+          "prediction": 2.838,
+          "confidence_80": [
+            1.0,
+            5.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 31.4,
+          "under_prob": 68.6,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 3.5
+        },
+        "difference": {
+          "prediction_diff": 0.019217765134486253,
+          "prediction_diff_pct": 0.681775445324642,
+          "over_prob_diff": -18.6
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 33.27584657297139,
+          "median": 31.47161772388683,
+          "std_dev": 24.935075254322786,
+          "confidence_80": [
+            0.0,
+            67.41341039170908
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 24.5
+        },
+        "hybrid": {
+          "prediction": 21.643485959599936,
+          "confidence_80": [
+            16.806744484648732,
+            26.517719308149417
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 24.5
+        },
+        "difference": {
+          "prediction_diff": -11.632360613371453,
+          "prediction_diff_pct": -34.95736941767229,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_yards": {
+        "monte_carlo": {
+          "prediction": 59.04114203074668,
+          "median": 58.317310876174744,
+          "std_dev": 32.19072363888877,
+          "confidence_80": [
+            15.667812955192195,
+            101.18701527725428
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 35.936137936912374,
+          "confidence_80": [
+            32.20500087378654,
+            39.477059455753505
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": -23.105004093834303,
+          "prediction_diff_pct": -39.133735051740665,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_tds": {
+        "monte_carlo": {
+          "prediction": 0.7652367451040486,
+          "median": 0.6947954659257646,
+          "std_dev": 0.6413018224117653,
+          "confidence_80": [
+            0.0,
+            1.6658247187288377
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.714,
+          "confidence_80": [
+            0.0,
+            2.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 16.400000000000002,
+          "under_prob": 83.6,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.05123674510404863,
+          "prediction_diff_pct": -6.695541664963045,
+          "over_prob_diff": -33.599999999999994
+        }
+      }
+    }
+  },
+  "TreVeyon Henderson": {
+    "player_name": "TreVeyon Henderson",
+    "position": "RB",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 1.6305258647391256,
+          "median": 1.3679126536702282,
+          "std_dev": 1.5033311680207782,
+          "confidence_80": [
+            0.0,
+            3.766802930475248
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 3.5
+        },
+        "hybrid": {
+          "prediction": 1.463,
+          "confidence_80": [
+            0.0,
+            3.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 44.9,
+          "under_prob": 55.1,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 3.5
+        },
+        "difference": {
+          "prediction_diff": -0.16752586473912556,
+          "prediction_diff_pct": -10.274345740963065,
+          "over_prob_diff": -5.100000000000001
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 10.839349512841098,
+          "median": 9.222455767674852,
+          "std_dev": 9.860939109648369,
+          "confidence_80": [
+            0.0,
+            24.809651938593223
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 24.5
+        },
+        "hybrid": {
+          "prediction": 30.881789722932744,
+          "confidence_80": [
+            30.01057438617101,
+            31.740690069890146
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 24.5
+        },
+        "difference": {
+          "prediction_diff": 20.042440210091648,
+          "prediction_diff_pct": 184.90445562575397,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_yards": {
+        "monte_carlo": {
+          "prediction": 65.28451474315308,
+          "median": 63.45109993599002,
+          "std_dev": 41.60495910214632,
+          "confidence_80": [
+            7.5386588875839005,
+            120.62299824072346
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 75.33088147070562,
+          "confidence_80": [
+            67.98771971510077,
+            82.43623947203822
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": 10.046366727552538,
+          "prediction_diff_pct": 15.388590643704191,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_tds": {
+        "monte_carlo": {
+          "prediction": 0.8077638133946037,
+          "median": 0.6954272485578963,
+          "std_dev": 0.7209356119999027,
+          "confidence_80": [
+            0.0,
+            1.8256798204651974
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.742,
+          "confidence_80": [
+            0.0,
+            2.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 17.2,
+          "under_prob": 82.8,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.06576381339460369,
+          "prediction_diff_pct": -8.141465649251257,
+          "over_prob_diff": -32.8
+        }
+      }
+    }
+  },
+  "Stefon Diggs": {
+    "player_name": "Stefon Diggs",
+    "position": "WR",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 4.821873278247654,
+          "median": 4.785654449993693,
+          "std_dev": 2.515694484171026,
+          "confidence_80": [
+            1.526198634491822,
+            8.125511825986198
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 5.5
+        },
+        "hybrid": {
+          "prediction": 5.067,
+          "confidence_80": [
+            2.0,
+            8.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 40.2,
+          "under_prob": 59.8,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 5.5
+        },
+        "difference": {
+          "prediction_diff": 0.24512672175234584,
+          "prediction_diff_pct": 5.083640892392527,
+          "over_prob_diff": -9.799999999999997
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 64.57060912617712,
+          "median": 63.27722905640765,
+          "std_dev": 41.91365232214255,
+          "confidence_80": [
+            5.095929855937815,
+            121.07656650276652
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 17.43543677635751,
+          "confidence_80": [
+            13.264853940892293,
+            21.44998561143104
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": -47.13517234981961,
+          "prediction_diff_pct": -72.99787471063344,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.3146415951900011,
+          "median": 0.2121228427337252,
+          "std_dev": 0.3455460408540925,
+          "confidence_80": [
+            0.0,
+            0.819448652983873
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.26,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 22.5,
+          "under_prob": 77.5,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.05464159519000111,
+          "prediction_diff_pct": -17.366297408009565,
+          "over_prob_diff": -27.5
+        }
+      }
+    }
+  },
+  "DeMario Douglas": {
+    "player_name": "DeMario Douglas",
+    "position": "WR",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 1.5506977877280377,
+          "median": 1.4831249940856224,
+          "std_dev": 1.0969027402829723,
+          "confidence_80": [
+            0.0,
+            3.05882259524603
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 5.5
+        },
+        "hybrid": {
+          "prediction": 1.505,
+          "confidence_80": [
+            0.0,
+            3.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 45.6,
+          "under_prob": 54.4,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 5.5
+        },
+        "difference": {
+          "prediction_diff": -0.045697787728037786,
+          "prediction_diff_pct": -2.946917709542273,
+          "over_prob_diff": -4.399999999999999
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 22.568470901691228,
+          "median": 17.87637062108861,
+          "std_dev": 22.152157061787598,
+          "confidence_80": [
+            0.0,
+            54.07913494848544
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 64.77560874956066,
+          "confidence_80": [
+            61.733132274599555,
+            67.73228219073606
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": 42.20713784786943,
+          "prediction_diff_pct": 187.0181548042164,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.2091513509838232,
+          "median": 0.0625861603577589,
+          "std_dev": 0.27876856086606766,
+          "confidence_80": [
+            0.0,
+            0.6215535092832154
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.061,
+          "confidence_80": [
+            0.0,
+            0.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 5.800000000000001,
+          "under_prob": 94.2,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.1481513509838232,
+          "prediction_diff_pct": -70.83451782019901,
+          "over_prob_diff": -44.2
+        }
+      }
+    }
+  },
+  "Hunter Henry": {
+    "player_name": "Hunter Henry",
+    "position": "TE",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 3.6843380285208993,
+          "median": 3.6525116145189247,
+          "std_dev": 2.1023987304879013,
+          "confidence_80": [
+            0.8255890044700279,
+            6.445487383822023
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 4.5
+        },
+        "hybrid": {
+          "prediction": 3.815,
+          "confidence_80": [
+            2.0,
+            6.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 31.7,
+          "under_prob": 68.3,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 4.5
+        },
+        "difference": {
+          "prediction_diff": 0.13066197147910064,
+          "prediction_diff_pct": 3.5464164923964834,
+          "over_prob_diff": -18.3
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 46.23761917563894,
+          "median": 44.97562216079561,
+          "std_dev": 29.425792775179236,
+          "confidence_80": [
+            5.153552566790276,
+            86.04169420766166
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 49.5
+        },
+        "hybrid": {
+          "prediction": 15.402709989695396,
+          "confidence_80": [
+            11.08368960891823,
+            19.952418409424556
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 49.5
+        },
+        "difference": {
+          "prediction_diff": -30.834909185943545,
+          "prediction_diff_pct": -66.68792583980931,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.4940134734604965,
+          "median": 0.3907811430439654,
+          "std_dev": 0.49640841663317836,
+          "confidence_80": [
+            0.0,
+            1.2033698042240553
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.404,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 34.0,
+          "under_prob": 66.0,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.09001347346049648,
+          "prediction_diff_pct": -18.220853943509773,
+          "over_prob_diff": -16.0
+        }
+      }
+    }
+  },
+  "Sam Darnold": {
+    "player_name": "Sam Darnold",
+    "position": "QB",
+    "stats": {
+      "rushing_yards": {
+        "monte_carlo": {
+          "prediction": 8.794070013310085,
+          "median": 8.120035123413984,
+          "std_dev": 7.110392438702037,
+          "confidence_80": [
+            0.0,
+            18.629247945702147
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 24.5
+        },
+        "hybrid": {
+          "prediction": 7.820698186746606,
+          "confidence_80": [
+            7.091153548656961,
+            8.50519753177576
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 24.5
+        },
+        "difference": {
+          "prediction_diff": -0.9733718265634792,
+          "prediction_diff_pct": -11.068502128027776,
+          "over_prob_diff": 0.0
+        }
+      },
+      "passing_tds": {
+        "monte_carlo": {
+          "prediction": 1.420830555110188,
+          "median": 1.2792123503581694,
+          "std_dev": 1.1887465681558476,
+          "confidence_80": [
+            0.0,
+            3.06677573542843
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 1.5
+        },
+        "hybrid": {
+          "prediction": 1.284,
+          "confidence_80": [
+            0.0,
+            3.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 37.8,
+          "under_prob": 62.2,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 1.5
+        },
+        "difference": {
+          "prediction_diff": -0.13683055511018805,
+          "prediction_diff_pct": -9.63032182958485,
+          "over_prob_diff": -12.200000000000003
+        }
+      },
+      "interceptions": {
+        "monte_carlo": {
+          "prediction": 0.9333621513438977,
+          "median": 0.761085012101967,
+          "std_dev": 0.8924090871743124,
+          "confidence_80": [
+            0.0,
+            2.22145054264176
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.845,
+          "confidence_80": [
+            0.0,
+            2.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 21.099999999999998,
+          "under_prob": 78.9,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.08836215134389769,
+          "prediction_diff_pct": -9.467081048515821,
+          "over_prob_diff": -28.900000000000002
+        }
+      },
+      "passing_yards": {
+        "monte_carlo": {
+          "prediction": 230.61850862842462,
+          "median": 231.41012027733666,
+          "std_dev": 75.1927244445398,
+          "confidence_80": [
+            133.98359520306923,
+            325.28493429281934
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 249.5
+        },
+        "hybrid": {
+          "prediction": 168.40657490306435,
+          "confidence_80": [
+            162.34900831040474,
+            174.65346645231878
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 249.5
+        },
+        "difference": {
+          "prediction_diff": -62.21193372536027,
+          "prediction_diff_pct": -26.976123510362694,
+          "over_prob_diff": 0.0
+        }
+      }
+    }
+  },
+  "Kenneth Walker III": {
+    "player_name": "Kenneth Walker III",
+    "position": "RB",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 2.1794234713503804,
+          "median": 2.1483836449542464,
+          "std_dev": 1.2471269345215517,
+          "confidence_80": [
+            0.47642853244011873,
+            3.8223849295190657
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 3.5
+        },
+        "hybrid": {
+          "prediction": 2.279,
+          "confidence_80": [
+            0.0,
+            4.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 39.7,
+          "under_prob": 60.3,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 3.5
+        },
+        "difference": {
+          "prediction_diff": 0.09957652864961952,
+          "prediction_diff_pct": 4.568938985864985,
+          "over_prob_diff": -10.299999999999997
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 22.424371723303622,
+          "median": 20.87105120894347,
+          "std_dev": 17.81926760154747,
+          "confidence_80": [
+            0.0,
+            47.18453289378867
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 24.5
+        },
+        "hybrid": {
+          "prediction": 9.390620308014034,
+          "confidence_80": [
+            4.42692935825387,
+            14.361655049609997
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 24.5
+        },
+        "difference": {
+          "prediction_diff": -13.033751415289588,
+          "prediction_diff_pct": -58.12315090078884,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_yards": {
+        "monte_carlo": {
+          "prediction": 60.399001675633876,
+          "median": 60.217539702915104,
+          "std_dev": 30.588917447412367,
+          "confidence_80": [
+            19.644232523239594,
+            100.178837155152
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 47.58482927895065,
+          "confidence_80": [
+            44.515581452925865,
+            50.70131385709798
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": -12.814172396683226,
+          "prediction_diff_pct": -21.21586788056583,
+          "over_prob_diff": 0.0
+        }
+      },
+      "rushing_tds": {
+        "monte_carlo": {
+          "prediction": 0.505788314301299,
+          "median": 0.2651768309701342,
+          "std_dev": 0.6109289710421496,
+          "confidence_80": [
+            0.0,
+            1.4041839316154636
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.359,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 29.599999999999998,
+          "under_prob": 70.4,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.14678831430129902,
+          "prediction_diff_pct": -29.021689539046356,
+          "over_prob_diff": -20.400000000000002
+        }
+      }
+    }
+  },
+  "Jaxon Smith-Njigba": {
+    "player_name": "Jaxon Smith-Njigba",
+    "position": "WR",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 7.248806373176244,
+          "median": 7.271416349808526,
+          "std_dev": 2.3423754876517604,
+          "confidence_80": [
+            4.252992446962454,
+            10.240038602879128
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 5.5
+        },
+        "hybrid": {
+          "prediction": 7.608,
+          "confidence_80": [
+            4.0,
+            11.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 49.4,
+          "under_prob": 50.6,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 5.5
+        },
+        "difference": {
+          "prediction_diff": 0.3591936268237559,
+          "prediction_diff_pct": 4.955210669620443,
+          "over_prob_diff": -0.6000000000000014
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 95.38058816670238,
+          "median": 95.33553689993882,
+          "std_dev": 42.084995549625596,
+          "confidence_80": [
+            40.39134398023072,
+            149.63488310073365
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 154.42632568488688,
+          "confidence_80": [
+            147.46316557193649,
+            160.57895702132603
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": 59.045737518184495,
+          "prediction_diff_pct": 61.90540303126115,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.6949203603158287,
+          "median": 0.6225040313962675,
+          "std_dev": 0.6072980252003557,
+          "confidence_80": [
+            0.0,
+            1.544032315640054
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.656,
+          "confidence_80": [
+            0.0,
+            2.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 47.3,
+          "under_prob": 52.7,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.038920360315828684,
+          "prediction_diff_pct": -5.600693624538514,
+          "over_prob_diff": -2.700000000000003
+        }
+      }
+    }
+  },
+  "Cooper Kupp": {
+    "player_name": "Cooper Kupp",
+    "position": "WR",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 2.764191010621775,
+          "median": 2.727715379826932,
+          "std_dev": 1.709795453379931,
+          "confidence_80": [
+            0.375000119962589,
+            5.036621374643718
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 5.5
+        },
+        "hybrid": {
+          "prediction": 2.842,
+          "confidence_80": [
+            1.0,
+            5.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 32.300000000000004,
+          "under_prob": 67.69999999999999,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 5.5
+        },
+        "difference": {
+          "prediction_diff": 0.07780898937822522,
+          "prediction_diff_pct": 2.8148919188013326,
+          "over_prob_diff": -17.699999999999996
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 34.00464206727771,
+          "median": 33.26749865431645,
+          "std_dev": 20.9412634669394,
+          "confidence_80": [
+            4.8310152528926995,
+            61.845191820974996
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 38.08083657796112,
+          "confidence_80": [
+            36.349200171669104,
+            39.90821564890596
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": 4.076194510683415,
+          "prediction_diff_pct": 11.98717075927081,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.2783199312129641,
+          "median": 0.19264027577281922,
+          "std_dev": 0.30321957320318504,
+          "confidence_80": [
+            0.0,
+            0.7230693912743441
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.176,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 16.0,
+          "under_prob": 84.0,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.10231993121296412,
+          "prediction_diff_pct": -36.76342214049745,
+          "over_prob_diff": -34.0
+        }
+      }
+    }
+  },
+  "Rashid Shaheed": {
+    "player_name": "Rashid Shaheed",
+    "position": "WR",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 2.6668946398803617,
+          "median": 2.43814561349867,
+          "std_dev": 2.185166696910612,
+          "confidence_80": [
+            0.0,
+            5.714531009726342
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 5.5
+        },
+        "hybrid": {
+          "prediction": 2.561,
+          "confidence_80": [
+            1.0,
+            5.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 47.599999999999994,
+          "under_prob": 52.400000000000006,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 5.5
+        },
+        "difference": {
+          "prediction_diff": -0.10589463988036174,
+          "prediction_diff_pct": -3.9707095397331567,
+          "over_prob_diff": -2.4000000000000057
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 35.748134045952575,
+          "median": 32.605386004173035,
+          "std_dev": 29.419065008962765,
+          "confidence_80": [
+            0.0,
+            77.24564857252392
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 64.5
+        },
+        "hybrid": {
+          "prediction": 6.86395779548151,
+          "confidence_80": [
+            3.013549251090959,
+            10.700293609670341
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 64.5
+        },
+        "difference": {
+          "prediction_diff": -28.884176250471064,
+          "prediction_diff_pct": -80.79911587368949,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.14955727127956178,
+          "median": 0.03102671969844817,
+          "std_dev": 0.20499536475209587,
+          "confidence_80": [
+            0.0,
+            0.45556597216304456
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.042,
+          "confidence_80": [
+            0.0,
+            0.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 4.1000000000000005,
+          "under_prob": 95.9,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.10755727127956177,
+          "prediction_diff_pct": -71.9171126614827,
+          "over_prob_diff": -45.9
+        }
+      }
+    }
+  },
+  "AJ Barner": {
+    "player_name": "AJ Barner",
+    "position": "TE",
+    "stats": {
+      "receptions": {
+        "monte_carlo": {
+          "prediction": 3.0990470520933706,
+          "median": 2.926314129827971,
+          "std_dev": 2.2967663166229024,
+          "confidence_80": [
+            0.0,
+            6.25188973042693
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 4.5
+        },
+        "hybrid": {
+          "prediction": 3.097,
+          "confidence_80": [
+            1.0,
+            5.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 38.2,
+          "under_prob": 61.8,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 4.5
+        },
+        "difference": {
+          "prediction_diff": -0.002047052093370638,
+          "prediction_diff_pct": -0.06605424373882539,
+          "over_prob_diff": -11.799999999999997
+        }
+      },
+      "receiving_yards": {
+        "monte_carlo": {
+          "prediction": 31.646379259707484,
+          "median": 30.442079683317477,
+          "std_dev": 21.181086705358357,
+          "confidence_80": [
+            1.2497276013899108,
+            60.555977591053164
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 49.5
+        },
+        "hybrid": {
+          "prediction": 50.994264964635875,
+          "confidence_80": [
+            47.863832900907205,
+            54.22680139838662
+          ],
+          "model_type": "xgboost",
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "features": [
+            "recent_form",
+            "consistency",
+            "ceiling",
+            "floor",
+            "trend"
+          ],
+          "line": 49.5
+        },
+        "difference": {
+          "prediction_diff": 19.34788570492839,
+          "prediction_diff_pct": 61.13775464216322,
+          "over_prob_diff": 0.0
+        }
+      },
+      "receiving_tds": {
+        "monte_carlo": {
+          "prediction": 0.47498768422539517,
+          "median": 0.36342138228092785,
+          "std_dev": 0.47931747264733693,
+          "confidence_80": [
+            0.0,
+            1.1689036008576044
+          ],
+          "over_prob": 50.0,
+          "under_prob": 50.0,
+          "line": 0.5
+        },
+        "hybrid": {
+          "prediction": 0.416,
+          "confidence_80": [
+            0.0,
+            1.0
+          ],
+          "model_type": "poisson",
+          "over_prob": 34.300000000000004,
+          "under_prob": 65.69999999999999,
+          "features": [
+            "recent_games",
+            "season_average",
+            "poisson_lambda"
+          ],
+          "line": 0.5
+        },
+        "difference": {
+          "prediction_diff": -0.05898768422539519,
+          "prediction_diff_pct": -12.41878183043665,
+          "over_prob_diff": -15.699999999999996
+        }
+      }
+    }
+  }
+}

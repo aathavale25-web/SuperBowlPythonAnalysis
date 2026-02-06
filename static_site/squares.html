@@ -19,8 +19,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="index.html" >Dashboard</a></li>
                     <li><a href="squares.html" class="active">Squares Analysis</a></li>
-                    <li><a href="players.html" >Player Props</a></li>
-                    <li><a href="playoffs.html" >Playoff Props</a></li>
+                    <li><a href="players.html" >Player Stats</a></li>
+                    <li><a href="prop_lines.html" >Betting Props</a></li>
+                    <li><a href="model_comparison.html" >Model Comparison</a></li>
                     <li><a href="about.html" >About</a></li>
                 </ul>
             </nav>
@@ -40,15 +41,1308 @@
     <p>Quarter-by-quarter probability analysis with recency weighting</p>
 </div>
 
+<style>
+    .squares-grid {
+        display: grid;
+        grid-template-columns: 40px repeat(10, 1fr);
+        grid-template-rows: 40px repeat(10, 1fr);
+        gap: 2px;
+        margin: 20px auto;
+        max-width: 700px;
+        background: #002244;
+        padding: 2px;
+        border-radius: 8px;
+    }
 
-<div class="card">
+    .grid-cell {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.85em;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+    .grid-header {
+        background: #002244;
+        color: white;
+        font-weight: bold;
+    }
+
+    .grid-data {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .grid-data:hover {
+        transform: scale(1.1);
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .grid-label {
+        background: #69BE28;
+        color: white;
+        font-size: 0.9em;
+    }
+
+    .probability-legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        font-size: 0.9em;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .legend-box {
+        width: 30px;
+        height: 20px;
+        border-radius: 3px;
+    }
+</style>
+
+
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>Q1 Quarter</h2>
     </div>
 
     
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            
+            <div class="grid-cell grid-label">0</div>
+            
+            <div class="grid-cell grid-label">1</div>
+            
+            <div class="grid-cell grid-label">2</div>
+            
+            <div class="grid-cell grid-label">3</div>
+            
+            <div class="grid-cell grid-label">4</div>
+            
+            <div class="grid-cell grid-label">5</div>
+            
+            <div class="grid-cell grid-label">6</div>
+            
+            <div class="grid-cell grid-label">7</div>
+            
+            <div class="grid-cell grid-label">8</div>
+            
+            <div class="grid-cell grid-label">9</div>
+            
+
+            <!-- Rows with row header + data cells -->
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">0</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="0-0: 24.64%">
+                        24.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="0-3: 24.64%">
+                        24.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="0-7: 6.72%">
+                        6.7
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">1</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">2</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">3</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">4</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">5</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">6</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">7</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="7-0: 15.84%">
+                        15.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="7-3: 15.84%">
+                        15.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="7-7: 4.32%">
+                        4.3
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">8</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">9</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="9-0: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="9-3: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    
+
+    
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -221,14 +1515,1238 @@
     
 </div>
 
-<div class="card">
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>Q2 Quarter</h2>
     </div>
 
     
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            
+            <div class="grid-cell grid-label">0</div>
+            
+            <div class="grid-cell grid-label">1</div>
+            
+            <div class="grid-cell grid-label">2</div>
+            
+            <div class="grid-cell grid-label">3</div>
+            
+            <div class="grid-cell grid-label">4</div>
+            
+            <div class="grid-cell grid-label">5</div>
+            
+            <div class="grid-cell grid-label">6</div>
+            
+            <div class="grid-cell grid-label">7</div>
+            
+            <div class="grid-cell grid-label">8</div>
+            
+            <div class="grid-cell grid-label">9</div>
+            
+
+            <!-- Rows with row header + data cells -->
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">0</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="0-0: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-1: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-3: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-4: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="0-7: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">1</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">2</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">3</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="3-0: 14.08%">
+                        14.1
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-1: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="3-3: 5.28%">
+                        5.3
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-4: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="3-7: 14.08%">
+                        14.1
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-9: 3.52%">
+                        3.5
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">4</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="4-0: 10.24%">
+                        10.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="4-1: 2.56%">
+                        2.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="4-3: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="4-4: 2.56%">
+                        2.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="4-7: 10.24%">
+                        10.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="4-9: 2.56%">
+                        2.6
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">5</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">6</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="6-0: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-1: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-3: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-4: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="6-7: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">7</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">8</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">9</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    
+
+    
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -401,14 +2919,1238 @@
     
 </div>
 
-<div class="card">
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>Q3 Quarter</h2>
     </div>
 
     
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            
+            <div class="grid-cell grid-label">0</div>
+            
+            <div class="grid-cell grid-label">1</div>
+            
+            <div class="grid-cell grid-label">2</div>
+            
+            <div class="grid-cell grid-label">3</div>
+            
+            <div class="grid-cell grid-label">4</div>
+            
+            <div class="grid-cell grid-label">5</div>
+            
+            <div class="grid-cell grid-label">6</div>
+            
+            <div class="grid-cell grid-label">7</div>
+            
+            <div class="grid-cell grid-label">8</div>
+            
+            <div class="grid-cell grid-label">9</div>
+            
+
+            <!-- Rows with row header + data cells -->
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">0</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="0-0: 28.16%">
+                        28.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="0-3: 17.92%">
+                        17.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="0-7: 5.12%">
+                        5.1
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="0-8: 7.68%">
+                        7.7
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="0-9: 5.12%">
+                        5.1
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">1</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">2</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">3</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="3-0: 5.28%">
+                        5.3
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-3: 3.36%">
+                        3.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-8: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">4</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">5</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">6</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="6-0: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="6-3: 2.24%">
+                        2.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-7: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-8: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-9: 0.64%">
+                        0.6
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">7</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="7-0: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="7-3: 2.24%">
+                        2.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-7: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-8: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-9: 0.64%">
+                        0.6
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">8</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-0: 3.52%">
+                        3.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-3: 2.24%">
+                        2.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-7: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-8: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-9: 0.64%">
+                        0.6
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">9</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    
+
+    
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -581,14 +4323,1238 @@
     
 </div>
 
-<div class="card">
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>Q4 Quarter</h2>
     </div>
 
     
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            
+            <div class="grid-cell grid-label">0</div>
+            
+            <div class="grid-cell grid-label">1</div>
+            
+            <div class="grid-cell grid-label">2</div>
+            
+            <div class="grid-cell grid-label">3</div>
+            
+            <div class="grid-cell grid-label">4</div>
+            
+            <div class="grid-cell grid-label">5</div>
+            
+            <div class="grid-cell grid-label">6</div>
+            
+            <div class="grid-cell grid-label">7</div>
+            
+            <div class="grid-cell grid-label">8</div>
+            
+            <div class="grid-cell grid-label">9</div>
+            
+
+            <!-- Rows with row header + data cells -->
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">0</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="0-0: 11.20%">
+                        11.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-2: 1.60%">
+                        1.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="0-3: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="0-7: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="0-9: 2.40%">
+                        2.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">1</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="1-0: 6.72%">
+                        6.7
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-2: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-3: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-7: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-9: 1.44%">
+                        1.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">2</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="2-0: 4.48%">
+                        4.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-2: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-3: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">3</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="3-0: 4.48%">
+                        4.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-2: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-3: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">4</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="4-0: 4.48%">
+                        4.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-2: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-3: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">5</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">6</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="6-0: 6.72%">
+                        6.7
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-2: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-3: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-7: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-9: 1.44%">
+                        1.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">7</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="7-0: 13.44%">
+                        13.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-2: 1.92%">
+                        1.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="7-3: 2.88%">
+                        2.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="7-7: 2.88%">
+                        2.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="7-9: 2.88%">
+                        2.9
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">8</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">9</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="9-0: 4.48%">
+                        4.5
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-2: 0.64%">
+                        0.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-3: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-7: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-9: 0.96%">
+                        1.0
+                    </div>
+                
+            
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    
+
+    
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -761,14 +5727,1238 @@
     
 </div>
 
-<div class="card">
+<div class="card" style="margin-bottom: 40px;">
     <div class="card-header">
         <h2>FINAL Score</h2>
     </div>
 
     
+        <!-- 10x10 Grid Visualization -->
+        <h3 style="margin: 20px 0 10px 0; text-align: center;">Probability Heatmap</h3>
+
+        <div class="probability-legend">
+            <span><strong>Probability:</strong></span>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dc2626;"></div>
+                <span>0-2%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f97316;"></div>
+                <span>2-4%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fbbf24;"></div>
+                <span>4-6%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #84cc16;"></div>
+                <span>6-8%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #22c55e;"></div>
+                <span>8%+</span>
+            </div>
+        </div>
+
+        <div class="squares-grid">
+            <!-- Top-left corner (empty) -->
+            <div class="grid-cell grid-header"></div>
+
+            <!-- Column headers (loser) -->
+            
+            <div class="grid-cell grid-label">0</div>
+            
+            <div class="grid-cell grid-label">1</div>
+            
+            <div class="grid-cell grid-label">2</div>
+            
+            <div class="grid-cell grid-label">3</div>
+            
+            <div class="grid-cell grid-label">4</div>
+            
+            <div class="grid-cell grid-label">5</div>
+            
+            <div class="grid-cell grid-label">6</div>
+            
+            <div class="grid-cell grid-label">7</div>
+            
+            <div class="grid-cell grid-label">8</div>
+            
+            <div class="grid-cell grid-label">9</div>
+            
+
+            <!-- Rows with row header + data cells -->
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">0</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="0-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">1</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #22c55e; color: #000;"
+                         title="1-0: 10.24%">
+                        10.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="1-2: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="1-3: 5.12%">
+                        5.1
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="1-4: 2.56%">
+                        2.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="1-5: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="1-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="1-8: 2.56%">
+                        2.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="1-9: 3.84%">
+                        3.8
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">2</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="2-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">3</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="3-0: 6.40%">
+                        6.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-2: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-3: 3.20%">
+                        3.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-4: 1.60%">
+                        1.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-5: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="3-8: 1.60%">
+                        1.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="3-9: 2.40%">
+                        2.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">4</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #fbbf24; color: #000;"
+                         title="4-0: 5.12%">
+                        5.1
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-2: 1.92%">
+                        1.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="4-3: 2.56%">
+                        2.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-4: 1.28%">
+                        1.3
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-5: 1.92%">
+                        1.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-8: 1.28%">
+                        1.3
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="4-9: 1.92%">
+                        1.9
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">5</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="5-0: 3.84%">
+                        3.8
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-2: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-3: 1.92%">
+                        1.9
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-4: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-5: 1.44%">
+                        1.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-8: 0.96%">
+                        1.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="5-9: 1.44%">
+                        1.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">6</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="6-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">7</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="7-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">8</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #84cc16; color: #000;"
+                         title="8-0: 6.40%">
+                        6.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-2: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-3: 3.20%">
+                        3.2
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-4: 1.60%">
+                        1.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-5: 2.40%">
+                        2.4
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="8-8: 1.60%">
+                        1.6
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #f97316; color: #fff;"
+                         title="8-9: 2.40%">
+                        2.4
+                    </div>
+                
+            
+                <!-- Row header (winner) -->
+                <div class="grid-cell grid-label">9</div>
+
+                <!-- Data cells -->
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-0: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-1: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-2: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-3: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-4: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-5: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-6: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-7: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-8: 0.00%">
+                        0.0
+                    </div>
+                
+                    
+                    
+                        
+                    
+
+                    <div class="grid-cell grid-data"
+                         style="background-color: #dc2626; color: #fff;"
+                         title="9-9: 0.00%">
+                        0.0
+                    </div>
+                
+            
+        </div>
+
+        <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+            <strong>Winner (Rows)</strong> vs <strong>Loser (Columns)</strong> | Hover for exact probability
+        </p>
+    
+
+    
         <!-- Top 10 Best Squares -->
-        <h3 style="margin-top: 1rem;">Top 10 Best Squares</h3>
+        <h3 style="margin-top: 2rem;">Top 10 Best Squares</h3>
         <table>
             <thead>
                 <tr>
@@ -942,22 +7132,18 @@
 </div>
 
 
+<!-- Methodology -->
 <div class="card">
-    <div class="card-header">
-        <h2>Methodology</h2>
-    </div>
-    <p>This analysis uses historical Super Bowl data with recency weighting:</p>
-    <ul style="margin-left: 2rem; margin-top: 1rem;">
-        <li>Last 5 years: 3x weight</li>
-        <li>Last 15 years: 2x weight</li>
-        <li>Older games: 1x weight</li>
-    </ul>
-    <p style="margin-top: 1rem;">Probabilities assume independence between winner and loser digits.</p>
+    <h2>📊 Methodology</h2>
+    <p><strong>Recency Weighting:</strong> More recent Super Bowls are weighted higher (exponential decay)</p>
+    <p><strong>Data Source:</strong> Historical Super Bowl scores from 2000-2024 (25 games)</p>
+    <p><strong>Probability Calculation:</strong> Frequency analysis with smoothing to account for rare combinations</p>
 </div>
 
 
+
             <footer class="footer">
-                <p>Last updated: 2026-02-05 14:43:13</p>
+                <p>Last updated: 2026-02-05 21:40:42</p>
                 <p>Data-driven Super Bowl analysis</p>
             </footer>
         </main>
