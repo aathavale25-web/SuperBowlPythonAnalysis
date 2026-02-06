@@ -218,6 +218,102 @@
     <div id="details-{{ player.name|replace(' ', '-') }}" class="game-details">
         <span class="close-btn" onclick="toggleGameDetails('{{ player.name }}')">&times;</span>
         <h3>{{ player.name }} - Game by Game Stats</h3>
+
+        <!-- Bar Chart -->
+        <div id="chart-{{ player.name|replace(' ', '-') }}" style="margin: 20px 0;"></div>
+        <script>
+            (function() {
+                // Prepare game data
+                const gameData = {{ player.game_by_game|tojson }};
+                const position = '{{ player.position }}';
+                const playerName = '{{ player.name }}';
+
+                // Determine which stat to plot based on position
+                let statIndex, statName, bettingLine;
+
+                {% if player.position == 'QB' %}
+                    statIndex = 5; // passing_yards
+                    statName = 'Passing Yards';
+                    {% if player.name in data.prop_lines %}
+                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.passing_yards[1].line if data.prop_lines[player.name].alternate_lines.passing_yards|length > 1 else 249.5 }};
+                    {% else %}
+                        bettingLine = 249.5;
+                    {% endif %}
+                {% elif player.position == 'RB' %}
+                    statIndex = 8; // rushing_yards
+                    statName = 'Rushing Yards';
+                    {% if player.name in data.prop_lines %}
+                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.rushing_yards[0].line if data.prop_lines[player.name].alternate_lines.rushing_yards|length > 0 else 69.5 }};
+                    {% else %}
+                        bettingLine = 69.5;
+                    {% endif %}
+                {% elif player.position in ['WR', 'TE'] %}
+                    statIndex = 11; // receiving_yards
+                    statName = 'Receiving Yards';
+                    {% if player.name in data.prop_lines %}
+                        bettingLine = {{ data.prop_lines[player.name].alternate_lines.receiving_yards[1].line if data.prop_lines[player.name].alternate_lines.receiving_yards|length > 1 else 69.5 }};
+                    {% else %}
+                        bettingLine = 69.5;
+                    {% endif %}
+                {% endif %}
+
+                // Extract values and calculate hit rate
+                const weeks = gameData.map((g, i) => `Week ${i + 1}`);
+                const values = gameData.map(g => g[statIndex] || 0);
+                const hitsOver = values.filter(v => v > bettingLine).length;
+                const hitRate = ((hitsOver / values.length) * 100).toFixed(1);
+
+                // Create bar colors (green if over line, red if under)
+                const colors = values.map(v => v > bettingLine ? '#22c55e' : '#dc2626');
+
+                // Create bar chart
+                const trace1 = {
+                    x: weeks,
+                    y: values,
+                    type: 'bar',
+                    name: statName,
+                    marker: {
+                        color: colors
+                    },
+                    text: values.map(v => v.toFixed(0)),
+                    textposition: 'auto',
+                };
+
+                // Horizontal line for betting line
+                const trace2 = {
+                    x: weeks,
+                    y: Array(weeks.length).fill(bettingLine),
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `Line: ${bettingLine}`,
+                    line: {
+                        color: '#002244',
+                        width: 3,
+                        dash: 'dash'
+                    }
+                };
+
+                const layout = {
+                    title: {
+                        text: `${statName} per Game<br><sub>Hit Rate: ${hitRate}% (${hitsOver}/${values.length} games OVER ${bettingLine})</sub>`,
+                        font: { size: 16 }
+                    },
+                    xaxis: { title: 'Game' },
+                    yaxis: { title: statName },
+                    showlegend: true,
+                    legend: { x: 0, y: 1.1, orientation: 'h' },
+                    margin: { t: 80, b: 60 },
+                    plot_bgcolor: '#f8f9fa',
+                    paper_bgcolor: '#f8f9fa'
+                };
+
+                const config = { responsive: true };
+
+                Plotly.newPlot('chart-{{ player.name|replace(' ', '-') }}', [trace1, trace2], layout, config);
+            })();
+        </script>
+
+        <h4 style="margin-top: 30px;">Detailed Game Log</h4>
         <table>
             <tr>
                 <th>Week</th>
