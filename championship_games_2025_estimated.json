@@ -1,0 +1,36 @@
+[
+  {
+    "year": 2025,
+    "game_type": "afc_championship",
+    "winner": "New England Patriots",
+    "loser": "Denver Broncos",
+    "winner_q1": 0,
+    "winner_q2": 7,
+    "winner_q3": 10,
+    "winner_q4": 10,
+    "winner_final": 10,
+    "loser_q1": 7,
+    "loser_q2": 7,
+    "loser_q3": 7,
+    "loser_q4": 7,
+    "loser_final": 7,
+    "notes": "Estimated quarters: Tied 7-7 at halftime, Patriots FG in 3rd quarter for 10-7 win"
+  },
+  {
+    "year": 2025,
+    "game_type": "nfc_championship",
+    "winner": "Seattle Seahawks",
+    "loser": "Los Angeles Rams",
+    "winner_q1": 7,
+    "winner_q2": 17,
+    "winner_q3": 24,
+    "winner_q4": 31,
+    "winner_final": 31,
+    "loser_q1": 7,
+    "loser_q2": 14,
+    "loser_q3": 21,
+    "loser_q4": 27,
+    "loser_final": 27,
+    "notes": "Estimated quarters: Back-and-forth scoring, Seahawks scored late in 2nd to take halftime lead"
+  }
+]

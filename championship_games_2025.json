@@ -1,0 +1,34 @@
+[
+  {
+    "winner": "New England Patriots",
+    "loser": "Denver Broncos",
+    "winner_q1": 0,
+    "winner_q2": 0,
+    "winner_q3": 0,
+    "winner_q4": 0,
+    "winner_final": 10,
+    "loser_q1": 0,
+    "loser_q2": 0,
+    "loser_q3": 0,
+    "loser_q4": 0,
+    "loser_final": 7,
+    "year": 2025,
+    "game_type": "afc_championship"
+  },
+  {
+    "winner": "Seattle Seahawks",
+    "loser": "Los Angeles Rams",
+    "winner_q1": 0,
+    "winner_q2": 0,
+    "winner_q3": 0,
+    "winner_q4": 0,
+    "winner_final": 31,
+    "loser_q1": 0,
+    "loser_q2": 0,
+    "loser_q3": 0,
+    "loser_q4": 0,
+    "loser_final": 27,
+    "year": 2025,
+    "game_type": "nfc_championship"
+  }
+]
