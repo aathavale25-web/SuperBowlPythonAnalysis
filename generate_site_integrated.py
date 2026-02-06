@@ -13,7 +13,7 @@ import shutil
 from analysis.squares import (
     load_superbowl_games,
     apply_recency_weighting,
-    calculate_digit_frequency,
+    calculate_combination_frequency,
     calculate_probability_matrix,
     rank_squares
 )
@@ -32,8 +32,8 @@ def collect_squares_data():
     ranked = {}
 
     for quarter in quarters:
-        freq = calculate_digit_frequency(weighted_games, quarter)
-        matrix = calculate_probability_matrix(freq)
+        combinations = calculate_combination_frequency(weighted_games, quarter)
+        matrix = calculate_probability_matrix(combinations)
         matrices[quarter] = matrix
 
         ranked_squares = rank_squares(matrix)

@@ -4,23 +4,22 @@ Analysis for Super Bowl squares betting
 
 import duckdb
 from pathlib import Path
-from collections import defaultdict
+from collections import defaultdict, Counter
 import plotly.graph_objects as go
 
 
-def calculate_digit_frequency(games, quarter):
+def calculate_combination_frequency(games, quarter):
     """
-    Calculate frequency of last digits in scores
+    Calculate actual (winner_digit, loser_digit) combination frequencies
 
     Args:
         games: List of game dicts with score data
         quarter: Which quarter to analyze ("q1", "q2", "q3", "q4", or "final")
 
     Returns:
-        dict with "winner" and "loser" digit frequencies
+        Counter of (winner_digit, loser_digit) tuples
     """
-    winner_digits = defaultdict(int)
-    loser_digits = defaultdict(int)
+    combinations = Counter()
 
     winner_key = f"winner_{quarter}"
     loser_key = f"loser_{quarter}"
@@ -34,13 +33,9 @@ def calculate_digit_frequency(games, quarter):
             winner_digit = winner_score % 10
             loser_digit = loser_score % 10
 
-            winner_digits[winner_digit] += 1
-            loser_digits[loser_digit] += 1
+            combinations[(winner_digit, loser_digit)] += 1
 
-    return {
-        "winner": dict(winner_digits),
-        "loser": dict(loser_digits)
-    }
+    return combinations
 
 
 def apply_recency_weighting(games, current_year=2024):
@@ -75,40 +70,32 @@ def apply_recency_weighting(games, current_year=2024):
     return weighted_games
 
 
-def calculate_probability_matrix(frequencies):
+def calculate_probability_matrix(combinations):
     """
-    Calculate 10x10 probability matrix from digit frequencies
+    Calculate 10x10 probability matrix from actual combinations
 
     Args:
-        frequencies: Dict with "winner" and "loser" digit frequency dicts
+        combinations: Counter of (winner_digit, loser_digit) tuples
 
     Returns:
         10x10 matrix of probabilities
     """
-    winner_freq = frequencies["winner"]
-    loser_freq = frequencies["loser"]
+    total_count = sum(combinations.values())
 
-    # Calculate total counts
-    total_winner = sum(winner_freq.values()) or 1
-    total_loser = sum(loser_freq.values()) or 1
+    if total_count == 0:
+        # If no data, return uniform distribution
+        uniform_prob = 1.0 / 100
+        return [[uniform_prob for _ in range(10)] for _ in range(10)]
 
     # Create 10x10 matrix
     matrix = []
     for winner_digit in range(10):
         row = []
         for loser_digit in range(10):
-            # Probability = P(winner digit) * P(loser digit)
-            # (assuming independence)
-            p_winner = winner_freq.get(winner_digit, 0) / total_winner
-            p_loser = loser_freq.get(loser_digit, 0) / total_loser
-            prob = p_winner * p_loser
+            count = combinations.get((winner_digit, loser_digit), 0)
+            prob = count / total_count
             row.append(prob)
         matrix.append(row)
-
-    # Normalize to ensure sum = 1.0
-    total_prob = sum(sum(row) for row in matrix)
-    if total_prob > 0:
-        matrix = [[prob / total_prob for prob in row] for row in matrix]
 
     return matrix
 
@@ -287,11 +274,11 @@ def analyze_squares():
     for quarter in quarters:
         print(f"📊 Analyzing {quarter.upper()}...")
 
-        # Calculate digit frequencies
-        freq = calculate_digit_frequency(weighted_games, quarter)
+        # Calculate combination frequencies
+        combinations = calculate_combination_frequency(weighted_games, quarter)
 
         # Calculate probability matrix
-        matrix = calculate_probability_matrix(freq)
+        matrix = calculate_probability_matrix(combinations)
 
         # Store for later use
         all_matrices[quarter] = matrix
